@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -158,58 +158,53 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="dino\debug.hpp" />
-    <ClInclude Include="dino\events\console_events.hpp" />
-    <ClInclude Include="dino\handlers\command_handler.hpp" />
-    <ClInclude Include="dino\events\task_events.hpp" />
-    <ClInclude Include="dino\handlers\task_handler.hpp" />
-    <ClInclude Include="dino\offset.hpp" />
-    <ClInclude Include="dino\objects\object_iterator.hpp" />
-    <ClInclude Include="dino\objects\game_object.hpp" />
-    <ClInclude Include="dino\objects\object.hpp" />
-    <ClInclude Include="dino\objects\object_manager.hpp" />
-    <ClInclude Include="dino\objects\unit.hpp" />
-    <ClInclude Include="dino\settings.hpp" />
-    <ClInclude Include="dino\version.hpp" />
-    <ClInclude Include="dino\vmt_hook.hpp" />
-    <ClInclude Include="dino\wow\console.hpp" />
-    <ClInclude Include="dino\wow\glue\character_select.hpp" />
-    <ClInclude Include="dino\wow\glue\glue.hpp" />
-    <ClInclude Include="dino\wow\glue\realmlist.hpp" />
-    <ClInclude Include="dino\wow\graphics.hpp" />
-    <ClInclude Include="dino\wow\lua.hpp" />
-    <ClInclude Include="dino\wow\offsets.hpp" />
-    <ClInclude Include="dino\session.hpp" />
-    <ClInclude Include="dino\wow\api\objects\cgame_object.hpp" />
-    <ClInclude Include="dino\wow\api\objects\cobject.hpp" />
-    <ClInclude Include="dino\wow\api\objects\cobject_iterator.hpp" />
-    <ClInclude Include="dino\wow\api\objects\cobject_manager.hpp" />
-    <ClInclude Include="dino\wow\api\objects\cunit.hpp" />
-    <ClInclude Include="dino\wow\guid.hpp" />
-    <ClInclude Include="dino\wow\objects\game_object.hpp" />
-    <ClInclude Include="dino\wow\objects\object.hpp" />
-    <ClInclude Include="dino\wow\objects\object_iterator.hpp" />
-    <ClInclude Include="dino\wow\objects\object_manager.hpp" />
-    <ClInclude Include="dino\wow\objects\unit.hpp" />
-    <ClInclude Include="dino\wow\object_manager.hpp" />
-    <ClInclude Include="dino\wow\game.hpp" />
-    <ClInclude Include="dino\wow\world.hpp" />
+    <ClInclude Include="..\src\dino\debug.hpp" />
+    <ClInclude Include="..\src\dino\events\console_events.hpp" />
+    <ClInclude Include="..\src\dino\events\task_events.hpp" />
+    <ClInclude Include="..\src\dino\handlers\command_handler.hpp" />
+    <ClInclude Include="..\src\dino\handlers\task_handler.hpp" />
+    <ClInclude Include="..\src\dino\offset.hpp" />
+    <ClInclude Include="..\src\dino\session.hpp" />
+    <ClInclude Include="..\src\dino\settings.hpp" />
+    <ClInclude Include="..\src\dino\version.hpp" />
+    <ClInclude Include="..\src\dino\vmt_hook.hpp" />
+    <ClInclude Include="..\src\dino\wow\api\objects\cgame_object.hpp" />
+    <ClInclude Include="..\src\dino\wow\api\objects\cobject.hpp" />
+    <ClInclude Include="..\src\dino\wow\api\objects\cobject_iterator.hpp" />
+    <ClInclude Include="..\src\dino\wow\api\objects\cobject_manager.hpp" />
+    <ClInclude Include="..\src\dino\wow\api\objects\cunit.hpp" />
+    <ClInclude Include="..\src\dino\wow\console.hpp" />
+    <ClInclude Include="..\src\dino\wow\game.hpp" />
+    <ClInclude Include="..\src\dino\wow\glue\character_select.hpp" />
+    <ClInclude Include="..\src\dino\wow\glue\glue.hpp" />
+    <ClInclude Include="..\src\dino\wow\glue\realmlist.hpp" />
+    <ClInclude Include="..\src\dino\wow\graphics.hpp" />
+    <ClInclude Include="..\src\dino\wow\guid.hpp" />
+    <ClInclude Include="..\src\dino\wow\lua.hpp" />
+    <ClInclude Include="..\src\dino\wow\objects\game_object.hpp" />
+    <ClInclude Include="..\src\dino\wow\objects\object.hpp" />
+    <ClInclude Include="..\src\dino\wow\objects\object_iterator.hpp" />
+    <ClInclude Include="..\src\dino\wow\objects\object_manager.hpp" />
+    <ClInclude Include="..\src\dino\wow\objects\unit.hpp" />
+    <ClInclude Include="..\src\dino\wow\object_manager.hpp" />
+    <ClInclude Include="..\src\dino\wow\offsets.hpp" />
+    <ClInclude Include="..\src\dino\wow\world.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dino\debug.cpp" />
-    <ClCompile Include="dino\handlers\command_handler.cpp" />
-    <ClCompile Include="dino\handlers\task_handler.cpp" />
-    <ClCompile Include="dino\session.cpp" />
-    <ClCompile Include="dino\settings.cpp" />
-    <ClCompile Include="dino\version.cpp" />
-    <ClCompile Include="dino\vmt_hook.cpp" />
-    <ClCompile Include="dino\wow\console.cpp" />
-    <ClCompile Include="dino\wow\glue\character_select.cpp" />
-    <ClCompile Include="dino\wow\glue\glue.cpp" />
-    <ClCompile Include="dino\wow\glue\realmlist.cpp" />
-    <ClCompile Include="dino\wow\graphics.cpp" />
-    <ClCompile Include="dino\wow\lua.cpp" />
+    <ClCompile Include="..\src\dino\debug.cpp" />
+    <ClCompile Include="..\src\dino\handlers\command_handler.cpp" />
+    <ClCompile Include="..\src\dino\handlers\task_handler.cpp" />
+    <ClCompile Include="..\src\dino\session.cpp" />
+    <ClCompile Include="..\src\dino\settings.cpp" />
+    <ClCompile Include="..\src\dino\version.cpp" />
+    <ClCompile Include="..\src\dino\vmt_hook.cpp" />
+    <ClCompile Include="..\src\dino\wow\console.cpp" />
+    <ClCompile Include="..\src\dino\wow\glue\character_select.cpp" />
+    <ClCompile Include="..\src\dino\wow\glue\glue.cpp" />
+    <ClCompile Include="..\src\dino\wow\glue\realmlist.cpp" />
+    <ClCompile Include="..\src\dino\wow\graphics.cpp" />
+    <ClCompile Include="..\src\dino\wow\lua.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

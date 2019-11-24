@@ -85,4 +85,31 @@ namespace dino::wow::console
 		auto write = bind_fn<void(const char*, int)>(offsets::console::write_fn);
 		write(message.c_str(), 0);
 	}
+
+//console::command
+	command::command(const std::string& cmd, std::uint32_t line_executed)
+		: cmd_{cmd}
+		, line_executed_{line_executed}
+	{}
+
+	void command::update()
+	{
+		line_executed_ = num_lines();
+		cmd_ = last_line();
+	}
+
+	std::uint32_t command::line_number() const noexcept
+	{
+		return line_executed_;
+	}
+
+	bool command::is_new() const
+	{
+		return line_executed_ == num_lines();
+	}
+
+	const std::string& command::cmd() const noexcept
+	{
+		return cmd_;
+	}
 }
