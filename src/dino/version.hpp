@@ -15,9 +15,12 @@ namespace dino::version
 	constexpr unsigned int build = 1;
 
 #ifndef NDEBUG
-	constexpr std::string_view mode = "debug";
+	constexpr bool debug = true;
+	constexpr bool release = !debug;
 #else
-	constexpr std::string_view mode = "release";
+	constexpr bool debug = false;
+	constexpr bool release = !debug;
 #endif
+
 	std::string format();
 }

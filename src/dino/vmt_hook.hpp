@@ -4,8 +4,6 @@
 
 namespace dino
 {
-
-
 	template <class Fn>
 	class vmt_hook
 	{

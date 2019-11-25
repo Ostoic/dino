@@ -13,103 +13,160 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\dino">
+      <UniqueIdentifier>{0e61c0ab-6a72-43fa-ac24-02a2a6306522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow">
+      <UniqueIdentifier>{32d58c09-cdbe-4b98-8506-bb80bc139a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\events">
+      <UniqueIdentifier>{d0ca1653-8bdc-4c56-ab2b-f7bbc25afd22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\handlers">
+      <UniqueIdentifier>{e2a0723d-4378-4461-be33-bd5cd197d422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\api">
+      <UniqueIdentifier>{7e92a6dd-0c44-4fc9-bfa5-d8f32e70ee01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\glue">
+      <UniqueIdentifier>{2d648233-1c4b-44ca-92e8-c7bc3d3eb65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\objects">
+      <UniqueIdentifier>{beb7b17a-81c8-4e65-b02a-61f01fbf6a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino">
+      <UniqueIdentifier>{f189232c-0857-4e2b-a34e-74565a141f3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\handlers">
+      <UniqueIdentifier>{b6d4232a-694f-4fa6-af5e-5245a7e45bfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\events">
+      <UniqueIdentifier>{c29b119f-c84c-409f-b5ec-74b0bbb24e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow">
+      <UniqueIdentifier>{50ade998-8f59-410b-ab01-383e4abf8fef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\glue">
+      <UniqueIdentifier>{1409a225-5c1f-4020-9fc7-288d0cb4ff9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\objects">
+      <UniqueIdentifier>{2b4ccb0c-dd64-4384-8a2e-07b1280fc295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\api">
+      <UniqueIdentifier>{bf130f68-6edb-4d2c-92a6-d731099e0ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\net">
+      <UniqueIdentifier>{7fb1e30d-6e90-4f72-8898-5e16d4d9d5ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\net">
+      <UniqueIdentifier>{85ac92c0-89e3-418c-a9ab-e5539eb238b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\debug.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\events\console_events.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\events\task_events.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\handlers\command_handler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\handlers\task_handler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\offset.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\session.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\settings.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\version.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\vmt_hook.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\wow\api\objects\cgame_object.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\api\objects\cobject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\api\objects\cobject_iterator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\api\objects\cobject_manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\api\objects\cunit.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\console.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\game.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\dino\wow\api</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\glue\character_select.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\dino\wow\glue</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\glue\glue.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\dino\wow\api\objects\cobject.hpp">
+      <Filter>Header Files\dino\wow\api</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\glue\realmlist.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\dino\wow\api\objects\cobject_iterator.hpp">
+      <Filter>Header Files\dino\wow\api</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\graphics.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\dino\wow\api\objects\cobject_manager.hpp">
+      <Filter>Header Files\dino\wow\api</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\guid.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\dino\handlers\command_handler.hpp">
+      <Filter>Header Files\dino\handlers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\lua.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\dino\wow\console.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\console_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\api\objects\cunit.hpp">
+      <Filter>Header Files\dino\wow\api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\debug.hpp">
+      <Filter>Header Files\dino</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\objects\game_object.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\dino\wow\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\glue\glue.hpp">
+      <Filter>Header Files\dino\wow\glue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\guid.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\graphics.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\lua.hpp">
+      <Filter>Header Files\dino\wow</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\objects\object.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\object_iterator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\object_manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\unit.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\dino\wow\objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\object_manager.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\dino\wow</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\offsets.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\dino\wow\objects\object_manager.hpp">
+      <Filter>Header Files\dino\wow\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\objects\object_iterator.hpp">
+      <Filter>Header Files\dino\wow\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\offset.hpp">
+      <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\glue\realmlist.hpp">
+      <Filter>Header Files\dino\wow\glue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\session.hpp">
+      <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\settings.hpp">
+      <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\task_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\handlers\task_handler.hpp">
+      <Filter>Header Files\dino\handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\objects\unit.hpp">
+      <Filter>Header Files\dino\wow\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\version.hpp">
+      <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\vmt_hook.hpp">
+      <Filter>Header Files\dino</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\world.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\net\connection.hpp">
+      <Filter>Header Files\dino\wow\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\offsets.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\net\messages.hpp">
+      <Filter>Header Files\dino\wow\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data_store.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="chat.hpp">
+      <Filter>Header Files\dino\wow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,44 +176,50 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dino\debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\handlers\command_handler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\handlers\task_handler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\session.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\settings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\version.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\dino\vmt_hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dino\wow\console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\dino\wow\glue\character_select.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\dino\wow\glue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\handlers\command_handler.cpp">
+      <Filter>Source Files\dino\handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\console.cpp">
+      <Filter>Source Files\dino\wow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\debug.cpp">
+      <Filter>Source Files\dino</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\glue\glue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\wow\glue\realmlist.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\dino\wow\glue</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\graphics.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\dino\wow</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\lua.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\dino\wow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\glue\realmlist.cpp">
+      <Filter>Source Files\dino\wow\glue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\session.cpp">
+      <Filter>Source Files\dino</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\handlers\task_handler.cpp">
+      <Filter>Source Files\dino\handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\settings.cpp">
+      <Filter>Source Files\dino</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\version.cpp">
+      <Filter>Source Files\dino</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\net\connection.cpp">
+      <Filter>Source Files\dino\wow\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data_store.cpp">
+      <Filter>Source Files\dino\wow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

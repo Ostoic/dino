@@ -26,7 +26,7 @@ namespace dino::handlers
 		static void install_hook();
 		static void uninstall_hook();
 
-		static task_handler& get();
+		static task_handler& get() noexcept;
 
 	public:
 		bool is_active() const;

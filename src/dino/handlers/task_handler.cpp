@@ -60,27 +60,35 @@ namespace dino::handlers
 
 			auto& tasks = task_handler.tasks_;
 			auto& services = task_handler.services_;
-			task_handler.update_session();
 
-			// Run services
-			if (!services.empty())
-				for (const auto& service : services)
-					service.fn();
-
-			// Run any new tasks
-			if (!tasks.empty())
+			try
 			{
-				// This is synchronized since tasks are meant to run once, so it is more likely endscene
-				// will race with another contending thread.
-				auto lock = std::unique_lock<std::mutex>{task_handler.tasks_mutex_};
-				if (lock.owns_lock())
+				task_handler.update_session();
+
+				// Run services
+				if (!services.empty())
+					for (const auto& service : services)
+						service.fn();
+
+				// Run any new tasks
+				if (!tasks.empty())
 				{
-					while (!tasks.empty())
+					// This is synchronized since tasks are meant to run once, so it is more likely endscene
+					// will race with another contending thread.
+					auto lock = std::unique_lock<std::mutex>{task_handler.tasks_mutex_};
+					if (lock.owns_lock())
 					{
-						tasks.front()();
-						tasks.pop();
+						while (!tasks.empty())
+						{
+							tasks.front()();
+							tasks.pop();
+						}
 					}
 				}
+			}
+			catch (const std::exception & e)
+			{
+				wow::console::dino("Error: {}", e.what());
 			}
 		}();
 
@@ -112,13 +120,11 @@ namespace dino::handlers
 	void task_handler::unhook()
 	{
 		// Make task_handler unhook itself
-		this->queue_task([] {
-			deref_as<fn_ptr<void()>>(wow::graphics::get_ptr_address())
-				= fn_ptr<void()>(static_cast<unsigned int>(task_handler::original_endscene));
-		});
+		deref_as<fn_ptr<void()>>(wow::graphics::get_ptr_address())
+			= fn_ptr<void()>(static_cast<unsigned int>(task_handler::original_endscene));
 	}
 
-	task_handler& task_handler::get()
+	task_handler& task_handler::get() noexcept
 	{
 		static task_handler s_;
 		return s_;

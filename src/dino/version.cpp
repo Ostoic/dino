@@ -21,9 +21,11 @@ namespace dino::version
 		auto gen = std::default_random_engine{seed()};
 		auto uniform = std::uniform_int_distribution<int>{0, dank_names.size() - 1};
 
+		constexpr std::string_view build_mode = (version::debug) ? "debug" : "release";
+
 		return fmt::format(
 			"{} [{}] {}.{}.{}",
-			dank_names[uniform(gen)], version::mode,
+			dank_names[uniform(gen)], build_mode,
 			version::major, version::minor, version::build
 		);
 	}

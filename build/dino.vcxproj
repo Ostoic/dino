@@ -174,13 +174,15 @@
     <ClInclude Include="..\src\dino\wow\api\objects\cobject_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cunit.hpp" />
     <ClInclude Include="..\src\dino\wow\console.hpp" />
-    <ClInclude Include="..\src\dino\wow\game.hpp" />
+    <ClInclude Include="..\src\dino\wow\data_store.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\character_select.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\glue.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\realmlist.hpp" />
     <ClInclude Include="..\src\dino\wow\graphics.hpp" />
     <ClInclude Include="..\src\dino\wow\guid.hpp" />
     <ClInclude Include="..\src\dino\wow\lua.hpp" />
+    <ClInclude Include="..\src\dino\wow\net\connection.hpp" />
+    <ClInclude Include="..\src\dino\wow\net\messages.hpp" />
     <ClInclude Include="..\src\dino\wow\objects\game_object.hpp" />
     <ClInclude Include="..\src\dino\wow\objects\object.hpp" />
     <ClInclude Include="..\src\dino\wow\objects\object_iterator.hpp" />
@@ -189,6 +191,7 @@
     <ClInclude Include="..\src\dino\wow\object_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\offsets.hpp" />
     <ClInclude Include="..\src\dino\wow\world.hpp" />
+    <ClInclude Include="chat.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -200,11 +203,13 @@
     <ClCompile Include="..\src\dino\version.cpp" />
     <ClCompile Include="..\src\dino\vmt_hook.cpp" />
     <ClCompile Include="..\src\dino\wow\console.cpp" />
+    <ClCompile Include="..\src\dino\wow\data_store.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\character_select.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\glue.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\realmlist.cpp" />
     <ClCompile Include="..\src\dino\wow\graphics.cpp" />
     <ClCompile Include="..\src\dino\wow\lua.cpp" />
+    <ClCompile Include="..\src\dino\wow\net\connection.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

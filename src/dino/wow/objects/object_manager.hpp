@@ -1,9 +1,15 @@
 #pragma once
 
+#include "object_iterator.hpp"
+
 namespace dino::wow::objects
 {
 	class object_manager
 	{
+	public:
+		//using iterator = object_iterator;
+		//using const_iterator = object_iterator;
+
 	public:
 		iterator begin();
 		iterator end();

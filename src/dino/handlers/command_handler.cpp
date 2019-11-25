@@ -5,7 +5,7 @@
 
 namespace dino::handlers
 {
-	command_handler& command_handler::get()
+	command_handler& command_handler::get() noexcept
 	{
 		static command_handler singleton;
 		return singleton;
