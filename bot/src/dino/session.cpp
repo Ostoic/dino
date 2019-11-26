@@ -77,7 +77,7 @@ namespace dino
 		// 17 -> channel message
 		//if (message_type == 17)
 
-		// Todo: Figure out what the different types of messages are
+		// Todo: Figure out what the different types of chat messages are
 		wow::console::dino("[SMSG_GM_MESSAGECHAT] data size = {}, cursor pos = {}", data.size(), data.cursor());
 		wow::console::dino("[SMSG_GM_MESSAGECHAT] language = {}, msg type = {}", language, message_type);
 		data.set_cursor(original_cursor);

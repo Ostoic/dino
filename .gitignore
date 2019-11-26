@@ -1,2 +1,2 @@
-build/Release/*
-build/.vs/*
+bot/build/Release/*
+bot/build/.vs/*

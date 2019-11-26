@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\src;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
