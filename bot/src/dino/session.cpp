@@ -57,6 +57,12 @@ namespace dino
 		auto original_handler
 			= bind_fn<int(int, int, int, void*)>(wow::offsets::net::messages::packet_smsg_gm_messagechat_fn);
 
+		// Todo: Reimplement the important parts of the smsg chat handler
+
+		// Todo: Revise the following RE method; this way assumes one path through the smsg chat handler,
+		// so it's possible that 'bytes_pulled' is different when we get to pull the message,
+		// based on the chat message type
+
 		// 0. nothing						(bytes_pulled: 2)
 		// 1. pull int8 -> message type		(after: bytes_pulled == 3)
 		// 2. pull int32 -> language		(after: bytes_pulled == 7)
