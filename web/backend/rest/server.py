@@ -1,11 +1,14 @@
 import flask
 from flask import request
+from flask_cors import CORS
 from functools import wraps
 
 from .session import Session
 from .session import find as find_session
+from .session import user_has_session
 
 app = flask.Flask(__name__)
+CORS(app)
 
 @app.errorhandler(404)
 def not_found(error):
@@ -15,8 +18,14 @@ def not_found(error):
 def acess_denied(error):
     return flask.make_response(flask.jsonify({'error': 'Access denied'}), 401)
 	
+	
+def cors_jsonify(message):
+	response = flask.jsonify(message)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
+	
 def make_error(message):
-	return flask.jsonify({
+	return cors_jsonify({
 		'error': message
 	})
 	
@@ -55,10 +64,13 @@ def login():
 		return make_error('Username and password requird')
 	
 	session = Session()
+	if user_has_session(username):
+		return make_error('User already logged in')
+		
 	if not session.login(username, password):
 		return make_error('Invalid username or password')
 		
-	return flask.jsonify({
+	return cors_jsonify({
 		'success': 'logged in',
 		'token': session.token()
 	})
@@ -74,7 +86,7 @@ def logout():
 		return make_error('Not logged in')
 
 	session.logout()
-	return flask.jsonify({
+	return cors_jsonify({
 		'success': 'logged out'
 	})
 
@@ -88,7 +100,7 @@ def account_summary():
 	if session is None or not session.logged_in():
 		return make_error('Not logged in')
 
-	return flask.jsonify({
+	return cors_jsonify({
 		'username': session.account_data().username,
 		'first_name': session.account_data().first_name,
 		'last_name': session.account_data().last_name

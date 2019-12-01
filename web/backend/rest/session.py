@@ -12,6 +12,12 @@ sessions = []
 
 def find(token):
 	return next(filter(lambda session: session.token() == token, sessions), None)
+	
+def user_has_session(username):
+	for session in sessions:
+		if session.account_data().username == username:
+			return True
+	return False
 
 class Session:
 	def __init__(self, account_data = None, token = None):
@@ -36,6 +42,7 @@ class Session:
 		
 	def logout(self):
 		self.__token = None
+		print('Session remove: {}'.format(self))
 		sessions.remove(self)
 		
 	def logged_in(self):
