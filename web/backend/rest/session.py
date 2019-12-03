@@ -31,6 +31,9 @@ class Session:
 
 	def login(self, username, password):
 		account_data = db.find_account(username = username)
+		if not account_data:
+			return False
+			
 		if account_data.password == password:
 			self.__token = make_token(account_data.username)
 			self.__account_data = account_data
@@ -41,8 +44,8 @@ class Session:
 		return False
 		
 	def logout(self):
-		self.__token = None
 		print('Session remove: {}'.format(self))
+		self.__token = None
 		sessions.remove(self)
 		
 	def logged_in(self):

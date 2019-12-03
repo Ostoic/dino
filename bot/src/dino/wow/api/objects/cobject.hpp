@@ -17,12 +17,12 @@ namespace dino::wow::objects
 
 	private:
 		explicit cobject(address base)
-			: base_{base}
+			: class_base_{base}
 			, guid_{bind_value<wow::guid>(base)}
 		{}
 
 	private:
-		address base_;
+		address class_base_;
 		wow::guid guid_;
 	};
 

@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\GitHub\json\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -159,8 +159,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\dino\debug.hpp" />
+    <ClInclude Include="..\src\dino\emitters\chat_emitter.hpp" />
+    <ClInclude Include="..\src\dino\emitters\endscene_emitter.hpp" />
+    <ClInclude Include="..\src\dino\events\chat_events.hpp" />
     <ClInclude Include="..\src\dino\events\console_events.hpp" />
-    <ClInclude Include="..\src\dino\events\task_events.hpp" />
+    <ClInclude Include="..\src\dino\events\endscene_events.hpp" />
+    <ClInclude Include="..\src\dino\hacks\anti_afk.hpp" />
+    <ClInclude Include="..\src\dino\hacks\translator.hpp" />
     <ClInclude Include="..\src\dino\handlers\command_handler.hpp" />
     <ClInclude Include="..\src\dino\handlers\task_handler.hpp" />
     <ClInclude Include="..\src\dino\offset.hpp" />
@@ -173,6 +178,7 @@
     <ClInclude Include="..\src\dino\wow\api\objects\cobject_iterator.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cobject_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cunit.hpp" />
+    <ClInclude Include="..\src\dino\wow\chat.hpp" />
     <ClInclude Include="..\src\dino\wow\console.hpp" />
     <ClInclude Include="..\src\dino\wow\data_store.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\character_select.hpp" />
@@ -191,17 +197,21 @@
     <ClInclude Include="..\src\dino\wow\object_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\offsets.hpp" />
     <ClInclude Include="..\src\dino\wow\world.hpp" />
-    <ClInclude Include="chat.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\dino\debug.cpp" />
+    <ClCompile Include="..\src\dino\emitters\chat_emitter.cpp" />
+    <ClCompile Include="..\src\dino\emitters\endscene_emitter.cpp" />
+    <ClCompile Include="..\src\dino\hacks\anti_afk.cpp" />
+    <ClCompile Include="..\src\dino\hacks\translator.cpp" />
     <ClCompile Include="..\src\dino\handlers\command_handler.cpp" />
     <ClCompile Include="..\src\dino\handlers\task_handler.cpp" />
     <ClCompile Include="..\src\dino\session.cpp" />
     <ClCompile Include="..\src\dino\settings.cpp" />
     <ClCompile Include="..\src\dino\version.cpp" />
     <ClCompile Include="..\src\dino\vmt_hook.cpp" />
+    <ClCompile Include="..\src\dino\wow\chat.cpp" />
     <ClCompile Include="..\src\dino\wow\console.cpp" />
     <ClCompile Include="..\src\dino\wow\data_store.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\character_select.cpp" />

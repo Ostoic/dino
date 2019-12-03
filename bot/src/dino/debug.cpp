@@ -3,17 +3,8 @@
 #include "wow/console.hpp"
 #include "session.hpp"
 
-namespace dino
+namespace dino::debug
 {
-	void debug(const std::string& module_name)
-	{
-		using namespace std::chrono_literals;
-		//dino::allocate_console();
-		wow::console::enable();
-		wow::console::open();
-		session::start();
-	}
-
 	void allocate_console()
 	{
 		if (::AllocConsole())
@@ -24,5 +15,11 @@ namespace dino
 		}
 
 		spdlog::info("[dino] Console allocated");
+	}
+
+	void delete_console()
+	{
+		spdlog::info("[dino] Freeing console");
+		::FreeConsole();
 	}
 }

@@ -8,5 +8,4 @@ namespace dino::events
 	{
 		wow::console::command cmd;
 	};
-
 }

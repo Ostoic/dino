@@ -25,7 +25,8 @@ namespace dino::wow::offsets
 
 	namespace time
 	{
-
+		constexpr auto timestamp = address{0x00B1D618};
+		constexpr auto last_action = address{0x00B499A4};
 	}
 
 	namespace world
@@ -50,7 +51,7 @@ namespace dino::wow::offsets
 		constexpr auto get_int64 = address{0x0047B400};
 		constexpr auto get_float = address{0x0047B440};
 		constexpr auto get_string = address{0x0047B480};
-		constexpr auto get_string_count = address{0x0047B6B0};
+		constexpr auto get_string_ptr = address{0x0047B6B0};
 
 		// put functions
 		constexpr auto put_int8 = address{0x0047AFE0};
@@ -73,6 +74,7 @@ namespace dino::wow::offsets
 		{
 			constexpr auto nc_set_message_handler_fn = address{0x00631FA0};
 			constexpr auto set_message_handler_fn = address{0x006B0B80};
+			constexpr auto clear_message_handler_fn = address{0x006B0BC0};
 
 			constexpr auto singleton = address{0x00C79CF4};
 		}

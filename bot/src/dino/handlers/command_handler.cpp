@@ -1,5 +1,6 @@
 #include "command_handler.hpp"
 #include "../version.hpp"
+#include "../session.hpp"
 
 #include <unordered_set>
 
@@ -24,6 +25,12 @@ namespace dino::handlers
 			wow::console::dino("Welcome to {}", dino::version::name);
 			return true;
 		}
+
+		//else if (cmd.cmd() == "dino::exit")
+		//{
+		//	wow::console::dino("Exiting...");
+		//	session::exit();
+		//}
 
 		return false;
 	}

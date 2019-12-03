@@ -5,7 +5,7 @@ namespace dino::wow::net::messages
 	enum class server
 	{
 		null = 0x0,
-		chat_message = 0x95,
+		chat_message = 0x96,
 		gm_chat_message = 0x3B3,
 	};
 

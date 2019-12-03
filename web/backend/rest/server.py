@@ -7,6 +7,8 @@ from .session import Session
 from .session import find as find_session
 from .session import user_has_session
 
+from .db import accounts
+
 app = flask.Flask(__name__)
 CORS(app)
 
@@ -89,6 +91,23 @@ def logout():
 	return cors_jsonify({
 		'success': 'logged out'
 	})
+	
+		
+@app.route('/user-exists', methods = ['GET'])
+def user_exists():
+	if request.json is None:
+		return make_error('Content must be in json format')
+		
+	username = request.json.get('username')
+	if accounts.find_account(username) is not None:	
+		return cors_jsonify({
+			'result': 'user exists'
+		})
+	else:
+		return cors_jsonify({
+			'result': 'user does not exist'
+		})
+		
 
 @app.route('/account/summary')
 def account_summary():

@@ -61,6 +61,18 @@
     <Filter Include="Header Files\dino\wow\net">
       <UniqueIdentifier>{85ac92c0-89e3-418c-a9ab-e5539eb238b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\dino\emitters">
+      <UniqueIdentifier>{df1e33d4-eb77-4bdd-a5bc-93926d5c2fae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\emitters">
+      <UniqueIdentifier>{b7976887-f935-4d34-a32d-c2ac140e44fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\hacks">
+      <UniqueIdentifier>{da93fb9e-4670-4a50-9116-99614d2c7b60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\hacks">
+      <UniqueIdentifier>{f6d655a6-d5cc-49d8-9fd6-38753b782caf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -135,9 +147,6 @@
     <ClInclude Include="..\src\dino\settings.hpp">
       <Filter>Header Files\dino</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\events\task_events.hpp">
-      <Filter>Header Files\dino\events</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\handlers\task_handler.hpp">
       <Filter>Header Files\dino\handlers</Filter>
     </ClInclude>
@@ -165,8 +174,26 @@
     <ClInclude Include="..\src\dino\wow\data_store.hpp">
       <Filter>Header Files\dino\wow</Filter>
     </ClInclude>
-    <ClInclude Include="chat.hpp">
+    <ClInclude Include="..\src\dino\wow\chat.hpp">
       <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\endscene_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\chat_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\endscene_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\chat_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\hacks\anti_afk.hpp">
+      <Filter>Header Files\dino\hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\hacks\translator.hpp">
+      <Filter>Header Files\dino\hacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +247,21 @@
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\data_store.cpp">
       <Filter>Source Files\dino\wow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\chat.cpp">
+      <Filter>Source Files\dino\wow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\endscene_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\chat_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\hacks\anti_afk.cpp">
+      <Filter>Source Files\dino\hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\hacks\translator.cpp">
+      <Filter>Source Files\dino\hacks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

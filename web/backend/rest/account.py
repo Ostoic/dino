@@ -1,6 +1,6 @@
 class Account:
 	def __init__(self, username, password, first_name = None, last_name = None):
-		if first_name is not None:
+		if first_name is None:
 			first_name = username
 		self.username = username
 		self.password = password

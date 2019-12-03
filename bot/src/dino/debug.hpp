@@ -2,9 +2,9 @@
 
 #include <string>
 
-namespace dino
+namespace dino::debug
 {
-	void debug(const std::string& module_name);
-
 	void allocate_console();
+	void delete_console();
 }
+

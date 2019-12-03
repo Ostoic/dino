@@ -15,7 +15,7 @@ namespace dino::wow::objects
 		explicit object(address base);
 
 	private:
-		address base_;
+		address class_base_;
 		wow::guid guid_;
 	};
 
@@ -30,7 +30,7 @@ namespace dino::wow::objects
 	}
 
 	object::object(address base)
-		: base_{base}
+		: class_base_{base}
 		, guid_{bind_value<wow::guid>(base)}
 	{}
 }
