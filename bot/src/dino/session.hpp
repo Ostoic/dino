@@ -11,7 +11,7 @@
 
 #include "emitters/endscene_emitter.hpp"
 #include "handlers/task_handler.hpp"
-#include "wow/chat.hpp"
+#include "wow/chat/message.hpp"
 #include "offset.hpp"
 
 namespace dino
@@ -41,25 +41,12 @@ namespace dino
 		bool queue_async_task(Fn&& fn);
 
 	private:
-		template <class Event, auto Fn>
-		bool add_service()
-		{
-			this->dispatcher()
-				.sink<Event>()
-				.connect<Fn>();
-
-			return true;
-		}
-
-		template <class Event>
-		void remove_service();
-
-	private:
 		friend class emitters::endscene_emitter;
 
 		void update();
-		void update_object_manager();
-		void update_console_commands();
+
+		void install_hacks();
+		void install_loggers();
 
 	private:
 		entt::registry registry_;
@@ -85,14 +72,5 @@ namespace dino
 	bool session::queue_async_task(Fn&& fn)
 	{
 		return handlers::task_handler::queue_async_task(std::forward<Fn>(fn));
-	}
-
-	template <class Event>
-	void session::remove_service()
-	{
-		//this->dispatcher().sink<Event>().
-		//this->dispatcher()
-
-		//emitters::endscene_emitter::get().remove_service(name);
 	}
 }

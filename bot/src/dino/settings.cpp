@@ -26,6 +26,11 @@ namespace dino
 		return std::chrono::milliseconds{static_cast<unsigned int>(1000.f / settings::fps())};
 	}
 
+	std::string settings::json_library_path()
+	{
+		return get().json_library_path_;
+	}
+
 	float settings::fps() noexcept
 	{
 		return get().fps_;
@@ -34,6 +39,11 @@ namespace dino
 	bool settings::hacks::anti_afk() noexcept
 	{
 		return get().hacks_anti_afk_;
+	}
+
+	bool settings::hacks::enabled() noexcept
+	{
+		return get().hacks_enabled_;
 	}
 
 	bool settings::hacks::translator() noexcept

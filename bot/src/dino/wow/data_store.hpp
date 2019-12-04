@@ -41,7 +41,7 @@ namespace dino::wow
 		T pull(Args&&... args)
 		{
 			if constexpr (std::is_floating_point_v<T>)
-				return T{this->pull_float()};
+				return static_cast<T>(this->pull_float());
 
 			else if constexpr (std::is_same_v<T, char*>)
 				return this->pull_string_ptr(std::forward<Args>(args)...);
@@ -50,16 +50,16 @@ namespace dino::wow
 				return this->pull_string(std::forward<Args>(args)...);
 
 			else if constexpr (data_store::is_compatible_v<T, std::int64_t>)
-				return T{this->pull_int64()};
+				return static_cast<T>(this->pull_int64());
 
 			else if constexpr (data_store::is_compatible_v<T, std::int32_t>)
-				return T{this->pull_int32()};
+				return static_cast<T>(this->pull_int32());
 
 			else if constexpr (data_store::is_compatible_v<T, std::int16_t>)
-				return T{this->pull_int16()};
+				return static_cast<T>(this->pull_int16());
 
 			else if constexpr (data_store::is_compatible_v<T, std::int8_t>)
-				return T{this->pull_int8()};
+				return static_cast<T>(this->pull_int8());
 
 			else
 				static_assert(false, "[wow::data_store::pull] Type is unsupported");

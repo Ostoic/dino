@@ -6,12 +6,16 @@ namespace dino::wow::net::messages
 	{
 		null = 0x0,
 		chat_message = 0x96,
+		emote = 0x103,
+		text_emote = 0x105,
 		gm_chat_message = 0x3B3,
 	};
 
 	enum class client
 	{
 		chat_message = 0x95,
+		emote = 0x102,
+		text_emote = 0x104,
 	};
 }
 

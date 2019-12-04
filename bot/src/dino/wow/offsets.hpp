@@ -19,6 +19,17 @@ namespace dino::wow::offsets
 		constexpr auto last_line = address{0x00CABA58};
 	}
 
+	namespace lua
+	{
+		constexpr auto framescript_execute_fn = address{0x00819210};
+		constexpr auto framescript_get_text_fn = address{0x00819D40};
+	}
+
+	namespace chat
+	{
+		constexpr auto add_chat_message_fn = address{0x00509DD0};
+	}
+
 	namespace object_manager
 	{
 	}
@@ -68,6 +79,7 @@ namespace dino::wow::offsets
 		{
 			constexpr auto packet_smsg_messagechat_fn = address{0x0050EBA0};
 			constexpr auto packet_smsg_gm_messagechat_fn = address{0x0050EBC0};
+			constexpr auto packet_smsg_text_emote_fn = address{0x00504070};
 		}
 
 		namespace client_services

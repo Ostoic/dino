@@ -1,31 +1,14 @@
-#include "chat.hpp"
-#include "console.hpp"
+#include "message.hpp"
+#include "../console.hpp"
+#include "../guid.hpp"
 
 namespace dino::wow::chat
 {
-	message parse_data_store(wow::data_store store)
-	{
-		return message{store};
-	}
-
-	message::message(data_store store)
+	message::message(data_store store, const bool is_gm_chat)
 		: store_{store}
+		, is_gm_chat_{is_gm_chat}
 		, msg_type_{static_cast<message::type>(store->pull<char>())}
-		, language_{store->pull<int>()}
-		, sender_{store->pull<guid>()}
 	{
-		store->pull<int>();
-		if (static_cast<int>(msg_type_) == 8)
-			return;
-
-		if (msg_type_ == message::type::channel)
-			//store_->pull<std::string>(128);
-			return;
-
-		receiver_ = store->pull<guid>();
-		auto length = store_->pull<int>();
-		char* data = store_->pull<char*>(length);
-		text_ = std::string{data, static_cast<unsigned int>(length)};
 		store->restore_cursor();
 	}
 
@@ -55,14 +38,20 @@ namespace dino::wow::chat
 		if (static_cast<int>(msg_type_) == 8)
 			return {};
 
+		if (is_gm_chat_)
+		{
+			auto length = store_->pull<int>();
+			store_->pull<char*>(length);
+		}
+
 		if (msg_type_ == message::type::channel)
-			//store_->pull<std::string>(128);
-			return "";
+			store_->pull<std::string>(128);
+			//return "";
 
 		store_->pull<guid>();
 		auto length = store_->pull<int>();
 		char* data = store_->pull<char*>(length);
-		return std::string{data, static_cast<unsigned int>(length)};
+		return std::string{data};
 	}
 
 	std::string message::channel() const noexcept
@@ -71,15 +60,16 @@ namespace dino::wow::chat
 		if (static_cast<int>(msg_type_) == 8)
 			return {};
 
-		//if (msg_type_ == message::type::channel)
-			//return store_->pull<std::string>(128);
+		if (is_gm_chat_)
+		{
+			auto length = store_->pull<int>();
+			store_->pull<char*>(length);
+		}
+
+		if (msg_type_ == message::type::channel)
+			return store_->pull<std::string>(128);
 
 		return {};
-	}
-
-	const std::string& message::chat_tag() const noexcept
-	{
-		return chat_tag_;
 	}
 
 	message::type message::msg_type() const noexcept
@@ -107,11 +97,48 @@ namespace dino::wow::chat
 
 	guid message::receiver() const noexcept
 	{
-		return receiver_;
+		return {};
 	}
 
 	bool message::is_gm_chat() const noexcept
 	{
 		return false;
 	}
+
+	void add_message(const std::string& message)
+	{
+		auto add_chat_message_fn
+			= bind_fn<void(
+				const char*,
+				message::type,
+				const char*,
+				int,
+				const char*,
+				const char*,
+				const char*,
+				guid,
+				int,
+				guid,
+				int,
+				char,
+				int
+			)>(offsets::chat::add_chat_message_fn);
+
+		add_chat_message_fn(
+			message.c_str(),
+			message::type::system,
+			nullptr,
+			0,
+			nullptr,
+			nullptr,
+			nullptr,
+			guid{},
+			0,
+			guid{},
+			0,
+			0,
+			0
+		);
+	}
+
 }

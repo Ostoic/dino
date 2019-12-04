@@ -10,7 +10,6 @@ namespace dino::wow
 		constexpr guid();
 		constexpr explicit guid(int low, int high);
 		constexpr explicit guid(std::uint64_t value);
-		constexpr explicit guid(std::int64_t value);
 		constexpr int low() const noexcept;
 		constexpr int high() const noexcept;
 
@@ -30,10 +29,6 @@ namespace dino::wow
 
 	constexpr guid::guid(const std::uint64_t value)
 		: value_{value}
-	{}
-
-	constexpr guid::guid(const std::int64_t value)
-		: value_{static_cast<std::uint64_t>(value)}
 	{}
 
 	constexpr int guid::low() const noexcept
