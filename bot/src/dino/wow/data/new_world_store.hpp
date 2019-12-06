@@ -30,6 +30,8 @@ namespace dino::wow::data
 		float z() const;
 		float rotation() const;
 
+		void seek_end();
+
 	private:
 		mutable data::store store_;
 	};

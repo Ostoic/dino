@@ -18,7 +18,10 @@ namespace dino::wow
 	private:
 		std::uint64_t value_;
 	};
+}
 
+namespace dino::wow
+{
 	constexpr guid::guid()
 		: value_{0}
 	{}

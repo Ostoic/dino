@@ -21,6 +21,8 @@ namespace dino::wow::data
 		guid agent() const;
 		unsigned int flags() const;
 
+		void seek_end();
+
 	private:
 		mutable data::store store_;
 	};

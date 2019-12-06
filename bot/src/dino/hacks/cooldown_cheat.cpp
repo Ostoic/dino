@@ -16,13 +16,13 @@ namespace dino::hacks
 		log::info(OBFUSCATE("[cooldown_cheat::on_setting_change] cooldown_cheat: {}"), settings::hacks::cooldown_cheat());
 		if (!settings::hacks::enabled() || !settings::hacks::cooldown_cheat())
 		{
-			session::get().dispatcher()
+			session::dispatcher()
 				.sink<events::received_cooldown_cheat>()
 				.disconnect<mutilate_receiver>();
 		}
 		else
 		{
-			session::get().dispatcher()
+			session::dispatcher()
 				.sink<events::received_cooldown_cheat>()
 				.connect<mutilate_receiver>();
 		}

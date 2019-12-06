@@ -3,9 +3,12 @@
 #include <cstddef>
 
 #include "../../offset.hpp"
+#include "../guid.hpp"
 
 namespace dino::wow::data
 {
+	class compressed_guid;
+
 	class store
 	{
 	public:
@@ -15,17 +18,20 @@ namespace dino::wow::data
 
 	public:
 		explicit store(address class_base);
+		explicit store(address class_base, unsigned int cursor);
+		explicit store(const store& store, unsigned int initial_cursor);
 
 		const store* operator->() const noexcept;
-
 		store* operator->() noexcept;
 
 	public:
 		std::size_t size() const;
 
+		address class_base();
+
 		address base() const;
 		unsigned int cursor() const;
-		void set_cursor(unsigned int cursor);
+		void seek(unsigned int cursor);
 
 		void restore_cursor();
 
@@ -42,6 +48,12 @@ namespace dino::wow::data
 
 			else if constexpr (std::is_same_v<T, std::string>)
 				return this->pull_string(std::forward<Args>(args)...);
+
+			else if constexpr (std::is_same_v<T, wow::guid>)
+				return static_cast<T>(this->pull_int64());
+
+			else if constexpr (std::is_same_v<T, wow::data::compressed_guid>)
+				return static_cast<T>(this->pull_compressed_guid());
 
 			else if constexpr (store::is_compatible_v<T, std::int64_t>)
 				return static_cast<T>(this->pull_int64());
@@ -90,6 +102,7 @@ namespace dino::wow::data
 		}
 
 		float pull_float();
+		data::compressed_guid pull_compressed_guid();
 		std::int64_t pull_int64();
 		std::int32_t pull_int32();
 		std::int16_t pull_int16();
@@ -98,6 +111,7 @@ namespace dino::wow::data
 		std::string pull_string(std::size_t max_length = 64);
 
 		void put_float(float value);
+		void put_guid(wow::guid value);
 		void put_int64(std::int64_t value);
 		void put_int32(std::int32_t value);
 		void put_int16(std::int16_t value);

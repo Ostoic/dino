@@ -19,11 +19,17 @@ namespace dino::wow::offsets
 		constexpr auto last_line = address{0x00CABA58};
 	}
 
+	namespace game
+	{
+		constexpr auto root_path = address{0x00B32360};
+	}
+
 	namespace lua
 	{
 		constexpr auto stack = address{0x00D3F78C};
 		constexpr auto framescript_execute_fn = address{0x00819210};
 		constexpr auto framescript_get_text_fn = address{0x00819D40};
+		constexpr auto framcescript_register_function_fn = address{0x00817F90};
 	}
 
 	namespace chat
@@ -44,6 +50,14 @@ namespace dino::wow::offsets
 	namespace world
 	{
 		constexpr auto traceline_fn = address{0x007A3B70};
+		constexpr auto get_framerate_fn = address{0x0077F440};
+
+		constexpr auto is_valid_position_fn = address{0x00406E90};
+	}
+
+	namespace combat_log
+	{
+		constexpr auto add_combat_log_entry = address{0x00751C40};
 	}
 
 	namespace store
@@ -62,6 +76,7 @@ namespace dino::wow::offsets
 		constexpr auto get_int32 = address{0x0047B3C0};
 		constexpr auto get_int64 = address{0x0047B400};
 		constexpr auto get_float = address{0x0047B440};
+		constexpr auto get_compressed_guid = address{0x0076DC20};
 		constexpr auto get_string = address{0x0047B480};
 		constexpr auto get_string_ptr = address{0x0047B6B0};
 
@@ -81,19 +96,36 @@ namespace dino::wow::offsets
 			constexpr auto packet_smsg_messagechat_fn = address{0x0050EBA0};
 			constexpr auto packet_smsg_gm_messagechat_fn = address{0x0050EBC0};
 			constexpr auto packet_smsg_text_emote_fn = address{0x00504070};
-			constexpr auto packet_smsg_cast_failed_fn = address{0x00809AF0};
+			constexpr auto packet_smsg_cast_failed_fn = address{0X00809AF0};
 			constexpr auto packet_smsg_dismount_fn = address{0x00741A40};
 			constexpr auto packet_smsg_new_world_fn = address{0x00403D10};
 
+			constexpr auto packet_smsg_loot_list_fn = address{0x0071CA50};
+			constexpr auto packet_smsg_stand_state_update_fn = address{0x0073F540};
+			constexpr auto packet_smsg_unit_spellcast_start_fn = address{0x008020C0};
+			constexpr auto packet_smsg_spell_cooldown_fn = address{0x00806DD0};
+			constexpr auto packet_smsg_spell_start_fn = address{0x0080FEE0};
+			constexpr auto packet_smsg_spell_go_fn = address{0x0080FEE0};
+			constexpr auto packet_smsg_spell_failure_fn = address{0x00809C70};
+			constexpr auto packet_smsg_spell_failed_other_fn = address{0x00806AD0};
+
+			constexpr auto packet_smsg_combat_log_multiple_fn = address{0x006D4110};
+			constexpr auto packet_smsg_notification = address{0x00401280};
+
 			constexpr auto packet_smsg_spell_log_execute_fn = address{0x006D3730};
 			constexpr auto packet_smsg_spell_log_miss_fn = address{0x006D3200};
-			constexpr auto packet_smsg_spell_damage_shield = address{0x006D3750};
-			constexpr auto packet_smsg_spell_instakill_log = address{0x006CE260};
-			constexpr auto packet_smsg_spell_non_melee_damage_log = address{0x006D3C10};
+			constexpr auto packet_smsg_spell_damage_shield_fn = address{0x006D3750};
+			constexpr auto packet_smsg_spell_instakill_log_fn = address{0x006CE260};
+			constexpr auto packet_smsg_spell_non_melee_damage_log_fn = address{0x006D3C10};
 
 			constexpr auto packet_smsg_debug_aura_proc_fn = address{0x006D3730};
-			constexpr auto packet_smsg_periodic_aura_log = address{0x006D3730};
-			constexpr auto packet_smsg_spell_heal_log = address{0x006D3DD0};
+			constexpr auto packet_smsg_periodic_aura_log_fn = address{0x006D3730};
+			constexpr auto packet_smsg_spell_heal_log_fn = address{0x006D3DD0};
+			constexpr auto packet_smsg_spell_energize_log_fn = address{0x006D3EF0};
+
+			constexpr auto packet_smsg_spell_break_log = address{0x006CE3B0};
+			constexpr auto packet_smsg_spell_steal_log = address{0x006CE3B0};
+			constexpr auto packet_smsg_spell_dispell_log = address{0x006CE3B0};
 
 			constexpr auto packet_smsg_health_update_fn = address{0x00716D20};
 			constexpr auto packet_smsg_power_update_fn = address{0x007236C0};

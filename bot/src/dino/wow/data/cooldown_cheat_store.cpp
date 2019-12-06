@@ -24,14 +24,22 @@ namespace dino::wow::data
 
 	void cooldown_cheat_store::set_receiver(const guid receiver)
 	{
-		store_->put(receiver);
+		store_->put(static_cast<std::uint64_t>(receiver));
 		store_->restore_cursor();
 	}
 
 	guid cooldown_cheat_store::receiver() const
 	{
-		const auto result = store_->pull<guid>();
+		const auto result = store_->pull<wow::guid>();
 		store_->restore_cursor();
-		return result;
+		return guid{result};
+	}
+
+	void cooldown_cheat_store::seek_end()
+	{
+		store_->restore_cursor();
+		const auto initial = store_->cursor();
+
+		store_->seek(initial + sizeof(std::uint64_t));
 	}
 }

@@ -33,14 +33,15 @@
 
 namespace dino
 {
-	void log_chat(const events::received_chat_message& event)
+	template <class ChatEvent>
+	void log_chat(const ChatEvent& event)
 	{
-		const auto text = event.message->text();
-		const auto sender = event.message->sender();
+		const auto text = event.store->text();
+		const auto sender = event.store->sender();
 
 		log::info(
-			OBFUSCATE("[{}] [{}]: {}"),
-			to_string_view(event.message->msg_type()),
+			OBFUSCATE("[chat_emitter] [{}] [{}]: {}"),
+			to_string_view(event.store->msg_type()),
 			sender,
 			text
 		);
@@ -49,22 +50,25 @@ namespace dino
 	void log_emote(const events::received_text_emote& event)
 	{
 		log::info(
-			OBFUSCATE("{} ->text_emote> {}"),
-			event.emote->sender_guid(),
-			event.emote->target_name()
+			OBFUSCATE("[chat_emitter] {} ->text_emote> {}"),
+			event.store->sender_guid(),
+			event.store->target_name()
 		);
 	}
 
 	void enter_world(const events::gamestate_change_ingame& event)
 	{
-		log::info(OBFUSCATE("[enter_world] Installing chat_emitter..."));
-		emitters::chat_emitter::install();
+		using namespace std::chrono_literals;
+		session::queue_async_task(1s, [] {
+			log::info(OBFUSCATE("[enter_world] Installing chat_emitter..."));
+			emitters::chat_emitter::install();
 
-		log::info(OBFUSCATE("[enter_world] Installing world_emitter..."));
-		emitters::world_emitter::install();
+			log::info(OBFUSCATE("[enter_world] Installing world_emitter..."));
+			emitters::world_emitter::install();
 
-		log::info(OBFUSCATE("[enter_world] Installing spellcast_emitter..."));
-		emitters::spellcast_emitter::install();
+			log::info(OBFUSCATE("[enter_world] Installing spellcast_emitter..."));
+			emitters::spellcast_emitter::install();
+		});
 	}
 
 	void session::start()
@@ -75,7 +79,6 @@ namespace dino
 			wow::console::enable();
 			wow::console::open();
 
-			auto& s = session::get();
 			// Setup task handler for .queue_task()
 			session::dispatcher()
 				.sink<events::endscene_frame>()
@@ -88,26 +91,27 @@ namespace dino
 				.sink<events::gamestate_change_ingame>()
 				.connect<enter_world>();
 
-			s.dispatcher_
+			dispatcher()
 				.sink<events::gamestate_change>()
 				.connect<handlers::reinstall_lua_emitter>();
 
-			s.queue_task([] {
+			session::queue_task([] {
 				log::info(OBFUSCATE("{} loaded"), dino::version::format());
 			});
 
 			//if (version::debug)
 				//dino::debug::allocate_console();
+
 			using namespace std::chrono_literals;
-			s.queue_async_task(5s, [] {
+			session::queue_async_task(5s, [] {
 				log::info(OBFUSCATE("attempting to trigger settings_changed event..."));
 				settings::modify<settings::hacks::cooldown_cheat>(false);
 
 				if (wow::glue::current_screen() == wow::glue::screen::login)
 					wow::lua::run(OBFUSCATE("DefaultServerLogin('{}', '{}')"), OBFUSCATE("Jewishpig"), OBFUSCATE("Gb2gMyBNrSDvijtb"));
 
-				log::info("test 5s begin!");
-				wow::lua::execute(OBFUSCATE("dino.command('test 5s')"));
+				//log::info("test 5s begin!");
+				//wow::lua::execute(OBFUSCATE("dino.command('test 5s')"));
 			});
 
 			emitters::endscene_emitter::install();
@@ -122,16 +126,10 @@ namespace dino
 
 	void session::exit()
 	{
-		auto& dispatcher = get().dispatcher();
+		auto& dispatcher = session::dispatcher();
 		dispatcher.enqueue<events::dino_exit>();
 		emitters::gamestate_emitter::uninstall();
 		emitters::endscene_emitter::uninstall();
-	}
-
-	session& session::get()
-	{
-		static session s;
-		return s;
 	}
 
 	void session::update()
@@ -146,7 +144,11 @@ namespace dino
 		// Enable chat logging
 		dispatcher()
 			.sink<events::received_chat_message>()
-			.connect<log_chat>();
+			.connect<log_chat<events::received_chat_message>>();
+
+		dispatcher()
+			.sink<events::received_gm_chat_message>()
+			.connect<log_chat<events::received_gm_chat_message>>();
 
 		// Enable emote logging
 		dispatcher()
@@ -159,12 +161,22 @@ namespace dino
 		// Disable chat logging
 		dispatcher()
 			.sink<events::received_chat_message>()
-			.disconnect<log_chat>();
+			.disconnect<log_chat<events::received_chat_message>>();
+
+		dispatcher()
+			.sink<events::received_gm_chat_message>()
+			.disconnect<log_chat<events::received_gm_chat_message>>();
 
 		// Disable emote logging
 		dispatcher()
 			.sink<events::received_text_emote>()
 			.disconnect<log_emote>();
+	}
+
+	session& session::get()
+	{
+		static session s_;
+		return s_;
 	}
 
 	entt::registry& session::registry() noexcept

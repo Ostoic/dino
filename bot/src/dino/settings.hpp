@@ -84,7 +84,7 @@ namespace dino::settings
 	template <auto Fn, class T>
 	void modify(T&& x)
 	{
-		auto& dispatcher = session::get().dispatcher();
+		auto& dispatcher = session::dispatcher();
 		if constexpr (internal::disambiguator<Fn>::setting == internal::setting::fps)
 		{
 			log::info(OBFUSCATE("[settings::modify] emit: events::setting_changed<fps>"));

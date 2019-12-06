@@ -2,9 +2,7 @@
 
 #include "../offsets.hpp"
 #include "../console.hpp"
-#include "../../log.hpp"
-
-#include <algorithm>
+#include "compressed_guid.hpp"
 
 namespace dino::wow::data
 {
@@ -24,9 +22,24 @@ namespace dino::wow::data
 		initial_cursor_ = this->cursor();
 	}
 
+	store::store(address class_base, unsigned int cursor)
+		: store{class_base}
+	{
+		initial_cursor_ = cursor;
+	}
+
+	store::store(const store& store, unsigned int initial_cursor)
+		: store{store.class_base_, initial_cursor}
+	{}
+
 	std::size_t store::size() const
 	{
 		return deref_as<unsigned int>(class_base_ + offsets::store::size);
+	}
+
+	address store::class_base()
+	{
+		return class_base_;
 	}
 
 	address store::base() const
@@ -39,7 +52,7 @@ namespace dino::wow::data
 		return deref_as<unsigned int>(class_base_ + offsets::store::bytes_pulled);
 	}
 
-	void store::set_cursor(unsigned int cursor)
+	void store::seek(unsigned int cursor)
 	{
 		auto& bytes_pulled = deref_as<unsigned int>(class_base_ + offsets::store::bytes_pulled);
 		bytes_pulled = cursor;
@@ -47,7 +60,7 @@ namespace dino::wow::data
 
 	void store::restore_cursor()
 	{
-		this->set_cursor(initial_cursor_);
+		this->seek(initial_cursor_);
 	}
 
 	char* store::buffer()
@@ -58,6 +71,11 @@ namespace dino::wow::data
 	float store::pull_float()
 	{
 		return this->generic_pull<float>(offsets::store::get_float);
+	}
+
+	data::compressed_guid store::pull_compressed_guid()
+	{
+		return data::compressed_guid{*this};
 	}
 
 	void store::put_float(const float value)
@@ -135,8 +153,6 @@ namespace dino::wow::data
 
 		std::string data;
 		data.resize(max_length, 0);
-
-		log::info("[store::pull_string] max_length: {}", max_length);
 
 		internal_pull(
 			reinterpret_cast<void*>(static_cast<unsigned int>(class_base_)),

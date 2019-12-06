@@ -10,7 +10,8 @@ namespace dino::wow::chat
 	class emote
 	{
 	public:
-		emote(data::store store);
+		explicit emote(address cdata);
+		explicit emote(data::store store);
 
 		emote* operator->() noexcept { return this; }
 		const emote* operator->() const noexcept { return this; }

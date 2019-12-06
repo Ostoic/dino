@@ -69,4 +69,11 @@ namespace dino::wow::data
 		store_->restore_cursor();
 		return result;
 	}
+
+	void cast_failed_store::seek_end()
+	{
+		store_->restore_cursor();
+		const auto initial_cursor = store_->cursor();
+		store_->seek(initial_cursor + sizeof(unsigned char) + sizeof(unsigned int) + sizeof(unsigned char));
+	}
 }

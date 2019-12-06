@@ -22,6 +22,8 @@ namespace dino::wow::data
 		unsigned int spell_id() const;
 		unsigned char error() const;
 
+		void seek_end();
+
 	private:
 		mutable data::store store_;
 	};

@@ -21,6 +21,8 @@ namespace dino::wow::data
 		guid receiver() const;
 		unsigned int amount_healed() const;
 
+		void seek_end();
+
 	private:
 		mutable data::store store_;
 	};

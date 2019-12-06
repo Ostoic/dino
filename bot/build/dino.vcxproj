@@ -95,6 +95,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;DINO_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,6 +133,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ForcedIncludeFiles>"pch.h"</ForcedIncludeFiles>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,8 +172,9 @@
     <ClInclude Include="..\src\dino\emitters\endscene_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\gamestate_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\lua_emitter.hpp" />
-    <ClInclude Include="..\src\dino\emitters\set_message_handler.hpp" />
+    <ClInclude Include="..\src\dino\emitters\emitters.hpp" />
     <ClInclude Include="..\src\dino\events\chat_events.hpp" />
+    <ClInclude Include="..\src\dino\events\combat_log_events.hpp" />
     <ClInclude Include="..\src\dino\events\console_events.hpp" />
     <ClInclude Include="..\src\dino\events\dino_events.hpp" />
     <ClInclude Include="..\src\dino\events\endscene_events.hpp" />
@@ -190,6 +193,7 @@
     <ClInclude Include="..\src\dino\lua.hpp" />
     <ClInclude Include="..\src\dino\offset.hpp" />
     <ClInclude Include="..\src\dino\script\core.hpp" />
+    <ClInclude Include="..\src\dino\script\settings.hpp" />
     <ClInclude Include="..\src\dino\session.hpp" />
     <ClInclude Include="..\src\dino\settings.hpp" />
     <ClInclude Include="..\src\dino\version.hpp" />
@@ -203,6 +207,9 @@
     <ClInclude Include="..\src\dino\wow\chat\message.hpp" />
     <ClInclude Include="..\src\dino\wow\console.hpp" />
     <ClInclude Include="..\src\dino\wow\data\ai_reaction_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\combat_log_multiple_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\combat_log_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\compressed_guid.hpp" />
     <ClInclude Include="..\src\dino\wow\data\cooldown_cheat_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\health_update_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\message_store.hpp" />
@@ -246,6 +253,7 @@
     <ClCompile Include="..\src\dino\handlers\task_handler.cpp" />
     <ClCompile Include="..\src\dino\log\console_sink.cpp" />
     <ClCompile Include="..\src\dino\script\core.cpp" />
+    <ClCompile Include="..\src\dino\script\settings.cpp" />
     <ClCompile Include="..\src\dino\session.cpp" />
     <ClCompile Include="..\src\dino\settings.cpp" />
     <ClCompile Include="..\src\dino\version.cpp" />
@@ -253,14 +261,17 @@
     <ClCompile Include="..\src\dino\wow\chat\message.cpp" />
     <ClCompile Include="..\src\dino\wow\console.cpp" />
     <ClCompile Include="..\src\dino\wow\data\ai_reaction_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\combat_log_multiple_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\combat_log_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\compressed_guid.cpp" />
     <ClCompile Include="..\src\dino\wow\data\cooldown_cheat_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\health_update_store.cpp" />
-    <ClCompile Include="..\src\dino\wow\data\message_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\mount_result_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\new_world_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\cast_failed_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\store.cpp" />
     <ClCompile Include="..\src\dino\wow\framexml\events.cpp" />
+    <ClCompile Include="..\src\dino\wow\geometry\vector.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\character_select.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\glue.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\realmlist.cpp" />

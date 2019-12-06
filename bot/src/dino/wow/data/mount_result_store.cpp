@@ -34,4 +34,9 @@ namespace dino::wow::data
 		store_->restore_cursor();
 		return result;
 	}
+
+	void mount_result_store::seek_end()
+	{
+		store_->seek(sizeof(unsigned int));
+	}
 }

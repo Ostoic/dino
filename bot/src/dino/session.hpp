@@ -26,7 +26,6 @@ namespace dino
 	class session
 	{
 	public:
-		static session& get();
 		static void start();
 		static void exit();
 
@@ -56,6 +55,7 @@ namespace dino
 	private:
 		friend class emitters::endscene_emitter;
 
+		static session& get();
 		void update();
 
 		static void install_loggers();

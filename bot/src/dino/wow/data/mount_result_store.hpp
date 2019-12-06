@@ -18,6 +18,8 @@ namespace dino::wow::data
 		void set_flags(unsigned int flags);
 		unsigned int flags() const;
 
+		void seek_end();
+
 	private:
 		mutable data::store store_;
 	};

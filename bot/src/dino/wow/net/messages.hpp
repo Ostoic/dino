@@ -21,9 +21,25 @@ namespace dino::wow::net::messages
 		spell_break_log = 0x14F,
 		spell_heal_log = 0x150,
 		spell_energize_log = 0x151,
+		spell_dispell_log = 0x27B,
+		spell_steal_log = 0x333,
+
 		health_update = 0x47F,
 		power_update = 0x480,
 		guild_roster = 0x8A,
+
+		spell_start = 0x131,
+		spell_go = 0x132,
+		spell_failure = 0x133,
+		spell_failed_other = 0x2A6,
+		spell_cooldown = 0x134,
+		cooldown_event = 0x135,
+
+		notification = 0x1CB,
+
+		unit_spellcast_start = 0x14D,
+		stand_state_update = 0x29D,
+		loot_list = 0x3F9,
 
 		ai_reaction = 0x13C,
 
@@ -31,6 +47,8 @@ namespace dino::wow::net::messages
 		dismount_result = 0x16F,
 
 		cooldown_cheat = 0x1E1,
+
+		combat_log_multiple = 0x514,
 
 		debug_aura_proc = 0x24D,
 		periodic_aura_log = 0x24E,
@@ -46,6 +64,8 @@ namespace dino::wow::net::messages
 		chat_message = 0x95,
 		emote = 0x102,
 		text_emote = 0x104,
+
+		stand_state_change = 0x101,
 	};
 }
 

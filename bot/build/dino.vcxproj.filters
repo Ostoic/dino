@@ -109,8 +109,11 @@
     <Filter Include="Source Files\dino\wow\world">
       <UniqueIdentifier>{be60e1f6-7784-4e7f-97a7-9aa834445c38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\dino\geometry">
+    <Filter Include="Header Files\dino\wow\geometry">
       <UniqueIdentifier>{bc6d7ec0-8d41-41f5-85cf-dbef9a9daf85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\geometry">
+      <UniqueIdentifier>{46f1caa1-3c74-46f2-a2fa-432a122c8146}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,9 +264,6 @@
     <ClInclude Include="..\src\dino\script\core.hpp">
       <Filter>Header Files\dino\script</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\emitters\set_message_handler.hpp">
-      <Filter>Header Files\dino\emitters</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\events\world_events.hpp">
       <Filter>Header Files\dino\events</Filter>
     </ClInclude>
@@ -295,7 +295,7 @@
       <Filter>Header Files\dino\wow\world</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\geometry\vector.hpp">
-      <Filter>Header Files\dino\geometry</Filter>
+      <Filter>Header Files\dino\wow\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\hacks\cooldown_cheat.hpp">
       <Filter>Header Files\dino\hacks</Filter>
@@ -314,6 +314,24 @@
     </ClInclude>
     <ClInclude Include="..\src\dino\emitters\spellcast_emitter.hpp">
       <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\script\settings.hpp">
+      <Filter>Header Files\dino\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data\combat_log_multiple_store.hpp">
+      <Filter>Header Files\dino\wow\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data\combat_log_store.hpp">
+      <Filter>Header Files\dino\wow\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\combat_log_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\emitters.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data\compressed_guid.hpp">
+      <Filter>Header Files\dino\wow\data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -404,9 +422,6 @@
     <ClCompile Include="..\src\dino\wow\data\store.cpp">
       <Filter>Source Files\dino\wow\data</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dino\wow\data\message_store.cpp">
-      <Filter>Source Files\dino\wow\data</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\dino\wow\data\cast_failed_store.cpp">
       <Filter>Source Files\dino\wow\data</Filter>
     </ClCompile>
@@ -430,6 +445,21 @@
     </ClCompile>
     <ClCompile Include="..\src\dino\emitters\spellcast_emitter.cpp">
       <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\script\settings.cpp">
+      <Filter>Source Files\dino\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data\combat_log_multiple_store.cpp">
+      <Filter>Source Files\dino\wow\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data\combat_log_store.cpp">
+      <Filter>Source Files\dino\wow\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\geometry\vector.cpp">
+      <Filter>Source Files\dino\wow\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data\compressed_guid.cpp">
+      <Filter>Source Files\dino\wow\data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

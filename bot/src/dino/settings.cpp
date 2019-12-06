@@ -31,7 +31,7 @@ namespace dino::settings
 		void initialize()
 		{
 			static bool initialize_ = [] {
-				auto& dispatcher = session::get().dispatcher();
+				auto& dispatcher = session::dispatcher();
 				dispatcher
 					.sink<events::setting_changed<hacks::anti_afk>>()
 					.connect<dino::hacks::anti_afk::on_setting_change>();

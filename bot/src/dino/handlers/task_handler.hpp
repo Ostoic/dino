@@ -66,7 +66,7 @@ namespace dino::handlers
 	bool task_handler::queue_async_task(Fn&& fn)
 	{
 		return queue_task([&fn] {
-			std::thread{[] {
+			std::thread{[&] {
 				std::forward<Fn>(fn)();
 			}}.detach();
 		});

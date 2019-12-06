@@ -7,7 +7,7 @@ namespace dino::hacks
 {
 	void translator::fix_language(const events::received_chat_message& event)
 	{
-		event.message->set_language(0);
+		event.store->set_language(0);
 	}
 
 	void translator::on_setting_change(const events::setting_changed<settings::hacks::translator>& event)

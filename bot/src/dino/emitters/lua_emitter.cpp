@@ -4,6 +4,7 @@
 #include "../settings.hpp"
 
 #include "../wow/lua.hpp"
+#include "../wow/offsets.hpp"
 #include "../events/dino_events.hpp"
 #include "../events/framexml/player_events.hpp"
 
@@ -41,7 +42,7 @@ namespace dino::emitters
 			{
 				const auto json = json::parse(action.data());
 				const auto event = wow::framexml::to_event(json["event"]);
-				auto& dispatcher = dino::session::get().dispatcher();
+				auto& dispatcher = dino::session::dispatcher();
 
 				if (event == wow::framexml::event::player_target_changed)
 					dispatcher.enqueue<events::framexml::player_target_changed>();
@@ -56,7 +57,7 @@ namespace dino::emitters
 	{
 		try
 		{
-			dino::session::get().dispatcher()
+			dino::session::dispatcher()
 				.sink<events::endscene_frame>()
 				.connect<check_lua_handler>();
 
@@ -72,7 +73,7 @@ namespace dino::emitters
 
 	void lua_emitter::uninstall()
 	{
-		dino::session::get().dispatcher()
+		dino::session::dispatcher()
 			.sink<events::endscene_frame>()
 			.disconnect<check_lua_handler>();
 

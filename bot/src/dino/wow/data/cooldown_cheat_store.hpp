@@ -18,6 +18,8 @@ namespace dino::wow::data
 		void set_receiver(guid receiver);
 		guid receiver() const;
 
+		void seek_end();
+
 	private:
 		mutable data::store store_;
 	};

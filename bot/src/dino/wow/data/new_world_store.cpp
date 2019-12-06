@@ -106,4 +106,10 @@ namespace dino::wow::data
 		store_->restore_cursor();
 		return result;
 	}
+
+	void new_world_store::seek_end()
+	{
+		store_->seek(sizeof(unsigned int) + 4 * sizeof(float));
+	}
+
 }

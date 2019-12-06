@@ -11,11 +11,15 @@ namespace dino::wow::geometry
 		constexpr float y() const noexcept;
 		constexpr float z() const noexcept;
 
+		bool is_valid() const;
+
 	private:
 		float x_;
 		float y_;
 		float z_;
 	};
+
+	bool is_valid_position(const vector& vector);
 }
 
 namespace dino::wow::geometry

@@ -49,4 +49,9 @@ namespace dino::wow::data
 		store_->restore_cursor();
 		return result;
 	}
+
+	void health_update_store::seek_end()
+	{
+		store_->seek(sizeof(guid) + sizeof(unsigned int));
+	}
 }
