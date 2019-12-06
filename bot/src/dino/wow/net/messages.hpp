@@ -9,6 +9,36 @@ namespace dino::wow::net::messages
 		emote = 0x103,
 		text_emote = 0x105,
 		gm_chat_message = 0x3B3,
+		new_world = 0x3E,
+		cast_failed = 0x130,
+
+		spell_log_miss = 0x24B,
+		spell_log_execute = 0x24C,
+		spell_damage_shield = 0x24F,
+		spell_non_melee_damage_log = 0x250,
+		spell_instakill_log = 0x32F,
+		spell_update_chain_targets = 0x330,
+		spell_break_log = 0x14F,
+		spell_heal_log = 0x150,
+		spell_energize_log = 0x151,
+		health_update = 0x47F,
+		power_update = 0x480,
+		guild_roster = 0x8A,
+
+		ai_reaction = 0x13C,
+
+		mount_result = 0x16E,
+		dismount_result = 0x16F,
+
+		cooldown_cheat = 0x1E1,
+
+		debug_aura_proc = 0x24D,
+		periodic_aura_log = 0x24E,
+		cancel_combat = 0x14E,
+		break_target = 0x152,
+
+		update_object = 0xA9,
+		destroy_object = 0xAA,
 	};
 
 	enum class client

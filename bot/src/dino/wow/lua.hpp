@@ -31,7 +31,8 @@ namespace dino::wow::lua
 			: name_{get_text("dino_action")}
 			, data_{get_text("dino_action_data")}
 		{
-			lua::run("dino_action = nil dino_action_data = nil");
+			if (this->is_valid())
+				lua::run("dino_action = nil dino_action_data = nil");
 		}
 
 		const std::string& name() const noexcept
@@ -53,6 +54,11 @@ namespace dino::wow::lua
 		std::string name_;
 		std::string data_;
 	};
+
+	inline action last_action()
+	{
+		return action{};
+	}
 
 	/*
 	const auto action = wow::lua::get_text("dino_action");

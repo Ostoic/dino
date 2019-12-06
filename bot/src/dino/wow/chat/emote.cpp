@@ -4,7 +4,7 @@
 
 namespace dino::wow::chat
 {
-	emote::emote(const data_store store)
+	emote::emote(const data::store store)
 		: store_{store}
 	{}
 

@@ -68,17 +68,17 @@ namespace dino::wow::console
 		return command{last_line(), num_lines()};
 	}
 
-	bool register_command(const std::string& name, fn_ptr<command_t> command)
-	{
-		static std::unordered_map<std::string, fn_ptr<command_t>> commands;
-		commands[name] = command;
+	//bool register_command(const std::string& name, fn_ptr<command_t> command)
+	//{
+	//	static std::unordered_map<std::string, fn_ptr<command_t>> commands;
+	//	commands[name] = command;
 
-		auto register_command = bind_fn<int(const char*, fn_ptr<command_t>, int, int)>(offsets::console::register_fn);
+	//	auto register_command = bind_fn<int(const char*, fn_ptr<command_t>, int, int)>(offsets::console::register_fn);
 
-		spdlog::info("Command registered: >{}<", reinterpret_cast<void*>(command));
-		register_command(name.c_str(), command, 5, 0);
-		return true;
-	}
+	//	log::info("Command registered: >{}<", reinterpret_cast<void*>(command));
+	//	register_command(name.c_str(), command, 5, 0);
+	//	return true;
+	//}
 
 	void write(const std::string& message)
 	{

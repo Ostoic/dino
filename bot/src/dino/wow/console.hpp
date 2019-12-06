@@ -48,7 +48,7 @@ namespace dino::wow::console
 	command last_command();
 
 	// Todo: Doesn't work
-	bool register_command(const std::string& name, fn_ptr<command_t> command);
+	//bool register_command(const std::string& name, fn_ptr<command_t> command);
 
 	template <class... Args>
 	void write(const std::string& format, Args&&... args)

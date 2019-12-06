@@ -21,6 +21,7 @@ namespace dino::wow::offsets
 
 	namespace lua
 	{
+		constexpr auto stack = address{0x00D3F78C};
 		constexpr auto framescript_execute_fn = address{0x00819210};
 		constexpr auto framescript_get_text_fn = address{0x00819D40};
 	}
@@ -42,10 +43,10 @@ namespace dino::wow::offsets
 
 	namespace world
 	{
-
+		constexpr auto traceline_fn = address{0x007A3B70};
 	}
 
-	namespace data_store
+	namespace store
 	{
 		// offsets
 		constexpr auto vtable = address{0x0};
@@ -80,6 +81,34 @@ namespace dino::wow::offsets
 			constexpr auto packet_smsg_messagechat_fn = address{0x0050EBA0};
 			constexpr auto packet_smsg_gm_messagechat_fn = address{0x0050EBC0};
 			constexpr auto packet_smsg_text_emote_fn = address{0x00504070};
+			constexpr auto packet_smsg_cast_failed_fn = address{0x00809AF0};
+			constexpr auto packet_smsg_dismount_fn = address{0x00741A40};
+			constexpr auto packet_smsg_new_world_fn = address{0x00403D10};
+
+			constexpr auto packet_smsg_spell_log_execute_fn = address{0x006D3730};
+			constexpr auto packet_smsg_spell_log_miss_fn = address{0x006D3200};
+			constexpr auto packet_smsg_spell_damage_shield = address{0x006D3750};
+			constexpr auto packet_smsg_spell_instakill_log = address{0x006CE260};
+			constexpr auto packet_smsg_spell_non_melee_damage_log = address{0x006D3C10};
+
+			constexpr auto packet_smsg_debug_aura_proc_fn = address{0x006D3730};
+			constexpr auto packet_smsg_periodic_aura_log = address{0x006D3730};
+			constexpr auto packet_smsg_spell_heal_log = address{0x006D3DD0};
+
+			constexpr auto packet_smsg_health_update_fn = address{0x00716D20};
+			constexpr auto packet_smsg_power_update_fn = address{0x007236C0};
+			constexpr auto packet_smsg_guild_roster_fn = address{0x005CC5D0};
+
+			constexpr auto packet_smsg_update_object_fn = address{0x004D73A0};
+			constexpr auto packet_smsg_destroy_object_fn = address{0x004D7610};
+
+			constexpr auto packet_smsg_ai_reaction_fn = address{0x00716B10};
+			constexpr auto packet_smsg_cooldown_cheat_fn = address{0x00804110};
+
+			constexpr auto packet_smsg_mount_result_fn = address{0x006e2e90};
+			constexpr auto packet_smsg_dismount_result_fn = address{0x006e2e90};
+
+			constexpr auto packet_msg_raid_target_update_fn = address{0x005743B0};
 		}
 
 		namespace client_services

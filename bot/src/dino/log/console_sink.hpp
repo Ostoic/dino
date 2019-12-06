@@ -6,6 +6,8 @@
 
 #include <mutex>
 
+#include "../wow/console.hpp"
+
 namespace dino::log
 {
 	template <class Mutex>

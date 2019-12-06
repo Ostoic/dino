@@ -1,13 +1,15 @@
 #pragma once
 
-#include "../data_store.hpp"
-#include "../guid.hpp"
-
 #include <string_view>
+#include <optional>
+
+#include "../data/store.hpp"
+#include "../../wow/guid.hpp"
 
 namespace dino::wow::chat
 {
-	using namespace std::literals;
+	using namespace std::literals::string_view_literals;
+
 	class message
 	{
 	public:
@@ -123,38 +125,27 @@ namespace dino::wow::chat
 		};
 
 	public:
-		explicit message(data_store store, bool is_gm_chat = false);
-
-		message* operator->()
-		{
-			return this;
-		}
-
-		const message* operator->() const
-		{
-			return this;
-		}
+		explicit message(data::store store);
 
 	public:
-		void set_type(type type);
-		void set_language(int language);
-		void set_sender(guid sender);
+		const std::string& text() const noexcept;
+		const std::string& channel() const noexcept;
 
-		std::string text() const noexcept;
-		std::string channel() const noexcept;
-		//const std::string& chat_tag() const noexcept;
 		type msg_type() const noexcept;
 		int language() const noexcept;
 		guid sender() const noexcept;
-		guid receiver() const noexcept;
 		bool is_gm_chat() const noexcept;
 
 	private:
-		mutable data_store store_;
+		std::string text_;
+		std::string channel_;
 		type msg_type_;
+		int language_;
+		guid sender_;
 		bool is_gm_chat_;
 	};
 
+	void add_message(const message& message);
 	void add_message(const std::string& message);
 
 	template <class... Args>
@@ -168,4 +159,7 @@ namespace dino::wow::chat
 	{
 		return message::type_names[static_cast<int>(type)];
 	}
+
+	std::string to_string(const message::type type);
+
 }

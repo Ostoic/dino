@@ -4,23 +4,21 @@
 #include "../wow/framexml/events.hpp"
 #include "../session.hpp"
 
+#include <obfuscator.hpp>
+
 namespace dino::emitters
 {
 	class lua_emitter
 	{
 	public:
-		//static lua_emitter& get() noexcept;
-
 		static void install();
 		static void uninstall();
-
-		static void emit_on(wow::framexml::event event, const std::string& name);
 
 		template <class Event, auto Fn>
 		static void emit_on(const wow::framexml::event event, const std::string& name)
 		{
 			wow::lua::run(
-				"dino.register('{}', '{}', function(args) dino_action = 'event.emit' dino_action_data = args end)",
+				OBFUSCATE("dino.register('{}', '{}', function(args) dino_action = 'event.emit' dino_action_data = args end)"),
 				name, to_string(event)
 			);
 

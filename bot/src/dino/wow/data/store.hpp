@@ -2,11 +2,11 @@
 
 #include <cstddef>
 
-#include "../offset.hpp"
+#include "../../offset.hpp"
 
-namespace dino::wow
+namespace dino::wow::data
 {
-	class data_store
+	class store
 	{
 	public:
 		template <class From, class To>
@@ -14,17 +14,11 @@ namespace dino::wow
 			= std::is_convertible_v<From, To> && sizeof(From) == sizeof(To);
 
 	public:
-		explicit data_store(address class_base);
+		explicit store(address class_base);
 
-		const data_store* operator->() const
-		{
-			return this;
-		}
+		const store* operator->() const noexcept;
 
-		data_store* operator->()
-		{
-			return this;
-		}
+		store* operator->() noexcept;
 
 	public:
 		std::size_t size() const;
@@ -49,20 +43,20 @@ namespace dino::wow
 			else if constexpr (std::is_same_v<T, std::string>)
 				return this->pull_string(std::forward<Args>(args)...);
 
-			else if constexpr (data_store::is_compatible_v<T, std::int64_t>)
+			else if constexpr (store::is_compatible_v<T, std::int64_t>)
 				return static_cast<T>(this->pull_int64());
 
-			else if constexpr (data_store::is_compatible_v<T, std::int32_t>)
+			else if constexpr (store::is_compatible_v<T, std::int32_t>)
 				return static_cast<T>(this->pull_int32());
 
-			else if constexpr (data_store::is_compatible_v<T, std::int16_t>)
+			else if constexpr (store::is_compatible_v<T, std::int16_t>)
 				return static_cast<T>(this->pull_int16());
 
-			else if constexpr (data_store::is_compatible_v<T, std::int8_t>)
+			else if constexpr (store::is_compatible_v<T, std::int8_t>)
 				return static_cast<T>(this->pull_int8());
 
 			else
-				static_assert(false, "[wow::data_store::pull] Type is unsupported");
+				static_assert(false, "[wow::store::pull] Type is unsupported");
 		}
 
 		template <class T>

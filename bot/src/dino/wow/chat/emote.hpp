@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../data_store.hpp"
+#include "../data/store.hpp"
 #include "../guid.hpp"
 
 #include <string_view>
@@ -10,7 +10,7 @@ namespace dino::wow::chat
 	class emote
 	{
 	public:
-		emote(data_store store);
+		emote(data::store store);
 
 		emote* operator->() noexcept { return this; }
 		const emote* operator->() const noexcept { return this; }
@@ -21,7 +21,7 @@ namespace dino::wow::chat
 		std::string target_name() const;
 
 	private:
-		mutable data_store store_;
+		mutable data::store store_;
 	};
 
 }

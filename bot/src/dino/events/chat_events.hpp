@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../wow/chat/message.hpp"
+#include "../wow/data/message_store.hpp"
 #include "../wow/chat/emote.hpp"
 
 namespace dino::events
 {
 	struct received_chat_message
 	{
-		mutable wow::chat::message message;
+		mutable wow::data::message_store message;
 		mutable bool* pass;
 	};
 

@@ -1,7 +1,9 @@
 #include "debug.hpp"
 
-#include "wow/console.hpp"
 #include "session.hpp"
+#include "log.hpp"
+
+#include <obfuscator.hpp>
 
 namespace dino::debug
 {
@@ -14,12 +16,12 @@ namespace dino::debug
 			freopen("CONIN$", "r", stdin);
 		}
 
-		spdlog::info("[dino] Console allocated");
+		log::info(OBFUSCATE("[dino] Console allocated"));
 	}
 
 	void delete_console()
 	{
-		spdlog::info("[dino] Freeing console");
 		::FreeConsole();
+		log::info(OBFUSCATE("[dino] Freed console"));
 	}
 }

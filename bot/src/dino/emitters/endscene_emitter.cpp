@@ -1,13 +1,14 @@
 #include "endscene_emitter.hpp"
 
-#include "../wow/console.hpp"
+#include "../events/endscene_events.hpp"
 #include "../wow/graphics.hpp"
 #include "../settings.hpp"
 #include "../session.hpp"
 #include "../version.hpp"
-#include "../events/endscene_events.hpp"
+#include "../log.hpp"
 
 #include <chrono>
+#include <obfuscator.hpp>
 
 namespace dino::emitters
 {
@@ -57,9 +58,16 @@ namespace dino::emitters
 				return;
 
 			last_frame_time = clock::now();
-			auto& dispatcher = dino::session::get().dispatcher();
-			dispatcher.enqueue(events::endscene_frame{frame_duration});
-			dispatcher.update();
+			try
+			{
+				//log::info("frame");
+				dino::session::dispatcher().enqueue(events::endscene_frame{frame_duration});
+				dino::session::dispatcher().update();
+			}
+			catch (const std::exception& e)
+			{
+				log::critical(OBFUSCATE("[endscene_emitter] Exception: {}"), e.what());
+			}
 
 			//try
 			//{

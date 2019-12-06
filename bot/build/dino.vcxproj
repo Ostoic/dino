@@ -72,13 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\dinne\Documents\GitHub\Ostoic\String-Obfuscator-In-Compile-Time\include;C:\Users\dinne\Documents\GitHub\json\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\Library\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\Library\lua-5.1.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\dinne\Documents\Library\lua-5.1.4;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\dinne\Documents\Library\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\GitHub\json\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dinne\Documents\GitHub\Ostoic\String-Obfuscator-In-Compile-Time\include;C:\Users\dinne\Documents\GitHub\json\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\Library\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\Library\lua-5.1.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\dinne\Documents\Library\lua-5.1.4;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -97,6 +100,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,6 +139,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,18 +165,23 @@
   <ItemGroup>
     <ClInclude Include="..\src\dino\debug.hpp" />
     <ClInclude Include="..\src\dino\emitters\chat_emitter.hpp" />
+    <ClInclude Include="..\src\dino\emitters\spellcast_emitter.hpp" />
+    <ClInclude Include="..\src\dino\emitters\world_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\endscene_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\gamestate_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\lua_emitter.hpp" />
+    <ClInclude Include="..\src\dino\emitters\set_message_handler.hpp" />
     <ClInclude Include="..\src\dino\events\chat_events.hpp" />
     <ClInclude Include="..\src\dino\events\console_events.hpp" />
     <ClInclude Include="..\src\dino\events\dino_events.hpp" />
     <ClInclude Include="..\src\dino\events\endscene_events.hpp" />
+    <ClInclude Include="..\src\dino\events\framexml\guild_events.hpp" />
     <ClInclude Include="..\src\dino\events\framexml\player_events.hpp" />
     <ClInclude Include="..\src\dino\events\glue_events.hpp" />
+    <ClInclude Include="..\src\dino\events\world_events.hpp" />
     <ClInclude Include="..\src\dino\hacks\anti_afk.hpp" />
+    <ClInclude Include="..\src\dino\hacks\cooldown_cheat.hpp" />
     <ClInclude Include="..\src\dino\hacks\translator.hpp" />
-    <ClInclude Include="..\src\dino\handlers\command_handler.hpp" />
     <ClInclude Include="..\src\dino\handlers\gamestate_handler.hpp" />
     <ClInclude Include="..\src\dino\handlers\task_handler.hpp" />
     <ClInclude Include="..\src\dino\log.hpp" />
@@ -192,8 +202,16 @@
     <ClInclude Include="..\src\dino\wow\chat\language.hpp" />
     <ClInclude Include="..\src\dino\wow\chat\message.hpp" />
     <ClInclude Include="..\src\dino\wow\console.hpp" />
-    <ClInclude Include="..\src\dino\wow\data_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\ai_reaction_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\cooldown_cheat_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\health_update_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\message_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\mount_result_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\new_world_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\cast_failed_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\store.hpp" />
     <ClInclude Include="..\src\dino\wow\framexml\events.hpp" />
+    <ClInclude Include="..\src\dino\wow\geometry\vector.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\character_select.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\glue.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\realmlist.hpp" />
@@ -209,18 +227,21 @@
     <ClInclude Include="..\src\dino\wow\objects\unit.hpp" />
     <ClInclude Include="..\src\dino\wow\object_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\offsets.hpp" />
-    <ClInclude Include="..\src\dino\wow\world.hpp" />
+    <ClInclude Include="..\src\dino\wow\tls.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\traceline.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\dino\debug.cpp" />
     <ClCompile Include="..\src\dino\emitters\chat_emitter.cpp" />
+    <ClCompile Include="..\src\dino\emitters\spellcast_emitter.cpp" />
+    <ClCompile Include="..\src\dino\emitters\world_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\endscene_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\gamestate_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\lua_emitter.cpp" />
     <ClCompile Include="..\src\dino\hacks\anti_afk.cpp" />
+    <ClCompile Include="..\src\dino\hacks\cooldown_cheat.cpp" />
     <ClCompile Include="..\src\dino\hacks\translator.cpp" />
-    <ClCompile Include="..\src\dino\handlers\command_handler.cpp" />
     <ClCompile Include="..\src\dino\handlers\gamestate_handler.cpp" />
     <ClCompile Include="..\src\dino\handlers\task_handler.cpp" />
     <ClCompile Include="..\src\dino\log\console_sink.cpp" />
@@ -231,7 +252,14 @@
     <ClCompile Include="..\src\dino\wow\chat\emote.cpp" />
     <ClCompile Include="..\src\dino\wow\chat\message.cpp" />
     <ClCompile Include="..\src\dino\wow\console.cpp" />
-    <ClCompile Include="..\src\dino\wow\data_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\ai_reaction_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\cooldown_cheat_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\health_update_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\message_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\mount_result_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\new_world_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\cast_failed_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\store.cpp" />
     <ClCompile Include="..\src\dino\wow\framexml\events.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\character_select.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\glue.cpp" />
@@ -239,7 +267,7 @@
     <ClCompile Include="..\src\dino\wow\graphics.cpp" />
     <ClCompile Include="..\src\dino\wow\lua.cpp" />
     <ClCompile Include="..\src\dino\wow\net\connection.cpp" />
-    <ClCompile Include="..\src\dino\wow\world.cpp" />
+    <ClCompile Include="..\src\dino\wow\world\traceline.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

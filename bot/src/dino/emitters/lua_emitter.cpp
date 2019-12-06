@@ -6,11 +6,12 @@
 #include "../wow/lua.hpp"
 #include "../events/dino_events.hpp"
 #include "../events/framexml/player_events.hpp"
-#include "../handlers/command_handler.hpp"
 
 #include "../script/core.hpp"
+#include "../log.hpp"
 
 #include <nlohmann/json.hpp>
+#include <obfuscator.hpp>
 
 using json = nlohmann::json;
 
@@ -20,18 +21,23 @@ namespace dino::emitters
 	{
 		void check_lua_handler(const events::endscene_frame& event)
 		{
-			const auto action = wow::lua::action{};
-			if (action.name() == "lua.execute")
+			const auto action = wow::lua::last_action();
+
+			if (!action.is_valid())
+				return;
+
+			log::info(OBFUSCATE("[check_lua_handler] {}: {}"), action.name(), action.data());
+			if (action.name() == OBFUSCATE("lua.execute"))
 				wow::lua::execute(action.data());
 
-			else if (action.name() == "dino.command")
+			else if (action.name() == OBFUSCATE("dino.command"))
 			{
-				auto& dispatcher = dino::session::get().dispatcher();
-				dispatcher
-					.enqueue<events::new_dino_command>(events::new_dino_command{action.data()});
+				log::info("dino.command: {}", action.data());
+				//dino::session::get().dispatcher()
+					//.enqueue<events::new_dino_command>(events::new_dino_command{action.data()});
 			}
 
-			else if (action.name() == "event.emit")
+			else if (action.name() == OBFUSCATE("event.emit"))
 			{
 				const auto json = json::parse(action.data());
 				const auto event = wow::framexml::to_event(json["event"]);
@@ -54,12 +60,13 @@ namespace dino::emitters
 				.sink<events::endscene_frame>()
 				.connect<check_lua_handler>();
 
-			script::load(script::json_script);
-			script::load(script::emitter_script);
+			wow::lua::execute(script::json_script.data());
+			wow::lua::execute(script::emitter_script.data());
+			log::info(OBFUSCATE("[lua_emitter] installed"));
 		}
 		catch (const std::exception & e)
 		{
-			spdlog::critical("Exception: {}", e.what());
+			log::critical(OBFUSCATE("Exception: {}"), e.what());
 		}
 	}
 
@@ -69,6 +76,6 @@ namespace dino::emitters
 			.sink<events::endscene_frame>()
 			.disconnect<check_lua_handler>();
 
-		wow::lua::run("dino = {{}}");
+		log::info(OBFUSCATE("[lua_emitter] uninstalled"));
 	}
 }

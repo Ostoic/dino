@@ -12,13 +12,6 @@ namespace dino::emitters
 {
 	class endscene_emitter
 	{
-	public:
-		struct service
-		{
-			std::string name;
-			std::function<void()> fn;
-		};
-
 	private:
 		using clock = std::chrono::high_resolution_clock;
 

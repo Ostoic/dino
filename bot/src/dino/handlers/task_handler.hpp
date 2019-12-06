@@ -55,9 +55,9 @@ namespace dino::handlers
 	bool task_handler::queue_async_task(Duration duration, Fn&& fn)
 	{
 		return queue_task([&fn, duration] {
-			std::thread{[] {
+			std::thread{[&] {
 				std::this_thread::sleep_for(duration);
-				std::forward<Fn>(fn);
+				std::forward<Fn>(fn)();
 			}}.detach();
 		});
 	}
@@ -67,7 +67,7 @@ namespace dino::handlers
 	{
 		return queue_task([&fn] {
 			std::thread{[] {
-				std::forward<Fn>(fn);
+				std::forward<Fn>(fn)();
 			}}.detach();
 		});
 	}

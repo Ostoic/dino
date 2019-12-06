@@ -7,6 +7,7 @@
 #ifndef PCH_H
 #define PCH_H
 
+#define NOMINMAX
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 #include <fmt/ostream.h>

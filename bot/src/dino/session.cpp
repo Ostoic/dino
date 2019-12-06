@@ -1,16 +1,17 @@
 #include "session.hpp"
 
 #include "wow/console.hpp"
-#include "wow/chat/message.hpp"
+#include "wow/data/message_store.hpp"
 #include "version.hpp"
 #include "settings.hpp"
 
 #include "emitters/gamestate_emitter.hpp"
 #include "emitters/endscene_emitter.hpp"
+#include "emitters/world_emitter.hpp"
+#include "emitters/spellcast_emitter.hpp"
 #include "emitters/chat_emitter.hpp"
 #include "emitters/lua_emitter.hpp"
 
-#include "handlers/command_handler.hpp"
 #include "handlers/gamestate_handler.hpp"
 #include "events/console_events.hpp"
 #include "events/endscene_events.hpp"
@@ -26,6 +27,8 @@
 
 #include "log.hpp"
 
+#include <obfuscator.hpp>
+
 // headers for code-to-rewrite
 
 namespace dino
@@ -36,7 +39,7 @@ namespace dino
 		const auto sender = event.message->sender();
 
 		log::info(
-			"[{}] [{}]: {}",
+			OBFUSCATE("[{}] [{}]: {}"),
 			to_string_view(event.message->msg_type()),
 			sender,
 			text
@@ -46,7 +49,7 @@ namespace dino
 	void log_emote(const events::received_text_emote& event)
 	{
 		log::info(
-			"{} ->text_emote> {}",
+			OBFUSCATE("{} ->text_emote> {}"),
 			event.emote->sender_guid(),
 			event.emote->target_name()
 		);
@@ -54,29 +57,34 @@ namespace dino
 
 	void enter_world(const events::gamestate_change_ingame& event)
 	{
-		log::info("[enter_world] Installing chat_emitter...");
+		log::info(OBFUSCATE("[enter_world] Installing chat_emitter..."));
 		emitters::chat_emitter::install();
+
+		log::info(OBFUSCATE("[enter_world] Installing world_emitter..."));
+		emitters::world_emitter::install();
+
+		log::info(OBFUSCATE("[enter_world] Installing spellcast_emitter..."));
+		emitters::spellcast_emitter::install();
 	}
 
 	void session::start()
 	{
 		try
 		{
+			settings::internal::initialize();
 			wow::console::enable();
 			wow::console::open();
 
 			auto& s = session::get();
-			s.install_hacks();
-
 			// Setup task handler for .queue_task()
-			s.dispatcher_
+			session::dispatcher()
 				.sink<events::endscene_frame>()
 				.connect<handlers::task_handler::handle>();
 
-			s.install_loggers();
+			install_loggers();
 
 			// Handle enter_world
-			s.dispatcher_
+			dispatcher()
 				.sink<events::gamestate_change_ingame>()
 				.connect<enter_world>();
 
@@ -85,19 +93,30 @@ namespace dino
 				.connect<handlers::reinstall_lua_emitter>();
 
 			s.queue_task([] {
-				log::info("{} loaded", dino::version::format());
+				log::info(OBFUSCATE("{} loaded"), dino::version::format());
 			});
 
 			//if (version::debug)
 				//dino::debug::allocate_console();
+			using namespace std::chrono_literals;
+			s.queue_async_task(5s, [] {
+				log::info(OBFUSCATE("attempting to trigger settings_changed event..."));
+				settings::modify<settings::hacks::cooldown_cheat>(false);
+
+				if (wow::glue::current_screen() == wow::glue::screen::login)
+					wow::lua::run(OBFUSCATE("DefaultServerLogin('{}', '{}')"), OBFUSCATE("Jewishpig"), OBFUSCATE("Gb2gMyBNrSDvijtb"));
+
+				log::info("test 5s begin!");
+				wow::lua::execute(OBFUSCATE("dino.command('test 5s')"));
+			});
 
 			emitters::endscene_emitter::install();
 			emitters::gamestate_emitter::install();
-			log::info("done!");
+			log::info(OBFUSCATE("done!"));
 		}
 		catch (const std::exception & e)
 		{
-			log::critical("Exception: {}", e.what());
+			log::critical(OBFUSCATE("Exception: {}"), e.what());
 		}
 	}
 
@@ -106,7 +125,6 @@ namespace dino
 		auto& dispatcher = get().dispatcher();
 		dispatcher.enqueue<events::dino_exit>();
 		emitters::gamestate_emitter::uninstall();
-
 		emitters::endscene_emitter::uninstall();
 	}
 
@@ -120,46 +138,48 @@ namespace dino
 	{
 	}
 
-	void session::install_hacks()
-	{
-		if (!settings::hacks::enabled())
-			return;
-
-		if (settings::hacks::anti_afk())
-		{
-			dispatcher_
-				.sink<events::endscene_frame>()
-				.connect<hacks::anti_afk::tick>();
-		}
-
-		if (settings::hacks::translator())
-		{
-			dispatcher_
-				.sink<events::received_chat_message>()
-				.connect<hacks::translator::fix_language>();
-		}
-	}
-
 	void session::install_loggers()
 	{
+		// Enable debug logging
+		spdlog::set_level(spdlog::level::debug);
+
 		// Enable chat logging
-		dispatcher_
+		dispatcher()
 			.sink<events::received_chat_message>()
 			.connect<log_chat>();
 
 		// Enable emote logging
-		dispatcher_
+		dispatcher()
 			.sink<events::received_text_emote>()
 			.connect<log_emote>();
 	}
 
+	void session::uninstall_loggers()
+	{
+		// Disable chat logging
+		dispatcher()
+			.sink<events::received_chat_message>()
+			.disconnect<log_chat>();
+
+		// Disable emote logging
+		dispatcher()
+			.sink<events::received_text_emote>()
+			.disconnect<log_emote>();
+	}
+
 	entt::registry& session::registry() noexcept
 	{
-		return registry_;
+		return get().registry_;
 	}
 
 	entt::dispatcher& session::dispatcher() noexcept
 	{
-		return dispatcher_;
+		return get().dispatcher_;
 	}
+
+	std::string session::status_message()
+	{
+		return "";
+	}
+
 }
