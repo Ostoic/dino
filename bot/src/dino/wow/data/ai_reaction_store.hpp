@@ -9,7 +9,9 @@ namespace dino::wow::data
 	{
 	public:
 		explicit ai_reaction_store(address store_base);
-		explicit ai_reaction_store(data::store store);
+		explicit ai_reaction_store(data::store&& store);
+		explicit ai_reaction_store(data::CDataStore* store);
+		explicit ai_reaction_store() = default;
 
 		ai_reaction_store* operator->() noexcept;
 		const ai_reaction_store* operator->() const noexcept;

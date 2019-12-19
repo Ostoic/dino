@@ -1,6 +1,6 @@
 #pragma once
 
-namespace dino::wow::objects
+namespace dino::wow::world
 {
 	class game_object
 	{

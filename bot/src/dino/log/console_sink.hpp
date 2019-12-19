@@ -19,7 +19,32 @@ namespace dino::log
 		{
 			fmt::memory_buffer formatted;
 			spdlog::sinks::base_sink<Mutex>::formatter_->format(msg, formatted);
-			wow::console::write(fmt::to_string(formatted));
+
+			auto color = wow::console::color::standard;
+			switch (msg.level)
+			{
+			case spdlog::level::level_enum::info:
+				color = wow::console::color::standard;
+				break;
+
+			case spdlog::level::level_enum::err:
+				color = wow::console::color::error;
+				break;
+
+			case spdlog::level::level_enum::critical:
+				color = wow::console::color::error;
+				break;
+
+
+			case spdlog::level::level_enum::warn:
+				color = wow::console::color::warning;
+				break;
+
+			case spdlog::level::level_enum::off:
+				color = wow::console::color::echo;
+				break;
+			}
+			wow::console::write(fmt::to_string(formatted), color);
 		}
 
 		void console_sink::flush_()

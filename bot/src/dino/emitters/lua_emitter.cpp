@@ -5,11 +5,14 @@
 
 #include "../wow/lua.hpp"
 #include "../wow/offsets.hpp"
+#include "../wow/world/time.hpp"
 #include "../events/dino_events.hpp"
 #include "../events/framexml/player_events.hpp"
+#include "../events/framexml/ui_events.hpp"
 
 #include "../script/core.hpp"
 #include "../log.hpp"
+#include "../debug.hpp"
 
 #include <nlohmann/json.hpp>
 #include <obfuscator.hpp>
@@ -22,34 +25,65 @@ namespace dino::emitters
 	{
 		void check_lua_handler(const events::endscene_frame& event)
 		{
-			const auto action = wow::lua::last_action();
+			namespace chrono = std::chrono;
 
-			if (!action.is_valid())
-				return;
-
-			log::info(OBFUSCATE("[check_lua_handler] {}: {}"), action.name(), action.data());
-			if (action.name() == OBFUSCATE("lua.execute"))
-				wow::lua::execute(action.data());
-
-			else if (action.name() == OBFUSCATE("dino.command"))
+			const auto start = chrono::high_resolution_clock::now();
+			try
 			{
-				log::info("dino.command: {}", action.data());
-				//dino::session::get().dispatcher()
-					//.enqueue<events::new_dino_command>(events::new_dino_command{action.data()});
+				const auto action = wow::lua::last_action();
+
+				if (!action.is_valid())
+					return;
+
+				if (action.name() == OBFUSCATE("lua.execute"))
+					wow::lua::execute(action.data());
+
+				else if (action.name() == OBFUSCATE("dino.command"))
+				{
+					//const auto json = json::parse(action.data());
+					log::info("dino.command: {}", action.data());
+
+					if (action.data() == "dev")
+						dino::debug::dev();
+
+					//if (json[])
+					//dino::session::get().dispatcher()
+						//.enqueue<events::new_dino_command>(events::new_dino_command{action.data()});
+				}
+
+				else if (action.name() == OBFUSCATE("event.emit"))
+				{
+					const auto json = json::parse(action.data());
+					const auto event = wow::framexml::to_event(json["event"]);
+
+					log::info(
+						OBFUSCATE("[lua_emitter] [check_lua_handler] event: {}, action.data(): {}"),
+						to_string(event), action.data()
+					);
+
+					if (event == wow::framexml::event::player_target_changed)
+						dispatcher::enqueue<events::framexml::player_target_changed>();
+
+					else if (event == wow::framexml::event::player_entering_world)
+						dispatcher::enqueue<events::framexml::player_entering_world>();
+
+					else if (event == wow::framexml::event::ui_error_message)
+						dispatcher::enqueue(events::framexml::received_ui_error_message{action.data()});
+				}
+			}
+			catch (const std::exception& e)
+			{
+				log::error("[lua_emitter] Exception occured: {}", e.what());
 			}
 
-			else if (action.name() == OBFUSCATE("event.emit"))
-			{
-				const auto json = json::parse(action.data());
-				const auto event = wow::framexml::to_event(json["event"]);
-				auto& dispatcher = dino::session::dispatcher();
+			const auto end = chrono::high_resolution_clock::now();
 
-				if (event == wow::framexml::event::player_target_changed)
-					dispatcher.enqueue<events::framexml::player_target_changed>();
+			log::info(
+				"[lua_emitter::check_lua_handler] runtime: {} us",
+				chrono::duration_cast<chrono::microseconds>(end - start).count()
+			);
 
-				else if (event == wow::framexml::event::player_entering_world)
-					dispatcher.enqueue<events::framexml::player_entering_world>();
-			}
+			const auto time = wow::world::get_async_time();
 		}
 	}
 
@@ -57,8 +91,7 @@ namespace dino::emitters
 	{
 		try
 		{
-			dino::session::dispatcher()
-				.sink<events::endscene_frame>()
+			dispatcher::sink<events::endscene_frame>()
 				.connect<check_lua_handler>();
 
 			wow::lua::execute(script::json_script.data());
@@ -73,8 +106,7 @@ namespace dino::emitters
 
 	void lua_emitter::uninstall()
 	{
-		dino::session::dispatcher()
-			.sink<events::endscene_frame>()
+		dispatcher::sink<events::endscene_frame>()
 			.disconnect<check_lua_handler>();
 
 		log::info(OBFUSCATE("[lua_emitter] uninstalled"));

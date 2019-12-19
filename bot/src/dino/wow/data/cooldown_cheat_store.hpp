@@ -9,7 +9,8 @@ namespace dino::wow::data
 	{
 	public:
 		explicit cooldown_cheat_store(address store_base);
-		explicit cooldown_cheat_store(data::store store);
+		explicit cooldown_cheat_store(data::store&& store);
+		explicit cooldown_cheat_store() = default;
 
 		cooldown_cheat_store* operator->() noexcept;
 		const cooldown_cheat_store* operator->() const noexcept;

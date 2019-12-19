@@ -4,10 +4,11 @@
 
 #include "../../offset.hpp"
 #include "../guid.hpp"
+#include "CDataStore.hpp"
 
 namespace dino::wow::data
 {
-	class compressed_guid;
+	class packed_guid;
 
 	class store
 	{
@@ -17,9 +18,14 @@ namespace dino::wow::data
 			= std::is_convertible_v<From, To> && sizeof(From) == sizeof(To);
 
 	public:
+		explicit store(CDataStore* cdata_store, unsigned int initial_cursor = 2);
 		explicit store(address class_base);
 		explicit store(address class_base, unsigned int cursor);
+		explicit store(store&& store);
 		explicit store(const store& store, unsigned int initial_cursor);
+		explicit store() = default;
+
+		~store();
 
 		const store* operator->() const noexcept;
 		store* operator->() noexcept;
@@ -43,7 +49,7 @@ namespace dino::wow::data
 			if constexpr (std::is_floating_point_v<T>)
 				return static_cast<T>(this->pull_float());
 
-			else if constexpr (std::is_same_v<T, char*>)
+			else if constexpr (std::is_pointer_v<T>&& std::is_same_v<std::remove_cvref_t<std::remove_pointer_t<T>>, char>)
 				return this->pull_string_ptr(std::forward<Args>(args)...);
 
 			else if constexpr (std::is_same_v<T, std::string>)
@@ -52,8 +58,8 @@ namespace dino::wow::data
 			else if constexpr (std::is_same_v<T, wow::guid>)
 				return static_cast<T>(this->pull_int64());
 
-			else if constexpr (std::is_same_v<T, wow::data::compressed_guid>)
-				return static_cast<T>(this->pull_compressed_guid());
+			else if constexpr (std::is_same_v<T, wow::data::packed_guid>)
+				return static_cast<T>(this->pull_packed_guid());
 
 			else if constexpr (store::is_compatible_v<T, std::int64_t>)
 				return static_cast<T>(this->pull_int64());
@@ -64,7 +70,7 @@ namespace dino::wow::data
 			else if constexpr (store::is_compatible_v<T, std::int16_t>)
 				return static_cast<T>(this->pull_int16());
 
-			else if constexpr (store::is_compatible_v<T, std::int8_t>)
+			else if constexpr (sizeof(T) == sizeof(std::int8_t))
 				return static_cast<T>(this->pull_int8());
 
 			else
@@ -79,30 +85,13 @@ namespace dino::wow::data
 
 	private:
 		template <class T>
-		T generic_pull(const address fn_location)
-		{
-			const auto internal_pull = reinterpret_cast<void(__fastcall*)(void*, void*, T*)>(
-				static_cast<unsigned int>(fn_location)
-			);
-
-			auto result = T{};
-			internal_pull(
-				reinterpret_cast<void*>(static_cast<unsigned int>(class_base_)),
-				nullptr,
-				&result
-			);
-
-			return result;
-		}
-
-		template <class T>
 		void generic_put(const address fn_location, T x)
 		{
 			deref_as<T>(&this->buffer()[this->cursor()] - this->base()) = x;
 		}
 
 		float pull_float();
-		data::compressed_guid pull_compressed_guid();
+		packed_guid pull_packed_guid();
 		std::int64_t pull_int64();
 		std::int32_t pull_int32();
 		std::int16_t pull_int16();
@@ -121,7 +110,7 @@ namespace dino::wow::data
 	private:
 		static constexpr std::size_t ingame_class_size = 24;
 
-		address class_base_;
+		CDataStore* store_;
 		unsigned int initial_cursor_;
 	};
 }

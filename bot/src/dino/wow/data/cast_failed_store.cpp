@@ -6,11 +6,11 @@
 namespace dino::wow::data
 {
 	cast_failed_store::cast_failed_store(address store_base)
-		: cast_failed_store{data::store{store_base}}
+		: store_{store_base}
 	{}
 
-	cast_failed_store::cast_failed_store(data::store store)
-		: store_{store}
+	cast_failed_store::cast_failed_store(data::store&& store)
+		: store_{std::move(store)}
 	{
 		store_->restore_cursor();
 	}

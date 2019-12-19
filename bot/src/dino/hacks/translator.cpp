@@ -15,14 +15,12 @@ namespace dino::hacks
 		log::info(OBFUSCATE("[on_setting_change] translator: {}"), settings::hacks::translator());
 		if (!settings::hacks::enabled() || !settings::hacks::translator())
 		{
-			session::dispatcher()
-				.sink<events::received_chat_message>()
+			dispatcher::sink<events::received_chat_message>()
 				.disconnect<fix_language>();
 		}
 		else
 		{
-			session::dispatcher()
-				.sink<events::received_chat_message>()
+			dispatcher::sink<events::received_chat_message>()
 				.connect<fix_language>();
 		}
 	}

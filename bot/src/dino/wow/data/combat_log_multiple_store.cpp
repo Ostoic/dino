@@ -3,11 +3,11 @@
 namespace dino::wow::data
 {
 	combat_log_multiple_store::combat_log_multiple_store(address store_base)
-		: combat_log_multiple_store{data::store{store_base}}
+		: store_{store_base}
 	{}
 
-	combat_log_multiple_store::combat_log_multiple_store(data::store store)
-		: store_{store}
+	combat_log_multiple_store::combat_log_multiple_store(data::store&& store)
+		: store_{std::move(store)}
 	{
 		store_->restore_cursor();
 	}

@@ -13,16 +13,22 @@ namespace dino::log
 		};
 
 		if (loggers.count(name) == 0)
+		{
 			loggers[name] = spdlog::basic_logger_mt(name, fmt::format("logs/{}", name));
+			spdlog::register_logger(loggers[name]);
+		}
 
 		return loggers[name];
 	}
 
 	std::shared_ptr<spdlog::logger>& console_logger()
 	{
-		static auto console_logger_ = [&] {
+		static auto console_logger_ = [] {
 			auto console_sink = std::make_shared<console_sink_st>();
-			return std::make_shared<spdlog::logger>("console", std::move(console_sink));
+			auto logger = std::make_shared<spdlog::logger>("console", std::move(console_sink));
+			logger->set_level(spdlog::level::debug);
+			spdlog::register_logger(logger);
+			return logger;
 		}();
 
 		return console_logger_;

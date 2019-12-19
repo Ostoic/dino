@@ -7,10 +7,10 @@
 
 namespace dino::wow::data
 {
-	class compressed_guid
+	class packed_guid
 	{
 	public:
-		explicit compressed_guid(data::store store);
+		explicit packed_guid(wow::guid&& store);
 
 		explicit operator std::uint64_t() const noexcept;
 		explicit operator wow::guid() const noexcept;
@@ -19,7 +19,9 @@ namespace dino::wow::data
 		int low() const noexcept;
 		int high() const noexcept;
 
+		wow::guid unpack() const noexcept;
+
 	private:
-		mutable data::store store_;
+		wow::guid guid_;
 	};
 }

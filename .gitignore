@@ -1,3 +1,4 @@
 bot/build/Release/*
+bot/build/Debug/*
 bot/build/.vs/*
 *.obj

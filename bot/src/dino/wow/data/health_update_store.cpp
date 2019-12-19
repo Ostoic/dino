@@ -3,11 +3,11 @@
 namespace dino::wow::data
 {
 	health_update_store::health_update_store(address store_base)
-		: health_update_store{data::store{store_base}}
+		: store_{store_base}
 	{}
 
-	health_update_store::health_update_store(data::store store)
-		: store_{store}
+	health_update_store::health_update_store(data::store&& store)
+		: store_{std::move(store)}
 	{
 		store_->restore_cursor();
 	}

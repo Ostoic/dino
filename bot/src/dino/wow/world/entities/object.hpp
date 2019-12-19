@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../offset.hpp"
-#include "../guid.hpp"
+#include "../../../offset.hpp"
+#include "../../guid.hpp"
 
-namespace dino::wow::objects
+namespace dino::wow::world::entities
 {
 	class object
 	{
@@ -15,22 +15,20 @@ namespace dino::wow::objects
 		explicit object(address base);
 
 	private:
-		address class_base_;
+		address base_;
 		wow::guid guid_;
 	};
-
-
 }
 
-namespace dino::wow::objects
+namespace dino::wow::world::entities
 {
 	guid object::guid() const
 	{
 		return guid_;
 	}
 
-	object::object(address base)
-		: class_base_{base}
+	object::object(const address base)
+		: base_{base}
 		, guid_{bind_value<wow::guid>(base)}
 	{}
 }

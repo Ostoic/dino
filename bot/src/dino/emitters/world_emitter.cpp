@@ -4,6 +4,7 @@
 #include "../log.hpp"
 #include "../session.hpp"
 #include "../events/world_events.hpp"
+#include "../events/server_events.hpp"
 #include "../wow/data/cast_failed_store.hpp"
 #include "../wow/data/cooldown_cheat_store.hpp"
 #include "../wow/data/health_update_store.hpp"
@@ -38,6 +39,7 @@ namespace dino::emitters
 
 		void log_ai_reaction(const events::received_ai_reaction& event)
 		{
+			log::info("[log_ai_reaction]");
 			log::info(
 				OBFUSCATE("[world_emitter] log_ai_reaction: {}, {}"),
 				event.store->agent(),
@@ -48,9 +50,8 @@ namespace dino::emitters
 		void log_loot_list(const events::received_loot_list& event)
 		{
 			const auto looted_guid = event.store->pull<wow::guid>();
-			event.store->restore_cursor();
 			log::info(
-				OBFUSCATE("[world_emitter] log_loot_list: {}"),
+				OBFUSCATE("[world_emitter] [log_loot_list] guid: {}"),
 				looted_guid
 			);
 		}
@@ -59,9 +60,8 @@ namespace dino::emitters
 		{
 			const auto var1 = event.store->pull<unsigned int>();
 			const auto var2 = event.store->pull<std::uint8_t>();
-			event.store->restore_cursor();
 			log::info(
-				OBFUSCATE("[world_emitter] log_update_object: {} {}"),
+				OBFUSCATE("[world_emitter] [log_update_object] var1: {} var2: {}"),
 				var1, var2
 			);
 		}
@@ -69,9 +69,8 @@ namespace dino::emitters
 		void log_stand_state_update(const events::received_stand_state_update& event)
 		{
 			const auto var = event.store->pull<std::uint8_t>();
-			event.store->restore_cursor();
 			log::info(
-				OBFUSCATE("[world_emitter] log_update_object: {}"),
+				OBFUSCATE("[world_emitter] [log_stand_state_update] var: {}"),
 				var
 			);
 		}
@@ -79,11 +78,25 @@ namespace dino::emitters
 		void log_notification(const events::received_stand_state_update& event)
 		{
 			const auto var = event.store->pull<std::string>(0x1000u);
-			event.store->restore_cursor();
 			log::info(
-				OBFUSCATE("[world_emitter] log_notification: {}"),
+				OBFUSCATE("[world_emitter] [log_notification] var: {}"),
 				var
 			);
+		}
+
+		void log_server_message(const events::received_server_message& event)
+		{
+			const auto record = event.store->pull<unsigned int>();
+			const auto message = event.store->pull<std::string>(0x400);
+			log::info(
+				OBFUSCATE("[world_emitter] [log_server_message] record: {}, message: \"{}\""),
+				record, message
+			);
+		}
+
+		void log_zone_under_attack(const events::received_zone_under_attack& event)
+		{
+			log::info(OBFUSCATE("[world_emitter] [log_zone_under_attack] event"));
 		}
 	}
 
@@ -96,37 +109,37 @@ namespace dino::emitters
 		//emitters::make_net_emitter<events::received_update_object>();
 		emitters::make_net_emitter<events::received_stand_state_update>();
 		emitters::make_net_emitter<events::received_notification>();
+		emitters::make_net_emitter<events::received_server_message>();
+		emitters::make_net_emitter<events::received_zone_under_attack>();
 
 		// Enable loggers
-		dino::session::dispatcher()
-			.sink<events::received_new_world>()
+		dispatcher::sink<events::received_new_world>()
 			.connect<log_new_world>();
 
-		dino::session::dispatcher()
-			.sink<events::received_health_update>()
+		dispatcher::sink<events::received_health_update>()
 			.connect<log_health_update>();
 
-		dino::session::dispatcher()
-			.sink<events::received_ai_reaction>()
+		dispatcher::sink<events::received_ai_reaction>()
 			.connect<log_ai_reaction>();
 
-		dino::session::dispatcher()
-			.sink<events::received_loot_list>()
+		dispatcher::sink<events::received_loot_list>()
 			.connect<log_loot_list>();
 
-		dino::session::dispatcher()
-			.sink<events::received_update_object>()
+		dispatcher::sink<events::received_update_object>()
 			.connect<log_update_object>();
 
-		dino::session::dispatcher()
-			.sink<events::received_stand_state_update>()
+		dispatcher::sink<events::received_stand_state_update>()
 			.connect<log_stand_state_update>();
 
-		dino::session::dispatcher()
-			.sink<events::received_stand_state_update>()
+		dispatcher::sink<events::received_stand_state_update>()
 			.connect<log_notification>();
 
-		log::info(OBFUSCATE("[world_emitter] installed world emitters"));
+		dispatcher::sink<events::received_server_message>()
+			.connect<log_server_message>();
+
+		dispatcher::sink<events::received_zone_under_attack>()
+			.connect<log_zone_under_attack>();
+		log::info(OBFUSCATE("[world_emitter] installed"));
 	}
 
 	void world_emitter::uninstall()
@@ -138,31 +151,32 @@ namespace dino::emitters
 		//emitters::restore_net_emitter<events::received_update_object>();
 		emitters::restore_net_emitter<events::received_stand_state_update>();
 		emitters::restore_net_emitter<events::received_notification>();
+		emitters::restore_net_emitter<events::received_server_message>();
+		emitters::restore_net_emitter<events::received_zone_under_attack>();
 
-		dino::session::dispatcher()
-			.sink<events::received_new_world>()
+		dispatcher::sink<events::received_new_world>()
 			.disconnect<log_new_world>();
 
-		dino::session::dispatcher()
-			.sink<events::received_health_update>()
+		dispatcher::sink<events::received_health_update>()
 			.disconnect<log_health_update>();
 
-		dino::session::dispatcher()
-			.sink<events::received_ai_reaction>()
+		dispatcher::sink<events::received_ai_reaction>()
 			.disconnect<log_ai_reaction>();
 
-		dino::session::dispatcher()
-			.sink<events::received_loot_list>()
+		dispatcher::sink<events::received_loot_list>()
 			.disconnect<log_loot_list>();
 
-		dino::session::dispatcher()
-			.sink<events::received_update_object>()
+		dispatcher::sink<events::received_update_object>()
 			.disconnect<log_update_object>();
 
-		dino::session::dispatcher()
-			.sink<events::received_stand_state_update>()
+		dispatcher::sink<events::received_stand_state_update>()
 			.disconnect<log_stand_state_update>();
 
-		log::info(OBFUSCATE("[world_emitter] uninstalled world emitters"));
+		dispatcher::sink<events::received_server_message>()
+			.disconnect<log_server_message>();
+
+		dispatcher::sink<events::received_zone_under_attack>()
+			.disconnect<log_zone_under_attack>();
+		log::info(OBFUSCATE("[world_emitter] uninstalled"));
 	}
 }

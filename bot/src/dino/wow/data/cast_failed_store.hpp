@@ -8,7 +8,8 @@ namespace dino::wow::data
 	{
 	public:
 		explicit cast_failed_store(address store_base);
-		explicit cast_failed_store(data::store store);
+		explicit cast_failed_store(data::store&& store);
+		explicit cast_failed_store() = default;
 
 		cast_failed_store* operator->() noexcept;
 		const cast_failed_store* operator->() const noexcept;

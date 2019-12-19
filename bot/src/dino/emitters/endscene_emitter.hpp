@@ -24,6 +24,8 @@ namespace dino::emitters
 	public:
 		bool is_active() const;
 
+		std::chrono::nanoseconds last_hook_runtime() const;
+
 	private:
 		static unsigned int original_endscene;
 
@@ -31,8 +33,6 @@ namespace dino::emitters
 
 		void hook();
 		void unhook();
-
-		static void update_session();
 
 	private:
 		friend class session;
@@ -42,5 +42,6 @@ namespace dino::emitters
 	private:
 		std::mutex tasks_mutex_;
 		clock::time_point last_frame_time_;
+		std::chrono::nanoseconds last_hook_runtime_;
 	};
 }

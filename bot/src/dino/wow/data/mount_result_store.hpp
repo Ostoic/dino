@@ -9,7 +9,8 @@ namespace dino::wow::data
 	{
 	public:
 		explicit mount_result_store(address store_base);
-		explicit mount_result_store(data::store store);
+		explicit mount_result_store(data::store&& store);
+		explicit mount_result_store() = default;
 
 		mount_result_store* operator->() noexcept;
 		const mount_result_store* operator->() const noexcept;

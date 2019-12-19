@@ -6,11 +6,16 @@ namespace dino::wow::data
 		: ai_reaction_store{data::store{store_base}}
 	{}
 
-	ai_reaction_store::ai_reaction_store(data::store store)
-		: store_{store}
+	ai_reaction_store::ai_reaction_store(data::store&& store)
+		: store_{std::move(store)}
 	{
 		store_->restore_cursor();
 	}
+
+	ai_reaction_store::ai_reaction_store(data::CDataStore* store)
+		: store_{store}
+	{}
+
 
 	ai_reaction_store* ai_reaction_store::operator->() noexcept
 	{

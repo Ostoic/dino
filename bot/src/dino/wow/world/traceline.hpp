@@ -49,4 +49,5 @@ namespace dino::wow::world
 		return traceline(start, end, max_distance, Flags);
 	}
 
+	unsigned int trace_count();
 }

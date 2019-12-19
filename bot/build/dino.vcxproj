@@ -92,10 +92,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DINO_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DINO_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ForcedIncludeFiles>"pch.h"</ForcedIncludeFiles>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -165,14 +167,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\dino\ai\action.hpp" />
+    <ClInclude Include="..\src\dino\ai\agent.hpp" />
+    <ClInclude Include="..\src\dino\ai\behaviour.hpp" />
+    <ClInclude Include="..\src\dino\ai\goal.hpp" />
+    <ClInclude Include="..\src\dino\ai\model.hpp" />
+    <ClInclude Include="..\src\dino\ai\model\trait.hpp" />
+    <ClInclude Include="..\src\dino\ai\planner.hpp" />
+    <ClInclude Include="..\src\dino\ai\utility.hpp" />
+    <ClInclude Include="..\src\dino\config.hpp" />
     <ClInclude Include="..\src\dino\debug.hpp" />
+    <ClInclude Include="..\src\dino\dispatcher.hpp" />
     <ClInclude Include="..\src\dino\emitters\chat_emitter.hpp" />
+    <ClInclude Include="..\src\dino\emitters\net_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\spellcast_emitter.hpp" />
-    <ClInclude Include="..\src\dino\emitters\world_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\endscene_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\gamestate_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\lua_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\emitters.hpp" />
+    <ClInclude Include="..\src\dino\emitters\warden_emitter.hpp" />
+    <ClInclude Include="..\src\dino\emitters\world_emitter.hpp" />
     <ClInclude Include="..\src\dino\events\chat_events.hpp" />
     <ClInclude Include="..\src\dino\events\combat_log_events.hpp" />
     <ClInclude Include="..\src\dino\events\console_events.hpp" />
@@ -180,17 +194,20 @@
     <ClInclude Include="..\src\dino\events\endscene_events.hpp" />
     <ClInclude Include="..\src\dino\events\framexml\guild_events.hpp" />
     <ClInclude Include="..\src\dino\events\framexml\player_events.hpp" />
+    <ClInclude Include="..\src\dino\events\framexml\ui_events.hpp" />
     <ClInclude Include="..\src\dino\events\glue_events.hpp" />
+    <ClInclude Include="..\src\dino\events\net_events.hpp" />
+    <ClInclude Include="..\src\dino\events\server_events.hpp" />
+    <ClInclude Include="..\src\dino\events\spell_events.hpp" />
+    <ClInclude Include="..\src\dino\events\warden_events.hpp" />
     <ClInclude Include="..\src\dino\events\world_events.hpp" />
     <ClInclude Include="..\src\dino\hacks\anti_afk.hpp" />
-    <ClInclude Include="..\src\dino\hacks\cooldown_cheat.hpp" />
     <ClInclude Include="..\src\dino\hacks\translator.hpp" />
-    <ClInclude Include="..\src\dino\handlers\gamestate_handler.hpp" />
     <ClInclude Include="..\src\dino\handlers\task_handler.hpp" />
+    <ClInclude Include="..\src\dino\hook\vmt_hook.hpp" />
     <ClInclude Include="..\src\dino\log.hpp" />
     <ClInclude Include="..\src\dino\log\console_sink.hpp" />
     <ClInclude Include="..\src\dino\log\core.hpp" />
-    <ClInclude Include="..\src\dino\lua.hpp" />
     <ClInclude Include="..\src\dino\offset.hpp" />
     <ClInclude Include="..\src\dino\script\core.hpp" />
     <ClInclude Include="..\src\dino\script\settings.hpp" />
@@ -202,74 +219,95 @@
     <ClInclude Include="..\src\dino\wow\api\objects\cobject_iterator.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cobject_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cunit.hpp" />
-    <ClInclude Include="..\src\dino\wow\chat\emote.hpp" />
     <ClInclude Include="..\src\dino\wow\chat\language.hpp" />
     <ClInclude Include="..\src\dino\wow\chat\message.hpp" />
     <ClInclude Include="..\src\dino\wow\console.hpp" />
+    <ClInclude Include="..\src\dino\wow\cvar.hpp" />
     <ClInclude Include="..\src\dino\wow\data\ai_reaction_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\CDataStore.hpp" />
     <ClInclude Include="..\src\dino\wow\data\combat_log_multiple_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\combat_log_store.hpp" />
-    <ClInclude Include="..\src\dino\wow\data\compressed_guid.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\packed_guid.hpp" />
     <ClInclude Include="..\src\dino\wow\data\cooldown_cheat_store.hpp" />
+    <ClInclude Include="..\src\dino\wow\data\text_emote_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\health_update_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\message_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\mount_result_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\new_world_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\cast_failed_store.hpp" />
     <ClInclude Include="..\src\dino\wow\data\store.hpp" />
+    <ClInclude Include="..\src\dino\wow\db\db.hpp" />
     <ClInclude Include="..\src\dino\wow\framexml\events.hpp" />
     <ClInclude Include="..\src\dino\wow\geometry\vector.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\character_select.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\glue.hpp" />
     <ClInclude Include="..\src\dino\wow\glue\realmlist.hpp" />
     <ClInclude Include="..\src\dino\wow\graphics.hpp" />
+    <ClInclude Include="..\src\dino\wow\guid.cpp" />
     <ClInclude Include="..\src\dino\wow\guid.hpp" />
     <ClInclude Include="..\src\dino\wow\lua.hpp" />
+    <ClInclude Include="..\src\dino\wow\movement\movement.hpp" />
+    <ClInclude Include="..\src\dino\wow\movement\spline.hpp" />
     <ClInclude Include="..\src\dino\wow\net\connection.hpp" />
+    <ClInclude Include="..\src\dino\wow\net\handler.hpp" />
     <ClInclude Include="..\src\dino\wow\net\messages.hpp" />
-    <ClInclude Include="..\src\dino\wow\objects\game_object.hpp" />
-    <ClInclude Include="..\src\dino\wow\objects\object.hpp" />
-    <ClInclude Include="..\src\dino\wow\objects\object_iterator.hpp" />
-    <ClInclude Include="..\src\dino\wow\objects\object_manager.hpp" />
-    <ClInclude Include="..\src\dino\wow\objects\unit.hpp" />
     <ClInclude Include="..\src\dino\wow\object_manager.hpp" />
     <ClInclude Include="..\src\dino\wow\offsets.hpp" />
+    <ClInclude Include="..\src\dino\wow\spell.hpp" />
     <ClInclude Include="..\src\dino\wow\tls.hpp" />
+    <ClInclude Include="..\src\dino\wow\warden\byte_ops.hpp" />
+    <ClInclude Include="..\src\dino\wow\warden\rc4.hpp" />
+    <ClInclude Include="..\src\dino\wow\warden\warden.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\entities\game_object.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\entities\object.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\entities\object_iterator.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\entities\unit.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\entity_manger.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\time.hpp" />
     <ClInclude Include="..\src\dino\wow\world\traceline.hpp" />
+    <ClInclude Include="..\src\dino\wow\world\world.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\dino\ai\action.cpp" />
+    <ClCompile Include="..\src\dino\ai\agent.cpp" />
+    <ClCompile Include="..\src\dino\ai\goal.cpp" />
     <ClCompile Include="..\src\dino\debug.cpp" />
+    <ClCompile Include="..\src\dino\dispatcher.cpp" />
     <ClCompile Include="..\src\dino\emitters\chat_emitter.cpp" />
+    <ClCompile Include="..\src\dino\emitters\lua_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\spellcast_emitter.cpp" />
+    <ClCompile Include="..\src\dino\emitters\warden_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\world_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\endscene_emitter.cpp" />
     <ClCompile Include="..\src\dino\emitters\gamestate_emitter.cpp" />
-    <ClCompile Include="..\src\dino\emitters\lua_emitter.cpp" />
+    <ClCompile Include="..\src\dino\emitters\net_emitter.cpp" />
     <ClCompile Include="..\src\dino\hacks\anti_afk.cpp" />
-    <ClCompile Include="..\src\dino\hacks\cooldown_cheat.cpp" />
     <ClCompile Include="..\src\dino\hacks\translator.cpp" />
-    <ClCompile Include="..\src\dino\handlers\gamestate_handler.cpp" />
     <ClCompile Include="..\src\dino\handlers\task_handler.cpp" />
+    <ClCompile Include="..\src\dino\hook\vmt_hook.cpp" />
     <ClCompile Include="..\src\dino\log\console_sink.cpp" />
     <ClCompile Include="..\src\dino\script\core.cpp" />
     <ClCompile Include="..\src\dino\script\settings.cpp" />
     <ClCompile Include="..\src\dino\session.cpp" />
     <ClCompile Include="..\src\dino\settings.cpp" />
     <ClCompile Include="..\src\dino\version.cpp" />
-    <ClCompile Include="..\src\dino\wow\chat\emote.cpp" />
     <ClCompile Include="..\src\dino\wow\chat\message.cpp" />
     <ClCompile Include="..\src\dino\wow\console.cpp" />
+    <ClCompile Include="..\src\dino\wow\cvar.cpp" />
     <ClCompile Include="..\src\dino\wow\data\ai_reaction_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\CDataStore.cpp" />
     <ClCompile Include="..\src\dino\wow\data\combat_log_multiple_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\combat_log_store.cpp" />
-    <ClCompile Include="..\src\dino\wow\data\compressed_guid.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\packed_guid.cpp" />
     <ClCompile Include="..\src\dino\wow\data\cooldown_cheat_store.cpp" />
+    <ClCompile Include="..\src\dino\wow\data\text_emote_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\health_update_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\mount_result_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\new_world_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\cast_failed_store.cpp" />
     <ClCompile Include="..\src\dino\wow\data\store.cpp" />
+    <ClCompile Include="..\src\dino\wow\db\db.cpp" />
     <ClCompile Include="..\src\dino\wow\framexml\events.cpp" />
     <ClCompile Include="..\src\dino\wow\geometry\vector.cpp" />
     <ClCompile Include="..\src\dino\wow\glue\character_select.cpp" />
@@ -278,6 +316,10 @@
     <ClCompile Include="..\src\dino\wow\graphics.cpp" />
     <ClCompile Include="..\src\dino\wow\lua.cpp" />
     <ClCompile Include="..\src\dino\wow\net\connection.cpp" />
+    <ClCompile Include="..\src\dino\wow\warden\rc4.cpp" />
+    <ClCompile Include="..\src\dino\wow\warden\warden.cpp" />
+    <ClCompile Include="..\src\dino\wow\world\entity_manger.cpp" />
+    <ClCompile Include="..\src\dino\wow\world\time.cpp" />
     <ClCompile Include="..\src\dino\wow\world\traceline.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">

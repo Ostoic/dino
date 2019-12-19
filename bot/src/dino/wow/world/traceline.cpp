@@ -26,4 +26,9 @@ namespace dino::wow::world
 
 		return hit_result{out, result};
 	}
+
+	unsigned int trace_count()
+	{
+		return deref_as<unsigned int>(offsets::world::trace_count);
+	}
 }

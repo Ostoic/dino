@@ -2,7 +2,6 @@
 #include "session.hpp"
 #include "hacks/anti_afk.hpp"
 #include "hacks/translator.hpp"
-#include "hacks/cooldown_cheat.hpp"
 
 #include <fstream>
 #include <nlohmann/json.hpp>
@@ -17,7 +16,6 @@ namespace dino::settings
 		bool hacks_enabled_ = true;
 		bool hacks_anti_afk_ = true;
 		bool hacks_translator_ = true;
-		bool hacks_cooldown_cheat_ = true;
 
 		namespace
 		{
@@ -27,37 +25,26 @@ namespace dino::settings
 				const auto state = settings::hacks::enabled();
 			}
 		}
+	}
 
-		void initialize()
-		{
-			static bool initialize_ = [] {
-				auto& dispatcher = session::dispatcher();
-				dispatcher
-					.sink<events::setting_changed<hacks::anti_afk>>()
-					.connect<dino::hacks::anti_afk::on_setting_change>();
+	void initialize()
+	{
+		static bool initialize_ = [] {
+			dispatcher::sink<events::setting_changed<hacks::anti_afk>>()
+				.connect<dino::hacks::anti_afk::on_setting_change>();
 
-				dispatcher
-					.sink<events::setting_changed<hacks::translator>>()
-					.connect<dino::hacks::translator::on_setting_change>();
+			dispatcher::sink<events::setting_changed<hacks::translator>>()
+				.connect<dino::hacks::translator::on_setting_change>();
 
-				dispatcher
-					.sink<events::setting_changed<hacks::cooldown_cheat>>()
-					.connect<dino::hacks::cooldown_cheat::on_setting_change>();
+			dispatcher::sink<events::setting_changed<hacks::enabled>>()
+				.connect<internal::on_enabled_change>();
 
-				dispatcher
-					.sink<events::setting_changed<hacks::enabled>>()
-					.connect<on_enabled_change>();
-
-				settings::modify<fps>(fps());
-				settings::modify<hacks::enabled>(hacks::enabled());
-				settings::modify<hacks::anti_afk>(hacks::anti_afk());
-				settings::modify<hacks::translator>(hacks::translator());
-				settings::modify<hacks::cooldown_cheat>(hacks::cooldown_cheat());
-				return true;
-			}();
-
-			static_cast<void>(initialize);
-		}
+			settings::modify<fps>(fps());
+			settings::modify<hacks::enabled>(hacks::enabled());
+			settings::modify<hacks::anti_afk>(hacks::anti_afk());
+			settings::modify<hacks::translator>(hacks::translator());
+			return true;
+		}();
 	}
 
 	namespace hacks
@@ -75,11 +62,6 @@ namespace dino::settings
 		bool translator() noexcept
 		{
 			return internal::hacks_translator_;
-		}
-
-		bool cooldown_cheat() noexcept
-		{
-			return internal::hacks_cooldown_cheat_;
 		}
 	}
 

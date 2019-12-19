@@ -6,9 +6,9 @@
 
 namespace dino::wow::chat
 {
-	message::message(data::store store)
+	message::message(data::store&& store)
 	{
-		auto mstore = data::message_store{store};
+		auto mstore = data::message_store{std::move(store)};
 		text_ = mstore->text();
 		channel_ = mstore->channel().value_or("");
 		msg_type_ = mstore->msg_type();

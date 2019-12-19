@@ -64,7 +64,7 @@ namespace dino::wow::lua
 
 	std::string get_text(const std::string& variable_name)
 	{
-		const auto get = bind_fn<const char*(const char*, int, int)>(
+		const auto get = deref_as<const char*(const char*, int, int)>(
 			offsets::lua::framescript_get_text_fn
 		);
 

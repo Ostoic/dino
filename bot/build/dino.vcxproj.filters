@@ -46,9 +46,6 @@
     <Filter Include="Header Files\dino\wow\glue">
       <UniqueIdentifier>{1409a225-5c1f-4020-9fc7-288d0cb4ff9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\dino\wow\objects">
-      <UniqueIdentifier>{2b4ccb0c-dd64-4384-8a2e-07b1280fc295}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\dino\wow\api">
       <UniqueIdentifier>{bf130f68-6edb-4d2c-92a6-d731099e0ae7}</UniqueIdentifier>
     </Filter>
@@ -115,6 +112,48 @@
     <Filter Include="Source Files\dino\wow\geometry">
       <UniqueIdentifier>{46f1caa1-3c74-46f2-a2fa-432a122c8146}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\dino\ai">
+      <UniqueIdentifier>{751588c1-1e4a-4e3b-83a0-b30b6861fc47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\ai\sensors">
+      <UniqueIdentifier>{a71e8683-f715-49d6-a09b-b38859590d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\db">
+      <UniqueIdentifier>{93aa8198-3314-45cf-9082-89c3d78aa05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\db">
+      <UniqueIdentifier>{1b66fc8c-e4a2-41a8-b07f-d8b961df3e34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\ai">
+      <UniqueIdentifier>{8c43e109-ce7b-454f-a3a5-624987196559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\ai\model">
+      <UniqueIdentifier>{87f93013-088d-4793-a0f4-beb3d7d7b3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\ai\actions">
+      <UniqueIdentifier>{c4a47a32-34cf-4b04-8f0b-d0abeb0a7cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\warden">
+      <UniqueIdentifier>{0514ec6f-d3b9-4aaf-b699-54a6458d1b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\warden">
+      <UniqueIdentifier>{95edaf86-d75f-4815-ba70-c711523b4f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\movement">
+      <UniqueIdentifier>{325f9397-74cc-4b3d-a33d-0d862919771c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\hook">
+      <UniqueIdentifier>{a762c60c-1aa1-4064-ab72-a9318070baf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\hook">
+      <UniqueIdentifier>{463a40ac-6596-4629-8122-cdc2f09365d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dino\wow\world\entities">
+      <UniqueIdentifier>{6e06e0e8-4721-46b1-935b-cc5291abec3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\wow\world\entities">
+      <UniqueIdentifier>{8f81ac2a-6b63-4d5f-bff0-7c71702eeb46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -147,9 +186,6 @@
     <ClInclude Include="..\src\dino\debug.hpp">
       <Filter>Header Files\dino</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\game_object.hpp">
-      <Filter>Header Files\dino\wow\objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\wow\glue\glue.hpp">
       <Filter>Header Files\dino\wow\glue</Filter>
     </ClInclude>
@@ -162,17 +198,8 @@
     <ClInclude Include="..\src\dino\wow\lua.hpp">
       <Filter>Header Files\dino\wow</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\object.hpp">
-      <Filter>Header Files\dino\wow\objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\wow\object_manager.hpp">
       <Filter>Header Files\dino\wow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\object_manager.hpp">
-      <Filter>Header Files\dino\wow\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\object_iterator.hpp">
-      <Filter>Header Files\dino\wow\objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\offset.hpp">
       <Filter>Header Files\dino</Filter>
@@ -188,9 +215,6 @@
     </ClInclude>
     <ClInclude Include="..\src\dino\handlers\task_handler.hpp">
       <Filter>Header Files\dino\handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\objects\unit.hpp">
-      <Filter>Header Files\dino\wow\objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\version.hpp">
       <Filter>Header Files\dino</Filter>
@@ -240,17 +264,8 @@
     <ClInclude Include="..\src\dino\events\glue_events.hpp">
       <Filter>Header Files\dino\events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\handlers\gamestate_handler.hpp">
-      <Filter>Header Files\dino\handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\wow\chat\emote.hpp">
-      <Filter>Header Files\dino\wow\chat</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\wow\chat\language.hpp">
       <Filter>Header Files\dino\wow\chat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\lua.hpp">
-      <Filter>Header Files\dino</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\log\console_sink.hpp">
       <Filter>Header Files\dino\log</Filter>
@@ -266,9 +281,6 @@
     </ClInclude>
     <ClInclude Include="..\src\dino\events\world_events.hpp">
       <Filter>Header Files\dino\events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\emitters\world_emitter.hpp">
-      <Filter>Header Files\dino\emitters</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\chat\message.hpp">
       <Filter>Header Files\dino\wow\chat</Filter>
@@ -296,9 +308,6 @@
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\geometry\vector.hpp">
       <Filter>Header Files\dino\wow\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\hacks\cooldown_cheat.hpp">
-      <Filter>Header Files\dino\hacks</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dino\wow\data\health_update_store.hpp">
       <Filter>Header Files\dino\wow\data</Filter>
@@ -330,7 +339,121 @@
     <ClInclude Include="..\src\dino\emitters\emitters.hpp">
       <Filter>Header Files\dino\emitters</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\wow\data\compressed_guid.hpp">
+    <ClInclude Include="..\src\dino\ai\utility.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\db\db.hpp">
+      <Filter>Header Files\dino\wow\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\framexml\ui_events.hpp">
+      <Filter>Header Files\dino\events\framexml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\agent.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\action.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\model.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\guid.cpp">
+      <Filter>Source Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\server_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data\text_emote_store.hpp">
+      <Filter>Header Files\dino\wow\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\spell_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\planner.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\goal.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\warden_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\world_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\warden_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\warden\warden.hpp">
+      <Filter>Header Files\dino\wow\warden</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\warden\rc4.hpp">
+      <Filter>Header Files\dino\wow\warden</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\movement\movement.hpp">
+      <Filter>Header Files\dino\wow\movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\movement\spline.hpp">
+      <Filter>Header Files\dino\wow\movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data\packed_guid.hpp">
+      <Filter>Header Files\dino\wow\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\spell.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\world.hpp">
+      <Filter>Header Files\dino\wow\world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\hook\vmt_hook.hpp">
+      <Filter>Header Files\dino\hook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\net_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\events\net_events.hpp">
+      <Filter>Header Files\dino\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\cvar.hpp">
+      <Filter>Header Files\dino\wow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\entities\object.hpp">
+      <Filter>Header Files\dino\wow\world\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\entities\object_iterator.hpp">
+      <Filter>Header Files\dino\wow\world\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\entities\unit.hpp">
+      <Filter>Header Files\dino\wow\world\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\entities\game_object.hpp">
+      <Filter>Header Files\dino\wow\world\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\time.hpp">
+      <Filter>Header Files\dino\wow\world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\world\entity_manger.hpp">
+      <Filter>Header Files\dino\wow\world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\dispatcher.hpp">
+      <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\warden\byte_ops.hpp">
+      <Filter>Header Files\dino\wow\warden</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\config.hpp">
+      <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\net\handler.hpp">
+      <Filter>Header Files\dino\wow\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\behaviour.hpp">
+      <Filter>Header Files\dino\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\ai\model\trait.hpp">
+      <Filter>Header Files\dino\ai\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\wow\data\CDataStore.hpp">
       <Filter>Header Files\dino\wow\data</Filter>
     </ClInclude>
   </ItemGroup>
@@ -354,9 +477,6 @@
       <Filter>Source Files\dino\wow\glue</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\graphics.cpp">
-      <Filter>Source Files\dino\wow</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\wow\lua.cpp">
       <Filter>Source Files\dino\wow</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\glue\realmlist.cpp">
@@ -389,20 +509,11 @@
     <ClCompile Include="..\src\dino\hacks\translator.cpp">
       <Filter>Source Files\dino\hacks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dino\emitters\lua_emitter.cpp">
-      <Filter>Source Files\dino\emitters</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\dino\wow\framexml\events.cpp">
       <Filter>Source Files\dino\wow\framexml</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\emitters\gamestate_emitter.cpp">
       <Filter>Source Files\dino\emitters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\handlers\gamestate_handler.cpp">
-      <Filter>Source Files\dino\handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\wow\chat\emote.cpp">
-      <Filter>Source Files\dino\wow\chat</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\log\console_sink.cpp">
       <Filter>Source Files\dino\log</Filter>
@@ -427,9 +538,6 @@
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\world\traceline.cpp">
       <Filter>Source Files\dino\wow\world</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\dino\hacks\cooldown_cheat.cpp">
-      <Filter>Source Files\dino\hacks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\data\health_update_store.cpp">
       <Filter>Source Files\dino\wow\data</Filter>
@@ -458,7 +566,58 @@
     <ClCompile Include="..\src\dino\wow\geometry\vector.cpp">
       <Filter>Source Files\dino\wow\geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dino\wow\data\compressed_guid.cpp">
+    <ClCompile Include="..\src\dino\wow\db\db.cpp">
+      <Filter>Source Files\dino\wow\db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\lua.cpp">
+      <Filter>Source Files\dino\wow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\ai\agent.cpp">
+      <Filter>Source Files\dino\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\ai\action.cpp">
+      <Filter>Source Files\dino\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data\text_emote_store.cpp">
+      <Filter>Source Files\dino\wow\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\ai\goal.cpp">
+      <Filter>Source Files\dino\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\warden_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\warden\warden.cpp">
+      <Filter>Source Files\dino\wow\warden</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data\packed_guid.cpp">
+      <Filter>Source Files\dino\wow\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\warden\rc4.cpp">
+      <Filter>Source Files\dino\wow\warden</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\hook\vmt_hook.cpp">
+      <Filter>Source Files\dino\hook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\lua_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\net_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\cvar.cpp">
+      <Filter>Source Files\dino\wow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\world\time.cpp">
+      <Filter>Source Files\dino\wow\world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\world\entity_manger.cpp">
+      <Filter>Source Files\dino\wow\world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\dispatcher.cpp">
+      <Filter>Source Files\dino</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\data\CDataStore.cpp">
       <Filter>Source Files\dino\wow\data</Filter>
     </ClCompile>
   </ItemGroup>

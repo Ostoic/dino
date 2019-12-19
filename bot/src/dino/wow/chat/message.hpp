@@ -125,7 +125,7 @@ namespace dino::wow::chat
 		};
 
 	public:
-		explicit message(data::store store);
+		explicit message(data::store&& store);
 
 	public:
 		const std::string& text() const noexcept;

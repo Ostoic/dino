@@ -1,30 +1,66 @@
 #include "gamestate_emitter.hpp"
+#include "net_emitter.hpp"
+#include "lua_emitter.hpp"
+#include "warden_emitter.hpp"
+#include "spellcast_emitter.hpp"
+#include "chat_emitter.hpp"
+#include "world_emitter.hpp"
 
 #include "../session.hpp"
-#include "../events/glue_events.hpp"
-
-#include "../wow/console.hpp"
 #include "../wow/lua.hpp"
-
 #include "../log.hpp"
 
+#include "../events/glue_events.hpp"
+#include "../events/framexml/player_events.hpp"
+#include "../events/framexml/ui_events.hpp"
+
 #include <obfuscator.hpp>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace dino::emitters
 {
 	namespace
 	{
+		void reinstall_manditory_emitters(const events::gamestate_change& event)
+		{
+			constexpr auto either_ingame = [](const auto& left, const auto& right)
+			{
+				return left == wow::glue::screen::ingame || right == wow::glue::screen::ingame;
+			};
+
+			if (either_ingame(event.before, event.after) || event.before == event.after)
+			{
+				log::info(OBFUSCATE("[reinstall_lua_emitter] reinstalling lua_emitter..."));
+				emitters::lua_emitter::uninstall();
+				emitters::lua_emitter::install();
+			}
+
+			//emitters::warden_emitter::install();
+			emitters::net_emitter::install();
+		}
+
 		void emit_gamestate_change(const wow::glue::screen prev_screen, const wow::glue::screen current_screen)
 		{
-			auto& dispatcher = dino::session::dispatcher();
-
 			if (current_screen == wow::glue::screen::ingame)
-				dispatcher.enqueue<events::gamestate_change_ingame>({prev_screen, current_screen});
+				dispatcher::enqueue<events::gamestate_change_ingame>({prev_screen, current_screen});
 
 			else if (current_screen == wow::glue::screen::login)
-				dispatcher.enqueue<events::gamestate_change_login>({prev_screen, current_screen});
+				dispatcher::enqueue<events::gamestate_change_login>({prev_screen, current_screen});
 
-			dispatcher.enqueue<events::gamestate_change>({prev_screen, current_screen});
+			dispatcher::enqueue<events::gamestate_change>({prev_screen, current_screen});
+		}
+
+		void update_gamestate_change(const wow::glue::screen current_screen)
+		{
+			if (current_screen == wow::glue::screen::ingame)
+				dispatcher::update<events::gamestate_change_ingame>();
+
+			else if (current_screen == wow::glue::screen::login)
+				dispatcher::update<events::gamestate_change_login>();
+
+			dispatcher::update<events::gamestate_change>();
 		}
 
 		void check_gamestate_check(const events::endscene_frame& event)
@@ -36,14 +72,35 @@ namespace dino::emitters
 			{
 				emit_gamestate_change(prev_screen, current_screen);
 				prev_screen = current_screen;
-				dino::session::dispatcher()
-					.update<events::gamestate_change>();
+				update_gamestate_change(current_screen);
 			}
+		}
+
+		void on_ui_error_message(const events::framexml::received_ui_error_message& event)
+		{
+			auto json = json::parse(event.data);
+			log::info(OBFUSCATE("[lua_emitter] [on_ui_error_message] action.data(): {}"), event.data);
+		}
+
+		void enter_world(const events::gamestate_change_ingame& event)
+		{
+			emitters::lua_emitter::emit_on<events::framexml::received_ui_error_message, on_ui_error_message>(
+				wow::framexml::event::ui_error_message,
+				OBFUSCATE("emit:ui-error")
+			);
+
+			emitters::chat_emitter::install();
+			emitters::world_emitter::install();
+			emitters::spellcast_emitter::install();
 		}
 
 		void log_gamestate(const events::gamestate_change& event)
 		{
-			log::info(OBFUSCATE("CURRENT_GLUE_SCREEN: {}"), wow::lua::get_text(OBFUSCATE("CURRENT_GLUE_SCREEN")));
+			const auto id = dino::session::identity();
+			spdlog::set_pattern(fmt::format("[%Y-%m-%d %H:%M:%S.%e] [%n] [%l]{} %v",
+				id.empty() ? ("") : (fmt::format(" [{}]", id))
+			));
+
 			log::info(OBFUSCATE("{} -> {}"), to_string(event.before), to_string(event.after));
 		}
 	}
@@ -51,13 +108,19 @@ namespace dino::emitters
 	void gamestate_emitter::install()
 	{
 		// Setup gamestate driver
-		dino::session::dispatcher()
-			.sink<events::endscene_frame>()
+		dispatcher::sink<events::endscene_frame>()
 			.connect<check_gamestate_check>();
 
+		 //Handle gamestate_change
+		dispatcher::sink<events::gamestate_change>()
+			.connect<reinstall_manditory_emitters>();
+
+		// Handle enter_world
+		dispatcher::sink<events::gamestate_change_ingame>()
+			.connect<enter_world>();
+
 		// Enable gamestate logging
-		dino::session::dispatcher()
-			.sink<events::gamestate_change>()
+		dispatcher::sink<events::gamestate_change>()
 			.connect<log_gamestate>();
 
 		const auto screen = wow::glue::current_screen();
@@ -66,12 +129,20 @@ namespace dino::emitters
 
 	void gamestate_emitter::uninstall()
 	{
-		dino::session::dispatcher()
-			.sink<events::endscene_frame>()
+		// Disconnect gamestate handler
+		dispatcher::sink<events::endscene_frame>()
 			.disconnect<check_gamestate_check>();
 
-		dino::session::dispatcher()
-			.sink<events::gamestate_change>()
+		// Disconnect gamestate_change handler
+		dispatcher::sink<events::gamestate_change>()
+			.disconnect<reinstall_manditory_emitters>();
+
+		// Disconnect enter_world handler
+		dispatcher::sink<events::gamestate_change_ingame>()
+			.disconnect<enter_world>();
+
+		// Disable gamestate logging
+		dispatcher::sink<events::gamestate_change>()
 			.disconnect<log_gamestate>();
 	}
 }

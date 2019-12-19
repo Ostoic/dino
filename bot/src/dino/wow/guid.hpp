@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
 
 namespace dino::wow
 {
@@ -12,40 +13,52 @@ namespace dino::wow
 		constexpr explicit guid(std::uint64_t value);
 		constexpr int low() const noexcept;
 		constexpr int high() const noexcept;
+		explicit guid(std::string value);
 
 		constexpr operator std::uint64_t() const noexcept;
 
 	private:
-		std::uint64_t value_;
+		int low_;
+		int high_;
 	};
+
+}
+
+inline std::ostream& operator<<(std::ostream& out, const dino::wow::guid& guid)
+{
+	out << fmt::format("{:#08x}", static_cast<std::uint64_t>(guid));
+	return out;
 }
 
 namespace dino::wow
 {
 	constexpr guid::guid()
-		: value_{0}
+		: low_{0}
+		, high_{0}
 	{}
 
 	constexpr guid::guid(int low, int high)
-		: value_{(static_cast<std::uint64_t>(high) << 32) | static_cast<std::uint64_t>(low)}
+		: low_{low}
+		, high_{high}
 	{}
 
 	constexpr guid::guid(const std::uint64_t value)
-		: value_{value}
+		: low_{static_cast<int>(value)}
+		, high_{static_cast<int>(value >> 32)}
 	{}
 
 	constexpr int guid::low() const noexcept
 	{
-		return static_cast<int>(value_);
+		return static_cast<int>(low_);
 	}
 
 	constexpr int guid::high() const noexcept
 	{
-		return static_cast<int>(value_ >> 32);
+		return static_cast<int>(high_);
 	}
 
 	constexpr guid::operator std::uint64_t() const noexcept
 	{
-		return value_;
+		return static_cast<std::uint64_t>(low_) | (static_cast<std::uint64_t>(high_) << 32);
 	}
 }

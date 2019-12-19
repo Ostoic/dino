@@ -10,6 +10,19 @@ namespace dino::wow::console
 {
 	using command_t = int(const char*, const char*);
 
+	enum class color
+	{
+		standard = 0,
+		input = 1,
+		echo = 2,
+		error = 3,
+		warning = 4,
+		global = 5,
+		admin = 6,
+		highlight = 7,
+		background = 8,
+	};
+
 	void clear();
 	void close();
 	void open();
@@ -51,18 +64,18 @@ namespace dino::wow::console
 	//bool register_command(const std::string& name, fn_ptr<command_t> command);
 
 	template <class... Args>
-	void write(const std::string& format, Args&&... args)
+	void write(const std::string& format, const color color = color::standard, Args&&... args)
 	{
 		if (console::num_lines() >= 256)
 			console::clear();
 
-		auto write = bind_fn<void(const char*, int)>(offsets::console::write_fn);
-		write(fmt::format(format, std::forward<Args>(args)...).c_str(), 0);
+		auto write = bind_fn<void(const char*, console::color)>(offsets::console::write_fn);
+		write(fmt::format(format, std::forward<Args>(args)...).c_str(), color);
 	}
 
 	template <class... Args>
 	void dino(const std::string& format, Args&&... args)
 	{
-		return write(fmt::format("[dino] {}", format), std::forward<Args>(args)...);
+		return console::write(fmt::format("[dino] {}", format), std::forward<Args>(args)...);
 	}
 }

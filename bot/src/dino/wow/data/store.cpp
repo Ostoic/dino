@@ -2,7 +2,10 @@
 
 #include "../offsets.hpp"
 #include "../console.hpp"
-#include "compressed_guid.hpp"
+#include "packed_guid.hpp"
+#include "CDataStore.hpp"
+
+#include "../../log.hpp"
 
 namespace dino::wow::data
 {
@@ -16,46 +19,57 @@ namespace dino::wow::data
 		return this;
 	}
 
+	store::store(CDataStore* cdata_store, unsigned int initial_cursor)
+		: store_{cdata_store}
+		, initial_cursor_{initial_cursor}
+	{}
+
 	store::store(address base)
-		: class_base_{base}
+		: store{base, 2}
 	{
 		initial_cursor_ = this->cursor();
 	}
 
 	store::store(address class_base, unsigned int cursor)
-		: store{class_base}
-	{
-		initial_cursor_ = cursor;
-	}
+		: store{reinterpret_cast<CDataStore*>(static_cast<unsigned int>(class_base)), cursor}
+	{}
+
+	store::store(store&& store)
+		: store{store.store_, store->cursor()}
+	{}
 
 	store::store(const store& store, unsigned int initial_cursor)
-		: store{store.class_base_, initial_cursor}
+		: store{store.store_, initial_cursor}
 	{}
+
+	store::~store()
+	{
+		this->restore_cursor();
+	}
 
 	std::size_t store::size() const
 	{
-		return deref_as<unsigned int>(class_base_ + offsets::store::size);
+		return store_->m_size;
 	}
 
 	address store::class_base()
 	{
-		return class_base_;
+		return store_;
 	}
 
 	address store::base() const
 	{
-		return deref_as<address>(class_base_ + offsets::store::base);
+		return store_->m_base;
 	}
 
 	std::size_t store::cursor() const
 	{
-		return deref_as<unsigned int>(class_base_ + offsets::store::bytes_pulled);
+		return store_->m_cursor;
 	}
 
 	void store::seek(unsigned int cursor)
 	{
-		auto& bytes_pulled = deref_as<unsigned int>(class_base_ + offsets::store::bytes_pulled);
-		bytes_pulled = cursor;
+		store_->m_cursor = cursor;
 	}
 
 	void store::restore_cursor()
@@ -65,17 +79,7 @@ namespace dino::wow::data
 
 	char* store::buffer()
 	{
-		return deref_as<char*>(class_base_ + offsets::store::buffer);
-	}
-
-	float store::pull_float()
-	{
-		return this->generic_pull<float>(offsets::store::get_float);
-	}
-
-	data::compressed_guid store::pull_compressed_guid()
-	{
-		return data::compressed_guid{*this};
+		return reinterpret_cast<char*>(store_->m_buffer);
 	}
 
 	void store::put_float(const float value)
@@ -108,59 +112,61 @@ namespace dino::wow::data
 	//	//this->generic_put<float>(offsets::store::put_float, value);
 	//}
 
+	float store::pull_float()
+	{
+		float result;
+		store_->GetFloat(&result);
+		return result;
+	}
+
+	data::packed_guid store::pull_packed_guid()
+	{
+		guid result;
+		store_->GetPackedGUID(&result);
+		return packed_guid{std::move(result)};
+	}
+
 	std::int64_t store::pull_int64()
 	{
-		return this->generic_pull<std::int64_t>(offsets::store::get_int64);
+		std::int64_t result;
+		store_->GetInt64(&result);
+		return result;
 	}
 
 	std::int32_t store::pull_int32()
 	{
-		return this->generic_pull<std::int32_t>(offsets::store::get_int32);
+		std::int32_t result;
+		store_->GetInt32(&result);
+		return result;
 	}
 
 	std::int16_t store::pull_int16()
 	{
-		return this->generic_pull<std::int32_t>(offsets::store::get_int16);
+		std::int16_t result;
+		store_->GetInt16(&result);
+		return result;
 	}
 
 	std::int8_t store::pull_int8()
 	{
-		return this->generic_pull<std::int8_t>(offsets::store::get_int8);
+		std::int8_t result;
+		store_->GetInt8(&result);
+		return result;
 	}
 
 	char* store::pull_string_ptr(const std::size_t max_length)
 	{
-		const auto internal_pull = reinterpret_cast<void(__fastcall*)(void*, void*, char**, unsigned int)>(
-			static_cast<unsigned int>(offsets::store::get_string_ptr)
-		);
-
-		char* data = nullptr;
-		internal_pull(
-			reinterpret_cast<void*>(static_cast<unsigned int>(class_base_)),
-			nullptr,
-			&data,
-			static_cast<unsigned int>(max_length)
-		);
-
-		return data;
+		char* ptr = nullptr;
+		store_->GetStringPtr(&ptr, max_length);
+		return ptr;
 	}
 
 	std::string store::pull_string(const std::size_t max_length)
 	{
-		const auto internal_pull = reinterpret_cast<void(__fastcall*)(void*, void*, char*, unsigned int)>(
-			static_cast<unsigned int>(offsets::store::get_string)
-		);
-
 		std::string data;
 		data.resize(max_length, 0);
 
-		internal_pull(
-			reinterpret_cast<void*>(static_cast<unsigned int>(class_base_)),
-			nullptr,
-			data.data(),
-			static_cast<unsigned int>(max_length)
-		);
-
-		return std::string{data.data()};
+		store_->GetString(data.data(), max_length);
+		return std::string{data};
 	}
 }

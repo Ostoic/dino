@@ -5,6 +5,7 @@
 namespace dino
 {
 	using address = distant::address;
+	using byte = unsigned char;
 
 	template <class To>
 	To& bind_value(address address)

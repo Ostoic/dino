@@ -1,25 +1,25 @@
-#include "emote.hpp"
+#include "text_emote_store.hpp"
 #include "../console.hpp"
 #include "../guid.hpp"
 
-namespace dino::wow::chat
+namespace dino::wow::data
 {
-	emote::emote(const address cdata)
-		: emote{data::store{cdata}}
+	text_emote_store::text_emote_store(const address store_base)
+		: store_{store_base}
 	{}
 
-	emote::emote(const data::store store)
-		: store_{store}
+	text_emote_store::text_emote_store(data::store&& store)
+		: store_{std::move(store)}
 	{}
 
-	guid emote::sender_guid() const
+	guid text_emote_store::sender_guid() const
 	{
 		const auto result = store_->pull<wow::guid>();
 		store_->restore_cursor();
 		return guid{result};
 	}
 
-	std::string emote::target_name() const
+	std::string text_emote_store::target_name() const
 	{
 		store_->pull<wow::guid>();
 		store_->pull<int>();

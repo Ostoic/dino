@@ -34,6 +34,11 @@ namespace dino::emitters
 		return bind_value(wow::graphics::get_ptr_address()) != endscene_emitter::original_endscene;
 	}
 
+	std::chrono::nanoseconds endscene_emitter::last_hook_runtime() const
+	{
+		return last_hook_runtime_;
+	}
+
 	__declspec(naked) void endscene_hook()
 	{
 		using clock = std::chrono::high_resolution_clock;
@@ -60,9 +65,12 @@ namespace dino::emitters
 			last_frame_time = clock::now();
 			try
 			{
-				//log::info("frame");
-				dino::session::dispatcher().enqueue(events::endscene_frame{frame_duration});
-				dino::session::dispatcher().update();
+				const auto start = clock::now();
+				dispatcher::enqueue(events::endscene_frame{frame_duration});
+				dispatcher::update();
+
+				const auto end = clock::now();
+				endscene_emitter::get().last_hook_runtime_ = (end - start);
 			}
 			catch (const std::exception& e)
 			{
@@ -107,11 +115,6 @@ namespace dino::emitters
 			popad
 			jmp original_endscene;
 		};
-	}
-
-	void endscene_emitter::update_session()
-	{
-		dino::session::get().update();
 	}
 
 	endscene_emitter::endscene_emitter()

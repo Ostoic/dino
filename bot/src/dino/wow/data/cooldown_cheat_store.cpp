@@ -3,11 +3,11 @@
 namespace dino::wow::data
 {
 	cooldown_cheat_store::cooldown_cheat_store(address store_base)
-		: cooldown_cheat_store{data::store{store_base}}
+		: store_{store_base}
 	{}
 
-	cooldown_cheat_store::cooldown_cheat_store(data::store store)
-		: store_{store}
+	cooldown_cheat_store::cooldown_cheat_store(data::store&& store)
+		: store_{std::move(store)}
 	{
 		store_->restore_cursor();
 	}

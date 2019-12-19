@@ -9,7 +9,7 @@ namespace dino::wow::console
 {
 	void clear()
 	{
-		bind_value<unsigned int>(offsets::console::num_lines) = 257;
+		//bind_value<unsigned int>(offsets::console::num_lines) = 0;
 		bind_fn<void()>(offsets::console::clear_fn)();
 	}
 
@@ -60,7 +60,7 @@ namespace dino::wow::console
 
 	std::string last_line()
 	{
-		return std::string{bind_value<char[64]>(offsets::console::last_line)};
+		return std::string{bind_value<const char[64]>(offsets::console::last_line)};
 	}
 
 	command last_command()

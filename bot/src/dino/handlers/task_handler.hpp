@@ -9,6 +9,10 @@
 #include <thread>
 #include <functional>
 
+#include "../log.hpp"
+
+namespace dino { class session; }
+
 namespace dino::handlers
 {
 	class task_handler
@@ -30,9 +34,20 @@ namespace dino::handlers
 		template <class Fn>
 		static bool queue_async_task(Fn&& fn);
 
+		enum class transient_state
+		{
+			pass, disconnect
+		};
+
+	private:
+		friend class dino::session;
+
+		template <class Event>
+		static std::queue<std::function<transient_state(const Event&)>>& transients();
+
 	private:
 		std::queue<std::function<void()>> tasks_;
-		std::timed_mutex mutex_;
+		//std::timed_mutex mutex_;
 	};
 }
 
@@ -47,6 +62,7 @@ namespace dino::handlers
 		//if (!lock.try_lock_for(100ms))
 		//	return false;
 
+		log::info("task_handler::queue_task");
 		handler.tasks_.emplace(std::forward<Fn>(fn));
 		return true;
 	}
@@ -54,21 +70,31 @@ namespace dino::handlers
 	template <class Duration, class Fn>
 	bool task_handler::queue_async_task(Duration duration, Fn&& fn)
 	{
-		return queue_task([&fn, duration] {
-			std::thread{[&] {
-				std::this_thread::sleep_for(duration);
-				std::forward<Fn>(fn)();
-			}}.detach();
-		});
+		log::info("task_handler::queue_async_task");
+		std::thread{[&] {
+			log::info("inside new thread!");
+			std::this_thread::sleep_for(duration);
+			task_handler::queue_task(std::forward<Fn>(fn));
+		}}.detach();
+		return true;
 	}
 
 	template <class Fn>
 	bool task_handler::queue_async_task(Fn&& fn)
 	{
-		return queue_task([&fn] {
-			std::thread{[&] {
-				std::forward<Fn>(fn)();
-			}}.detach();
-		});
+		log::info("task_handler::queue_async_task");
+		std::thread{[&] {
+			log::info("inside new thread!");
+			task_handler::queue_task(std::forward<Fn>(fn));
+			log::info("after in thread!");
+		}}.detach();
+		return true;
+	}
+
+	template <class Event>
+	static std::queue<std::function<task_handler::transient_state(const Event&)>>& task_handler::transients()
+	{
+		static std::queue<std::function<task_handler::transient_state(const Event&)>> transients_;
+		return transients_;
 	}
 }

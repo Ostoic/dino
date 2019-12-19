@@ -16,4 +16,11 @@ namespace dino::wow::geometry
 
 		return is_valid_position_(&vector, 2.f);
 	}
+
+	vector front_of(const position& position, float magnitude)
+	{
+		return static_cast<vector>(position)
+			+ vector{magnitude * std::sin(position.rotation()), magnitude * std::cos(position.rotation()), position.z()};
+	}
+
 }

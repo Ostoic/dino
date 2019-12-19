@@ -8,7 +8,8 @@ namespace dino::wow::data
 	{
 	public:
 		explicit combat_log_store(address store_base);
-		explicit combat_log_store(data::store store);
+		explicit combat_log_store(data::store&& store);
+		explicit combat_log_store() = default;
 
 		combat_log_store* operator->() noexcept;
 		const combat_log_store* operator->() const noexcept;

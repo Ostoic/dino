@@ -3,6 +3,8 @@
 #include "../wow/data/store.hpp"
 #include "../wow/offsets.hpp"
 
+#include <boost/mp11/list.hpp>
+
 namespace dino::events
 {
 	struct received_combat_log_multiple
@@ -94,4 +96,17 @@ namespace dino::events
 		mutable wow::data::store store;
 		mutable bool* drop_packet;
 	};
+
+	using combat_log_events = boost::mp11::mp_list<
+		received_spell_steal_log,
+		received_spell_dispell_log,
+		received_spell_break_log,
+		received_spell_energize_log,
+		received_spell_heal_log,
+		received_spell_log_miss,
+		received_spell_log_execute,
+		received_spell_non_melee_damage_log,
+		received_periodic_aura_log,
+		received_combat_log_multiple
+	>;
 }

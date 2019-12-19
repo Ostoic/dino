@@ -18,12 +18,11 @@ namespace dino::emitters
 		static void emit_on(const wow::framexml::event event, const std::string& name)
 		{
 			wow::lua::run(
-				OBFUSCATE("dino.register('{}', '{}', function(args) dino_action = 'event.emit' dino_action_data = args end)"),
+				OBFUSCATE("dino.internals.register('{}', '{}', function(args) dino_action = 'event.emit' dino_action_data = args end)"),
 				name, to_string(event)
 			);
 
-			dino::session::get().dispatcher()
-				.sink<Event>()
+			dispatcher::sink<Event>()
 				.connect<Fn>();
 		}
 

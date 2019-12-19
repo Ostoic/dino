@@ -9,7 +9,8 @@ namespace dino::wow::data
 	{
 	public:
 		explicit health_update_store(address store_base);
-		explicit health_update_store(data::store store);
+		explicit health_update_store(data::store&& store);
+		explicit health_update_store() = default;
 
 		health_update_store* operator->() noexcept;
 		const health_update_store* operator->() const noexcept;

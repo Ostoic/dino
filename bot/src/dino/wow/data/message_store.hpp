@@ -13,8 +13,9 @@ namespace dino::wow::data
 	struct message_store
 	{
 	public:
-		explicit message_store(data::store data);
+		explicit message_store(data::store&& data);
 		explicit message_store(address cdata);
+		explicit message_store() = default;
 
 		message_store* operator->();
 		const message_store* operator->() const;
@@ -34,6 +35,10 @@ namespace dino::wow::data
 
 		void seek_end();
 
+		unsigned int cursor() const;
+
+		void restore_cursor() noexcept;
+
 	private:
 		mutable data::store store_;
 		chat::message::type msg_type_;
@@ -43,8 +48,8 @@ namespace dino::wow::data
 namespace dino::wow::data
 {
 	template <bool IsGmChat>
-	message_store<IsGmChat>::message_store(data::store store)
-		: store_{store}
+	message_store<IsGmChat>::message_store(data::store&& store)
+		: store_{std::move(store)}
 		, msg_type_{static_cast<chat::message::type>(store_->pull<char>())}
 	{
 		store_->restore_cursor();
@@ -70,6 +75,7 @@ namespace dino::wow::data
 	template <bool IsGmChat>
 	void message_store<IsGmChat>::set_type(const chat::message::type type)
 	{
+		store_->restore_cursor();
 		store_->put<char>(static_cast<char>(type));
 		store_->restore_cursor();
 	}
@@ -95,9 +101,10 @@ namespace dino::wow::data
 	{
 		store_->restore_cursor();
 		const auto initial_cursor = store_->cursor();
-		log::debug("[message_store::text] type: {}", to_string_view(msg_type_));
+		log::debug("[message_store::text] type: {}", to_string_view(this->msg_type()));
+		log::debug("[message_store::text] type: {}", static_cast<unsigned int>(this->msg_type()));
 		store_->seek(initial_cursor + sizeof(char) + sizeof(int) + sizeof(std::uint64_t) + sizeof(int));
-		if (static_cast<int>(msg_type_) == 8)
+		if (msg_type_ == chat::message::type::whisper_foreign)
 		{
 			store_->restore_cursor();
 			return {};
@@ -111,12 +118,14 @@ namespace dino::wow::data
 			msg_type_ == chat::message::type::raid_boss_emote ||
 			msg_type_ == chat::message::type::raid_boss_whisper)
 		{
-			const auto sender_name = std::string{store_->pull<char*>(store_->pull<int>())};
+			const auto max_length1 = store_->pull<unsigned int>();
+			const auto sender_name = std::string{store_->pull<char*>(max_length1)};
 			log::debug("[message_store::text] sender_name: {}", sender_name);
 			const auto receiver = store_->pull<wow::guid>();
 			log::debug("[message_store::text] receiver: {}", receiver);
 
-			const auto result = std::string{store_->pull<char*>(store_->pull<int>())};
+			const auto max_length = store_->pull<unsigned int>();
+			const auto result = std::string{store_->pull<char*>(max_length)};
 			store_->restore_cursor();
 			return result;
 		}
@@ -134,7 +143,7 @@ namespace dino::wow::data
 
 			store_->pull<guid>();
 			auto length = store_->pull<int>();
-			char* data = store_->pull<char*>(length);
+			const char* data = store_->pull<const char*>(length);
 			const auto result = std::string{data};
 			store_->restore_cursor();
 			return result;
@@ -163,7 +172,10 @@ namespace dino::wow::data
 		{
 			log::debug("[message_store::channel] is_gm_chat_: {}", this->is_gm_chat());
 			if (this->is_gm_chat())
-				store_->pull<char*>(store_->pull<int>());
+			{
+				const auto max_length = store_->pull<int>();
+				store_->pull<char*>(max_length);
+			}
 
 			if (msg_type_ == chat::message::type::channel)
 			{
@@ -180,6 +192,7 @@ namespace dino::wow::data
 	template <bool IsGmChat>
 	chat::message::type message_store<IsGmChat>::msg_type() const noexcept
 	{
+		store_->restore_cursor();
 		auto result = chat::message::type{store_->pull<char>()};
 		store_->restore_cursor();
 		return result;
@@ -231,7 +244,9 @@ namespace dino::wow::data
 			msg_type_ == chat::message::type::raid_boss_emote ||
 			msg_type_ == chat::message::type::raid_boss_whisper)
 		{
-			const auto sender_name = std::string{store_->pull<char*>(store_->pull<int>())};
+			const auto max_length = store_->pull<unsigned int>();
+			store_->pull<char*>(max_length);
+			const auto sender_name = std::string{};
 			log::debug("[message_store::seek_end] sender_name: {}", sender_name);
 			const auto receiver = store_->pull<wow::guid>();
 			log::debug("[message_store::seek_end] receiver: {}", receiver);
@@ -255,4 +270,17 @@ namespace dino::wow::data
 			char* data = store_->pull<char*>(length);
 		}
 	}
+
+	template <bool IsGmChat>
+	unsigned int message_store<IsGmChat>::cursor() const
+	{
+		return store_->cursor();
+	}
+
+	template <bool IsGmChat>
+	void message_store<IsGmChat>::restore_cursor() noexcept
+	{
+		store_->restore_cursor();
+	}
+
 }

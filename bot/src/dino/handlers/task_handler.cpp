@@ -27,6 +27,7 @@ namespace dino::handlers
 
 		while (!handler.tasks_.empty())
 		{
+			log::info("[task_handler::handler] task...");
 			handler.tasks_.front()();
 			handler.tasks_.pop();
 		}

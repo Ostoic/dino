@@ -12,7 +12,8 @@ namespace dino::wow::data
 	{
 	public:
 		explicit new_world_store(address store_base);
-		explicit new_world_store(data::store store);
+		explicit new_world_store(data::store&& store);
+		explicit new_world_store() = default;
 
 		new_world_store* operator->() noexcept;
 		const new_world_store* operator->() const noexcept;
