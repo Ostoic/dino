@@ -98,6 +98,7 @@ namespace dino::emitters
 
 		void log_spell_failure(const events::received_spell_failure& event)
 		{
+			log::info("[spellcast_emitter] [log_spell_failure]");
 			const auto caster = event.store->pull<wow::data::packed_guid>().unpack();
 			const auto pending_cast = event.store->pull<std::uint8_t>();
 			const auto spell_id = event.store->pull<std::uint32_t>();
@@ -230,13 +231,12 @@ namespace dino::emitters
 	void spellcast_emitter::install()
 	{
 		emitters::make_net_emitter<events::received_cast_failed>();
-		//emitters::make_net_emitter<events::received_cooldown_cheat>();
-		//emitters::make_net_emitter<events::received_mount_result>();
+		emitters::make_net_emitter<events::received_mount_result>();
 		emitters::make_net_emitter<events::received_spell_heal_log>();
-		//emitters::make_net_emitter<events::received_spell_failure>();
-		//emitters::make_net_emitter<events::received_spell_start>();
-		//emitters::make_net_emitter<events::received_spell_go>();
-		//emitters::make_net_emitter<events::received_spell_cooldown>();
+		emitters::make_net_emitter<events::received_spell_failure>();
+		emitters::make_net_emitter<events::received_spell_start>();
+		emitters::make_net_emitter<events::received_spell_go>();
+		emitters::make_net_emitter<events::received_spell_cooldown>();
 
 		//dispatcher::
 		//	.sink<events::received_combat_log_multiple>()
@@ -260,6 +260,7 @@ namespace dino::emitters
 
 		dispatcher::sink<events::received_spell_go>()
 			.connect<log_spell_go>();
+
 		log::info(OBFUSCATE("[spellcast_emitter] installed"));
 	}
 

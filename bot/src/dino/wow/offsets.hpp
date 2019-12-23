@@ -11,7 +11,7 @@ namespace dino::wow::offsets
 
 	namespace console
 	{
-		constexpr auto enabled = address{0x00CABCC4};
+		constexpr auto is_enabled = address{0x00CABCC4};
 		constexpr auto active = address{0x00CA1978};
 		constexpr auto num_lines = address{0x00CA197C};
 

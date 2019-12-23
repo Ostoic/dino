@@ -13,7 +13,7 @@ namespace dino::hacks
 	void translator::on_setting_change(const events::setting_changed<settings::hacks::translator>& event)
 	{
 		log::info(OBFUSCATE("[on_setting_change] translator: {}"), settings::hacks::translator());
-		if (!settings::hacks::enabled() || !settings::hacks::translator())
+		if (!settings::hacks::is_enabled() || !settings::hacks::translator())
 		{
 			dispatcher::sink<events::received_chat_message>()
 				.disconnect<fix_language>();

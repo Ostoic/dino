@@ -72,6 +72,11 @@ namespace dino::wow::data
 		store_->m_cursor = cursor;
 	}
 
+	void store::seek_end()
+	{
+		this->seek(this->size - 1);
+	}
+
 	void store::restore_cursor()
 	{
 		this->seek(initial_cursor_);

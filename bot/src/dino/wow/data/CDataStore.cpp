@@ -8,10 +8,11 @@ namespace dino::wow::data
 {
 	void CDataStore::GetPackedGUID(guid* guid)
 	{
+		// Note: This fn is not thiscall
 		const auto& get_packed_guid
-			= deref_as<CDataStore*(__fastcall)(CDataStore*, void*, wow::guid*)>(wow::offsets::store::get_packed_guid);
+			= deref_as<void(CDataStore*, wow::guid*)>(wow::offsets::store::get_packed_guid);
 
-		get_packed_guid(this, nullptr, guid);
+		get_packed_guid(this, guid);
 	}
 
 	void CDataStore::GetString(char* out, unsigned int max_length)

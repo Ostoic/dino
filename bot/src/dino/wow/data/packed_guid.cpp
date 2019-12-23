@@ -24,10 +24,9 @@ namespace dino::wow::data
 		}
 	}
 
-	packed_guid::packed_guid(wow::guid&& store)
-		: guid_{std::move(store)}
+	packed_guid::packed_guid(wow::guid&& guid)
+		: guid_{std::move(guid)}
 	{}
-
 
 	int packed_guid::low() const noexcept
 	{

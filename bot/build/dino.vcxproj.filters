@@ -154,6 +154,12 @@
     <Filter Include="Source Files\dino\wow\world\entities">
       <UniqueIdentifier>{8f81ac2a-6b63-4d5f-bff0-7c71702eeb46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\dino\internal">
+      <UniqueIdentifier>{b2331f9c-3faa-4ab5-ac44-312fb62412eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dino\internal">
+      <UniqueIdentifier>{79150400-98d8-48e3-9fb9-bb583c8e20d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -456,6 +462,12 @@
     <ClInclude Include="..\src\dino\wow\data\CDataStore.hpp">
       <Filter>Header Files\dino\wow\data</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\dino\internal\settings_disambiguator.hpp">
+      <Filter>Header Files\dino\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\internal\settings_fwd.hpp">
+      <Filter>Header Files\dino\internal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -619,6 +631,9 @@
     </ClCompile>
     <ClCompile Include="..\src\dino\wow\data\CDataStore.cpp">
       <Filter>Source Files\dino\wow\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\internal\settings_disambiguator.cpp">
+      <Filter>Source Files\dino\internal</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

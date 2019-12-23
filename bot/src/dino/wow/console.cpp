@@ -25,17 +25,17 @@ namespace dino::wow::console
 
 	void enable()
 	{
-		dino::bind_value<bool>(offsets::console::enabled) = true;
+		dino::bind_value<bool>(offsets::console::is_enabled) = true;
 	}
 
 	void disable()
 	{
-		dino::bind_value<bool>(offsets::console::enabled) = false;
+		dino::bind_value<bool>(offsets::console::is_enabled) = false;
 	}
 
 	bool is_enabled()
 	{
-		return dino::bind_value<bool>(offsets::console::enabled);
+		return dino::bind_value<bool>(offsets::console::is_enabled);
 	}
 
 	bool is_open()

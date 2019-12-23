@@ -5,16 +5,13 @@
 
 namespace dino::wow::data
 {
-	struct ai_reaction_store
+	struct ai_reaction_store : public store
 	{
 	public:
-		explicit ai_reaction_store(address store_base);
-		explicit ai_reaction_store(data::store&& store);
-		explicit ai_reaction_store(data::CDataStore* store);
-		explicit ai_reaction_store() = default;
-
-		ai_reaction_store* operator->() noexcept;
-		const ai_reaction_store* operator->() const noexcept;
+		template <class... Args>
+		explicit ai_reaction_store(Args&&... args)
+			: store{std::forward<Args>(args)}
+		{}
 
 	public:
 		void set_agent(guid agent);
@@ -22,10 +19,5 @@ namespace dino::wow::data
 
 		guid agent() const;
 		unsigned int flags() const;
-
-		void seek_end();
-
-	private:
-		mutable data::store store_;
 	};
 }

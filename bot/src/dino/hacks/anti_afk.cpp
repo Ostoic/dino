@@ -16,7 +16,7 @@ namespace dino::hacks
 	void anti_afk::on_setting_change(const events::setting_changed<settings::hacks::anti_afk>& event)
 	{
 		log::info(OBFUSCATE("[on_setting_change] anti_afk: {}"), settings::hacks::anti_afk());
-		if (!settings::hacks::enabled() || !settings::hacks::anti_afk())
+		if (!settings::hacks::is_enabled() || !settings::hacks::anti_afk())
 		{
 			dispatcher::sink<events::endscene_frame>()
 				.disconnect<tick>();

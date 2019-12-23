@@ -37,7 +37,10 @@ namespace dino::wow::data
 
 		address base() const;
 		unsigned int cursor() const;
+
 		void seek(unsigned int cursor);
+
+		void seek_end();
 
 		void restore_cursor();
 
@@ -88,6 +91,12 @@ namespace dino::wow::data
 		void generic_put(const address fn_location, T x)
 		{
 			deref_as<T>(&this->buffer()[this->cursor()] - this->base()) = x;
+		}
+
+		template <class T>
+		T& pull_ref()
+		{
+			deref_as<T>(&this->buffer()[this->cursor()] - this->base());
 		}
 
 		float pull_float();

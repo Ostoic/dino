@@ -19,10 +19,10 @@ namespace dino::settings
 
 		namespace
 		{
-			void on_enabled_change(const events::setting_changed<hacks::enabled>& event)
+			void on_enabled_change(const events::setting_changed<hacks::is_enabled>& event)
 			{
-				log::info(OBFUSCATE("[on_enabled_change] enabled: {})"), settings::hacks::enabled());
-				const auto state = settings::hacks::enabled();
+				log::info(OBFUSCATE("[on_enabled_change] is_enabled: {})"), settings::hacks::is_enabled());
+				const auto state = settings::hacks::is_enabled();
 			}
 		}
 	}
@@ -36,11 +36,11 @@ namespace dino::settings
 			dispatcher::sink<events::setting_changed<hacks::translator>>()
 				.connect<dino::hacks::translator::on_setting_change>();
 
-			dispatcher::sink<events::setting_changed<hacks::enabled>>()
+			dispatcher::sink<events::setting_changed<hacks::is_enabled>>()
 				.connect<internal::on_enabled_change>();
 
 			settings::modify<fps>(fps());
-			settings::modify<hacks::enabled>(hacks::enabled());
+			settings::modify<hacks::is_enabled>(hacks::is_enabled());
 			settings::modify<hacks::anti_afk>(hacks::anti_afk());
 			settings::modify<hacks::translator>(hacks::translator());
 			return true;
@@ -54,7 +54,7 @@ namespace dino::settings
 			return internal::hacks_anti_afk_;
 		}
 
-		bool enabled() noexcept
+		bool is_enabled() noexcept
 		{
 			return internal::hacks_enabled_;
 		}

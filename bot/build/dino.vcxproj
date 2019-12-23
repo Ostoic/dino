@@ -205,6 +205,8 @@
     <ClInclude Include="..\src\dino\hacks\translator.hpp" />
     <ClInclude Include="..\src\dino\handlers\task_handler.hpp" />
     <ClInclude Include="..\src\dino\hook\vmt_hook.hpp" />
+    <ClInclude Include="..\src\dino\internal\settings_disambiguator.hpp" />
+    <ClInclude Include="..\src\dino\internal\settings_fwd.hpp" />
     <ClInclude Include="..\src\dino\log.hpp" />
     <ClInclude Include="..\src\dino\log\console_sink.hpp" />
     <ClInclude Include="..\src\dino\log\core.hpp" />
@@ -286,6 +288,7 @@
     <ClCompile Include="..\src\dino\hacks\translator.cpp" />
     <ClCompile Include="..\src\dino\handlers\task_handler.cpp" />
     <ClCompile Include="..\src\dino\hook\vmt_hook.cpp" />
+    <ClCompile Include="..\src\dino\internal\settings_disambiguator.cpp" />
     <ClCompile Include="..\src\dino\log\console_sink.cpp" />
     <ClCompile Include="..\src\dino\script\core.cpp" />
     <ClCompile Include="..\src\dino\script\settings.cpp" />
