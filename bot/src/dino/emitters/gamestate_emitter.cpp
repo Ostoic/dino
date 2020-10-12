@@ -44,23 +44,23 @@ namespace dino::emitters
 		void emit_gamestate_change(const wow::glue::screen prev_screen, const wow::glue::screen current_screen)
 		{
 			if (current_screen == wow::glue::screen::ingame)
-				dispatcher::enqueue<events::gamestate_change_ingame>({prev_screen, current_screen});
+				scheduler::enqueue<events::gamestate_change_ingame>({prev_screen, current_screen});
 
 			else if (current_screen == wow::glue::screen::login)
-				dispatcher::enqueue<events::gamestate_change_login>({prev_screen, current_screen});
+				scheduler::enqueue<events::gamestate_change_login>({prev_screen, current_screen});
 
-			dispatcher::enqueue<events::gamestate_change>({prev_screen, current_screen});
+			scheduler::enqueue<events::gamestate_change>({prev_screen, current_screen});
 		}
 
 		void update_gamestate_change(const wow::glue::screen current_screen)
 		{
 			if (current_screen == wow::glue::screen::ingame)
-				dispatcher::update<events::gamestate_change_ingame>();
+				scheduler::update<events::gamestate_change_ingame>();
 
 			else if (current_screen == wow::glue::screen::login)
-				dispatcher::update<events::gamestate_change_login>();
+				scheduler::update<events::gamestate_change_login>();
 
-			dispatcher::update<events::gamestate_change>();
+			scheduler::update<events::gamestate_change>();
 		}
 
 		void check_gamestate_check(const events::endscene_frame& event)
@@ -108,19 +108,19 @@ namespace dino::emitters
 	void gamestate_emitter::install()
 	{
 		// Setup gamestate driver
-		dispatcher::sink<events::endscene_frame>()
+		scheduler::sink<events::endscene_frame>()
 			.connect<check_gamestate_check>();
 
 		 //Handle gamestate_change
-		dispatcher::sink<events::gamestate_change>()
+		scheduler::sink<events::gamestate_change>()
 			.connect<reinstall_manditory_emitters>();
 
 		// Handle enter_world
-		dispatcher::sink<events::gamestate_change_ingame>()
+		scheduler::sink<events::gamestate_change_ingame>()
 			.connect<enter_world>();
 
 		// Enable gamestate logging
-		dispatcher::sink<events::gamestate_change>()
+		scheduler::sink<events::gamestate_change>()
 			.connect<log_gamestate>();
 
 		const auto screen = wow::glue::current_screen();
@@ -130,19 +130,19 @@ namespace dino::emitters
 	void gamestate_emitter::uninstall()
 	{
 		// Disconnect gamestate handler
-		dispatcher::sink<events::endscene_frame>()
+		scheduler::sink<events::endscene_frame>()
 			.disconnect<check_gamestate_check>();
 
 		// Disconnect gamestate_change handler
-		dispatcher::sink<events::gamestate_change>()
+		scheduler::sink<events::gamestate_change>()
 			.disconnect<reinstall_manditory_emitters>();
 
 		// Disconnect enter_world handler
-		dispatcher::sink<events::gamestate_change_ingame>()
+		scheduler::sink<events::gamestate_change_ingame>()
 			.disconnect<enter_world>();
 
 		// Disable gamestate logging
-		dispatcher::sink<events::gamestate_change>()
+		scheduler::sink<events::gamestate_change>()
 			.disconnect<log_gamestate>();
 	}
 }

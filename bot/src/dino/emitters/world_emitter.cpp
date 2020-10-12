@@ -40,11 +40,11 @@ namespace dino::emitters
 		void log_ai_reaction(const events::received_ai_reaction& event)
 		{
 			log::info("[log_ai_reaction]");
-			log::info(
-				OBFUSCATE("[world_emitter] log_ai_reaction: {}, {}"),
-				event.store->agent(),
-				event.store->flags()
-			);
+			//log::info(
+			//	OBFUSCATE("[world_emitter] log_ai_reaction: {}, {}"),
+			//	event.store->agent(),
+			//	event.store->flags()
+			//);
 		}
 
 		void log_loot_list(const events::received_loot_list& event)
@@ -113,31 +113,31 @@ namespace dino::emitters
 		emitters::make_net_emitter<events::received_zone_under_attack>();
 
 		// Enable loggers
-		dispatcher::sink<events::received_new_world>()
+		scheduler::sink<events::received_new_world>()
 			.connect<log_new_world>();
 
-		dispatcher::sink<events::received_health_update>()
+		scheduler::sink<events::received_health_update>()
 			.connect<log_health_update>();
 
-		dispatcher::sink<events::received_ai_reaction>()
+		scheduler::sink<events::received_ai_reaction>()
 			.connect<log_ai_reaction>();
 
-		dispatcher::sink<events::received_loot_list>()
+		scheduler::sink<events::received_loot_list>()
 			.connect<log_loot_list>();
 
-		dispatcher::sink<events::received_update_object>()
+		scheduler::sink<events::received_update_object>()
 			.connect<log_update_object>();
 
-		dispatcher::sink<events::received_stand_state_update>()
+		scheduler::sink<events::received_stand_state_update>()
 			.connect<log_stand_state_update>();
 
-		dispatcher::sink<events::received_stand_state_update>()
+		scheduler::sink<events::received_stand_state_update>()
 			.connect<log_notification>();
 
-		dispatcher::sink<events::received_server_message>()
+		scheduler::sink<events::received_server_message>()
 			.connect<log_server_message>();
 
-		dispatcher::sink<events::received_zone_under_attack>()
+		scheduler::sink<events::received_zone_under_attack>()
 			.connect<log_zone_under_attack>();
 		log::info(OBFUSCATE("[world_emitter] installed"));
 	}
@@ -154,28 +154,28 @@ namespace dino::emitters
 		emitters::restore_net_emitter<events::received_server_message>();
 		emitters::restore_net_emitter<events::received_zone_under_attack>();
 
-		dispatcher::sink<events::received_new_world>()
+		scheduler::sink<events::received_new_world>()
 			.disconnect<log_new_world>();
 
-		dispatcher::sink<events::received_health_update>()
+		scheduler::sink<events::received_health_update>()
 			.disconnect<log_health_update>();
 
-		dispatcher::sink<events::received_ai_reaction>()
+		scheduler::sink<events::received_ai_reaction>()
 			.disconnect<log_ai_reaction>();
 
-		dispatcher::sink<events::received_loot_list>()
+		scheduler::sink<events::received_loot_list>()
 			.disconnect<log_loot_list>();
 
-		dispatcher::sink<events::received_update_object>()
+		scheduler::sink<events::received_update_object>()
 			.disconnect<log_update_object>();
 
-		dispatcher::sink<events::received_stand_state_update>()
+		scheduler::sink<events::received_stand_state_update>()
 			.disconnect<log_stand_state_update>();
 
-		dispatcher::sink<events::received_server_message>()
+		scheduler::sink<events::received_server_message>()
 			.disconnect<log_server_message>();
 
-		dispatcher::sink<events::received_zone_under_attack>()
+		scheduler::sink<events::received_zone_under_attack>()
 			.disconnect<log_zone_under_attack>();
 		log::info(OBFUSCATE("[world_emitter] uninstalled"));
 	}

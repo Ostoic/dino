@@ -16,7 +16,7 @@ namespace dino::wow::lua
 	void run(const std::string& format, Args&&... args)
 	{
 		auto script = fmt::format(format, std::forward<Args>(args)...);
-		dispatcher::queue_task([script = std::move(script)] {
+		scheduler::queue_task([script = std::move(script)] {
 			lua::execute(script);
 		});
 	}

@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\dinne\Documents\GitHub\Ostoic\String-Obfuscator-In-Compile-Time\include;C:\Users\dinne\Documents\GitHub\json\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\Library\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\Library\lua-5.1.4\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dinne\Documents\GitHub\String-Obfuscator-In-Compile-Time\include;C:\Users\dinne\Documents\GitHub\json\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\Library\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\Library\lua-5.1.4\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\dinne\Documents\Library\lua-5.1.4;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -80,11 +80,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\dinne\Documents\GitHub\Ostoic\String-Obfuscator-In-Compile-Time\include;C:\Users\dinne\Documents\GitHub\json\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\Library\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\Library\lua-5.1.4\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dinne\Documents\GitHub\String-Obfuscator-In-Compile-Time\include;C:\Users\dinne\Documents\GitHub\json\include;C:\Users\dinne\source\repos\distant dev\distant dev\include;C:\Users\dinne\Documents\Library\include;C:\Users\dinne\Documents\GitHub\Ostoic\dino\bot\src;C:\Users\dinne\Documents\Library\lua-5.1.4\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\dinne\Documents\Library\lua-5.1.4;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\dinne\Documents\GitHub\String-Obfuscator-In-Compile-Time\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -177,7 +178,7 @@
     <ClInclude Include="..\src\dino\ai\utility.hpp" />
     <ClInclude Include="..\src\dino\config.hpp" />
     <ClInclude Include="..\src\dino\debug.hpp" />
-    <ClInclude Include="..\src\dino\dispatcher.hpp" />
+    <ClInclude Include="..\src\dino\scheduler.hpp" />
     <ClInclude Include="..\src\dino\emitters\chat_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\net_emitter.hpp" />
     <ClInclude Include="..\src\dino\emitters\spellcast_emitter.hpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="..\src\dino\emitters\world_emitter.hpp" />
     <ClInclude Include="..\src\dino\events\chat_events.hpp" />
     <ClInclude Include="..\src\dino\events\combat_log_events.hpp" />
+    <ClInclude Include="..\src\dino\events\connected_event.hpp" />
     <ClInclude Include="..\src\dino\events\console_events.hpp" />
     <ClInclude Include="..\src\dino\events\dino_events.hpp" />
     <ClInclude Include="..\src\dino\events\endscene_events.hpp" />
@@ -207,6 +209,7 @@
     <ClInclude Include="..\src\dino\hook\vmt_hook.hpp" />
     <ClInclude Include="..\src\dino\internal\settings_disambiguator.hpp" />
     <ClInclude Include="..\src\dino\internal\settings_fwd.hpp" />
+    <ClInclude Include="..\src\dino\internal\uuid.hpp" />
     <ClInclude Include="..\src\dino\log.hpp" />
     <ClInclude Include="..\src\dino\log\console_sink.hpp" />
     <ClInclude Include="..\src\dino\log\core.hpp" />
@@ -215,6 +218,7 @@
     <ClInclude Include="..\src\dino\script\settings.hpp" />
     <ClInclude Include="..\src\dino\session.hpp" />
     <ClInclude Include="..\src\dino\settings.hpp" />
+    <ClInclude Include="..\src\dino\settings\setting.hpp" />
     <ClInclude Include="..\src\dino\version.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cgame_object.hpp" />
     <ClInclude Include="..\src\dino\wow\api\objects\cobject.hpp" />

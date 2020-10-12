@@ -1,6 +1,6 @@
 #include "debug.hpp"
 #include "session.hpp"
-#include "dispatcher.hpp"
+#include "scheduler.hpp"
 #include "log.hpp"
 
 #include "wow/lua.hpp"

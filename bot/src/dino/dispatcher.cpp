@@ -1,4 +1,4 @@
-#include "dispatcher.hpp"
+#include "scheduler.hpp"
 #include "log.hpp"
 
 #include "events/chat_events.hpp"
@@ -18,13 +18,13 @@
 
 namespace dino
 {
-	dispatcher& dispatcher::get()
+	scheduler& scheduler::get()
 	{
-		static dispatcher s_;
+		static scheduler s_;
 		return s_;
 	}
 
-	std::vector<std::string> dispatcher::get_event_list()
+	std::vector<std::string> scheduler::get_event_list()
 	{
 		namespace mp11 = boost::mp11;
 		using all_events = mp11::mp_set_union<

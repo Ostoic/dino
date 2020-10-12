@@ -67,13 +67,13 @@ namespace dino::emitters
 				if (!was_loaded)
 				{
 					was_loaded = true;
-					dispatcher::enqueue<events::warden_loaded>();
+					scheduler::enqueue<events::warden_loaded>();
 				}
 				else
 				{
 					// Previously was loaded, but now is not
 					was_loaded = false;
-					dispatcher::enqueue<events::warden_unloaded>();
+					scheduler::enqueue<events::warden_unloaded>();
 				}
 			}
 		}
@@ -89,8 +89,8 @@ namespace dino::emitters
 			event.scan_results = &scan_results;
 			event.scan_size = &scan_size;
 
-			dispatcher::enqueue(event);
-			dispatcher::update<decltype(event)>();
+			scheduler::enqueue(event);
+			scheduler::update<decltype(event)>();
 
 			if (drop_packet)
 				return;
@@ -102,7 +102,7 @@ namespace dino::emitters
 	void warden_emitter::install()
 	{
 		// Setup warden state driver
-		dispatcher::sink<events::endscene_frame>()
+		scheduler::sink<events::endscene_frame>()
 			.connect<check_warden_state>();
 
 		//dispatcher::sink<events::received_warden_data>()
@@ -129,16 +129,16 @@ namespace dino::emitters
 	void warden_emitter::uninstall()
 	{
 		// Setup warden state driver
-		dispatcher::sink<events::endscene_frame>()
+		scheduler::sink<events::endscene_frame>()
 			.disconnect<check_warden_state>();
 
-		dispatcher::sink<events::received_warden_data>()
+		scheduler::sink<events::received_warden_data>()
 			.disconnect<log_warden_data>();
 
-		dispatcher::sink<events::warden_loaded>()
+		scheduler::sink<events::warden_loaded>()
 			.disconnect<log_warden_loaded>();
 
-		dispatcher::sink<events::send_warden_scan>()
+		scheduler::sink<events::send_warden_scan>()
 			.disconnect<log_warden_send_scan>();
 
 		emitters::restore_net_emitter<events::received_warden_data>();

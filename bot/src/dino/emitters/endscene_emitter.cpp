@@ -66,8 +66,8 @@ namespace dino::emitters
 			try
 			{
 				const auto start = clock::now();
-				dispatcher::enqueue(events::endscene_frame{frame_duration});
-				dispatcher::update();
+				scheduler::enqueue(events::endscene_frame{frame_duration});
+				scheduler::update();
 
 				const auto end = clock::now();
 				endscene_emitter::get().last_hook_runtime_ = (end - start);

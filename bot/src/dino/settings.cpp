@@ -30,39 +30,61 @@ namespace dino::settings
 	void initialize()
 	{
 		static bool initialize_ = [] {
-			dispatcher::sink<events::setting_changed<hacks::anti_afk>>()
-				.connect<dino::hacks::anti_afk::on_setting_change>();
-
-			dispatcher::sink<events::setting_changed<hacks::translator>>()
-				.connect<dino::hacks::translator::on_setting_change>();
-
-			dispatcher::sink<events::setting_changed<hacks::is_enabled>>()
-				.connect<internal::on_enabled_change>();
-
-			settings::modify<fps>(fps());
-			settings::modify<hacks::is_enabled>(hacks::is_enabled());
-			settings::modify<hacks::anti_afk>(hacks::anti_afk());
-			settings::modify<hacks::translator>(hacks::translator());
 			return true;
 		}();
 	}
 
-	namespace hacks
+	template <auto Fn, class T>
+	void modify(T&& x)
 	{
-		bool anti_afk() noexcept
+		auto& dispatcher = session::dispatcher();
+		if constexpr (internal::disambiguator<Fn>::setting == internal::settings::setting::fps)
 		{
-			return internal::hacks_anti_afk_;
+			log::info(OBFUSCATE("[settings] [modify] setting_changed<fps>"));
+			auto event = events::setting_changed<fps>{internal::fps_};
+			scheduler::enqueue(std::move(event));
+			internal::fps_ = std::forward<T>(x);
+			scheduler::update<decltype(event)>();
 		}
 
-		bool is_enabled() noexcept
+		else if constexpr (internal::disambiguator<Fn>::setting == internal::setting::hacks_enabled)
 		{
-			return internal::hacks_enabled_;
+			log::info(OBFUSCATE("[settings] [modify] setting_changed<hacks::is_enabled>"));
+			auto event = events::setting_changed<hacks::is_enabled>{internal::hacks_enabled_};
+			scheduler::enqueue(std::move(event));
+			internal::hacks_enabled_ = std::forward<T>(x);
+			scheduler::update<decltype(event)>();
 		}
 
-		bool translator() noexcept
+		else if constexpr (internal::disambiguator<Fn>::setting == internal::setting::hacks_anti_afk)
 		{
-			return internal::hacks_translator_;
+			log::info(OBFUSCATE("[settings] [modify] setting_changed<hacks::anti_afk>"));
+			auto event = events::setting_changed<hacks::anti_afk>{internal::hacks_anti_afk_};
+			scheduler::enqueue(std::move(event));
+			internal::hacks_anti_afk_ = std::forward<T>(x);
+			scheduler::update<decltype(event)>();
 		}
+
+		else if constexpr (internal::disambiguator<Fn>::setting == internal::setting::hacks_translator)
+		{
+			log::info(OBFUSCATE("[settings] [modify]setting_changed<hacks::translator>"));
+			auto event = events::setting_changed<hacks::translator>{internal::hacks_translator_};
+			scheduler::enqueue(std::move(event));
+			internal::hacks_translator_ = std::forward<T>(x);
+			scheduler::update<decltype(event)>();
+		}
+
+		else if constexpr (internal::disambiguator<Fn>::setting == internal::setting::refresh_rate)
+		{
+			log::info(OBFUSCATE("[settings] [modify]setting_changed<refresh_rate>"));
+			auto event = events::setting_changed<refresh_rate>{internal::fps_};
+			scheduler::enqueue(std::move(event));
+			internal::fps_ = (1000.f / std::forward<T>(x));
+			scheduler::update<decltype(event)>();
+		}
+
+		else
+			static_assert(false, "[settings] [modify] Invalid setting");
 	}
 
 	void load_settings(const std::filesystem::path& path = std::filesystem::current_path())

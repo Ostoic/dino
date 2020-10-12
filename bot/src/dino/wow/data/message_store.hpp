@@ -1,11 +1,11 @@
 #pragma once
 
+#include <string_view>
+
 #include "../data/store.hpp"
 #include "../guid.hpp"
 #include "../chat/message.hpp"
-
-#include <string_view>
-#include <optional>
+#include "../chat/language.hpp"
 
 namespace dino::wow::data
 {
@@ -22,6 +22,7 @@ namespace dino::wow::data
 
 	public:
 		void set_type(chat::message::type type);
+		void set_language(chat::language language);
 		void set_language(int language);
 		void set_sender(guid sender);
 
@@ -78,6 +79,12 @@ namespace dino::wow::data
 		store_->restore_cursor();
 		store_->put<char>(static_cast<char>(type));
 		store_->restore_cursor();
+	}
+
+	template <bool IsGmChat>
+	void message_store<IsGmChat>::set_language(const chat::language language)
+	{
+		this->set_language(static_cast<unsigned int>(language));
 	}
 
 	template <bool IsGmChat>

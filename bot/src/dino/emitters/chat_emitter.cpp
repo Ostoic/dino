@@ -2,7 +2,7 @@
 #include "emitters.hpp"
 
 #include "../events/chat_events.hpp"
-#include "../dispatcher.hpp"
+#include "../scheduler.hpp"
 #include "../log.hpp"
 
 #include <obfuscator.hpp>
@@ -46,14 +46,14 @@ namespace dino::emitters
 	void chat_emitter::install()
 	{
 		// Enable chat logging
-		dispatcher::sink<events::received_chat_message>()
+		scheduler::sink<events::received_chat_message>()
 			.connect<log_chat<events::received_chat_message>>();
 
-		dispatcher::sink<events::received_gm_chat_message>()
+		scheduler::sink<events::received_gm_chat_message>()
 			.connect<log_chat<events::received_gm_chat_message>>();
 
 		// Enable emote logging
-		dispatcher::sink<events::received_text_emote>()
+		scheduler::sink<events::received_text_emote>()
 			.connect<log_text_emote>();
 
 		emitters::make_net_emitter<events::received_chat_message>();
@@ -65,14 +65,14 @@ namespace dino::emitters
 	void chat_emitter::uninstall()
 	{
 		// Disable chat logging
-		dispatcher::sink<events::received_chat_message>()
+		scheduler::sink<events::received_chat_message>()
 			.disconnect<log_chat<events::received_chat_message>>();
 
-		dispatcher::sink<events::received_gm_chat_message>()
+		scheduler::sink<events::received_gm_chat_message>()
 			.disconnect<log_chat<events::received_gm_chat_message>>();
 
 		// Disable emote logging
-		dispatcher::sink<events::received_text_emote>()
+		scheduler::sink<events::received_text_emote>()
 			.disconnect<log_text_emote>();
 
 		emitters::restore_net_emitter<events::received_chat_message>();

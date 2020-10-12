@@ -18,12 +18,12 @@ namespace dino::hacks
 		log::info(OBFUSCATE("[on_setting_change] anti_afk: {}"), settings::hacks::anti_afk());
 		if (!settings::hacks::is_enabled() || !settings::hacks::anti_afk())
 		{
-			dispatcher::sink<events::endscene_frame>()
+			scheduler::sink<events::endscene_frame>()
 				.disconnect<tick>();
 		}
 		else
 		{
-			dispatcher::sink<events::endscene_frame>()
+			scheduler::sink<events::endscene_frame>()
 				.connect<tick>();
 		}
 	}

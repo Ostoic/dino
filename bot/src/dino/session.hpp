@@ -7,7 +7,7 @@
 
 #include "emitters/endscene_emitter.hpp"
 #include "offset.hpp"
-#include "dispatcher.hpp"
+#include "scheduler.hpp"
 
 namespace dino
 {
@@ -26,7 +26,7 @@ namespace dino
 
 	public:
 		static entt::registry& registry() noexcept;
-		static dispatcher& dispatcher() noexcept;
+		static scheduler& dispatcher() noexcept;
 
 		static std::string status_message();
 
@@ -48,6 +48,6 @@ namespace dino
 	template <class... Args>
 	bool session::run_script(Args&&... args)
 	{
-		wow::lua::run(std::forward<Args>(args)...);
+		//wow::lua::run(std::forward<Args>(args)...);
 	}
 }

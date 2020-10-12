@@ -127,8 +127,8 @@ namespace dino::emitters
 		template <class Event>
 		void queue_event(const wow::data::store& store)
 		{
-			dispatcher::enqueue(Event{store});
-			dispatcher::update<Event>();
+			scheduler::enqueue(Event{store});
+			scheduler::update<Event>();
 		}
 
 		//void handle_combat_log_multiple(const events::received_combat_log_multiple& event)
@@ -243,22 +243,22 @@ namespace dino::emitters
 		//	.connect<handle_combat_log_multiple>();
 
 		// Enable loggers
-		dispatcher::sink<events::received_cast_failed>()
+		scheduler::sink<events::received_cast_failed>()
 			.connect<log_cast_failed>();
 
-		dispatcher::sink<events::received_mount_result>()
+		scheduler::sink<events::received_mount_result>()
 			.connect<log_mount_result>();
 
-		dispatcher::sink<events::received_spell_heal_log>()
+		scheduler::sink<events::received_spell_heal_log>()
 			.connect<log_spell_heal_log>();
 
-		dispatcher::sink<events::received_spell_start>()
+		scheduler::sink<events::received_spell_start>()
 			.connect<log_spell_start>();
 
-		dispatcher::sink<events::received_spell_failure>()
+		scheduler::sink<events::received_spell_failure>()
 			.connect<log_spell_failure>();
 
-		dispatcher::sink<events::received_spell_go>()
+		scheduler::sink<events::received_spell_go>()
 			.connect<log_spell_go>();
 
 		log::info(OBFUSCATE("[spellcast_emitter] installed"));
@@ -279,22 +279,22 @@ namespace dino::emitters
 		//	.sink<events::received_combat_log_multiple>()
 		//	.disconnect<handle_combat_log_multiple>();
 
-		dispatcher::sink<events::received_cast_failed>()
+		scheduler::sink<events::received_cast_failed>()
 			.disconnect<log_cast_failed>();
 
-		dispatcher::sink<events::received_mount_result>()
+		scheduler::sink<events::received_mount_result>()
 			.disconnect<log_mount_result>();
 
-		dispatcher::sink<events::received_spell_heal_log>()
+		scheduler::sink<events::received_spell_heal_log>()
 			.disconnect<log_spell_heal_log>();
 
-		dispatcher::sink<events::received_spell_start>()
+		scheduler::sink<events::received_spell_start>()
 			.disconnect<log_spell_start>();
 
-		dispatcher::sink<events::received_spell_failure>()
+		scheduler::sink<events::received_spell_failure>()
 			.disconnect<log_spell_failure>();
 
-		dispatcher::sink<events::received_spell_go>()
+		scheduler::sink<events::received_spell_go>()
 			.disconnect<log_spell_go>();
 		log::info(OBFUSCATE("[spellcast_emitter] uninstalled"));
 	}

@@ -21,8 +21,8 @@ namespace dino::emitters
 
 			auto event = events::received_wc_connected{};
 
-			dispatcher::enqueue(event);
-			dispatcher::update<decltype(event)>();
+			scheduler::enqueue(event);
+			scheduler::update<decltype(event)>();
 
 			wc_connected(self, nullptr, server, a3, tick_count, addr);
 		}
@@ -34,8 +34,8 @@ namespace dino::emitters
 
 			auto event = events::received_wc_disconnected{};
 
-			dispatcher::enqueue(event);
-			dispatcher::update<decltype(event)>();
+			scheduler::enqueue(event);
+			scheduler::update<decltype(event)>();
 
 			wc_disconnected(self, nullptr, a2, a3, a4);
 		}
@@ -52,8 +52,8 @@ namespace dino::emitters
 			event.data = &data_;
 			event.size = &size_;
 
-			dispatcher::enqueue(event);
-			dispatcher::update<decltype(event)>();
+			scheduler::enqueue(event);
+			scheduler::update<decltype(event)>();
 
 			handle_data(self, nullptr, a2, data_, size_);
 		}
@@ -103,13 +103,13 @@ namespace dino::emitters
 			//vmt_hook_rc->hook(14, hook_handle_data);
 			//vmt_hook_nc->hook(14, hook_handle_data);
 
-			dispatcher::sink<events::received_handle_data>()
+			scheduler::sink<events::received_handle_data>()
 				.connect<log_handle_data>();
 
-			dispatcher::sink<events::received_wc_connected>()
+			scheduler::sink<events::received_wc_connected>()
 				.connect<log_wc_connected>();
 
-			dispatcher::sink<events::received_wc_disconnected>()
+			scheduler::sink<events::received_wc_disconnected>()
 				.connect<log_wc_disconnected>();
 
 			log::info(OBFUSCATE("[net_emitter] installed"));

@@ -62,13 +62,13 @@ namespace dino::emitters
 					);
 
 					if (event == wow::framexml::event::player_target_changed)
-						dispatcher::enqueue<events::framexml::player_target_changed>();
+						scheduler::enqueue<events::framexml::player_target_changed>();
 
 					else if (event == wow::framexml::event::player_entering_world)
-						dispatcher::enqueue<events::framexml::player_entering_world>();
+						scheduler::enqueue<events::framexml::player_entering_world>();
 
 					else if (event == wow::framexml::event::ui_error_message)
-						dispatcher::enqueue(events::framexml::received_ui_error_message{action.data()});
+						scheduler::enqueue(events::framexml::received_ui_error_message{action.data()});
 				}
 			}
 			catch (const std::exception& e)
@@ -91,7 +91,7 @@ namespace dino::emitters
 	{
 		try
 		{
-			dispatcher::sink<events::endscene_frame>()
+			scheduler::sink<events::endscene_frame>()
 				.connect<check_lua_handler>();
 
 			wow::lua::execute(script::json_script.data());
@@ -106,7 +106,7 @@ namespace dino::emitters
 
 	void lua_emitter::uninstall()
 	{
-		dispatcher::sink<events::endscene_frame>()
+		scheduler::sink<events::endscene_frame>()
 			.disconnect<check_lua_handler>();
 
 		log::info(OBFUSCATE("[lua_emitter] uninstalled"));

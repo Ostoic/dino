@@ -22,7 +22,7 @@ namespace dino::emitters
 				name, to_string(event)
 			);
 
-			dispatcher::sink<Event>()
+			scheduler::sink<Event>()
 				.connect<Fn>();
 		}
 

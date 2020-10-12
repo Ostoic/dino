@@ -10,7 +10,7 @@ namespace dino::events
 		std::string data;
 	};
 
-	template <auto Setting>
+	template <std::uint64_t Setting>
 	struct setting_changed
 	{
 		std::any prev;
