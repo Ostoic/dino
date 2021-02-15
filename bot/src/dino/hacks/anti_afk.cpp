@@ -13,10 +13,14 @@ namespace dino::hacks
 		wow::world::set_last_action_time(timestamp);
 	}
 
-	void anti_afk::on_setting_change(const events::setting_changed<settings::hacks::anti_afk>& event)
+	void anti_afk::on_setting_change(const events::setting_changed& event)
 	{
-		log::info(OBFUSCATE("[on_setting_change] anti_afk: {}"), settings::hacks::anti_afk());
-		if (!settings::hacks::is_enabled() || !settings::hacks::anti_afk())
+		if (event.setting_name != "hacks.anti_afk")
+			return;
+
+		const auto& settings = session::settings();
+		log::info(OBFUSCATE("[on_setting_change] anti_afk: {}"), settings.lookup<bool>(event.setting_name));
+		if (!settings.lookup<bool>("hacks.is_enabled") || !settings.lookup<bool>(event.setting_name))
 		{
 			scheduler::sink<events::endscene_frame>()
 				.disconnect<tick>();

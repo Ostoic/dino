@@ -44,12 +44,12 @@ namespace dino::emitters
 		void emit_gamestate_change(const wow::glue::screen prev_screen, const wow::glue::screen current_screen)
 		{
 			if (current_screen == wow::glue::screen::ingame)
-				scheduler::enqueue<events::gamestate_change_ingame>({prev_screen, current_screen});
+				scheduler::trigger<events::gamestate_change_ingame>({prev_screen, current_screen});
 
 			else if (current_screen == wow::glue::screen::login)
-				scheduler::enqueue<events::gamestate_change_login>({prev_screen, current_screen});
+				scheduler::trigger<events::gamestate_change_login>({prev_screen, current_screen});
 
-			scheduler::enqueue<events::gamestate_change>({prev_screen, current_screen});
+			scheduler::trigger<events::gamestate_change>({prev_screen, current_screen});
 		}
 
 		void update_gamestate_change(const wow::glue::screen current_screen)
@@ -89,9 +89,10 @@ namespace dino::emitters
 				OBFUSCATE("emit:ui-error")
 			);
 
+			emitters::warden_emitter::install();
 			emitters::chat_emitter::install();
 			emitters::world_emitter::install();
-			emitters::spellcast_emitter::install();
+			//emitters::spellcast_emitter::install();
 		}
 
 		void log_gamestate(const events::gamestate_change& event)
@@ -125,6 +126,7 @@ namespace dino::emitters
 
 		const auto screen = wow::glue::current_screen();
 		emit_gamestate_change(screen, screen);
+		log::info(OBFUSCATE("[gamestate_emitter] installed"));
 	}
 
 	void gamestate_emitter::uninstall()

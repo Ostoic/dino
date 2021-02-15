@@ -1,6 +1,7 @@
 #pragma once
 
 #include <any>
+#include <string_view>
 #include <boost/mp11/list.hpp>
 
 namespace dino::events
@@ -10,9 +11,9 @@ namespace dino::events
 		std::string data;
 	};
 
-	template <std::uint64_t Setting>
 	struct setting_changed
 	{
+		std::string_view setting_name;
 		std::any prev;
 	};
 
@@ -20,10 +21,9 @@ namespace dino::events
 	{
 	};
 
-	template <auto Setting>
 	using dino_events = boost::mp11::mp_list<
 		new_dino_command,
-		setting_changed<Setting>,
+		setting_changed,
 		dino_exit
 	>;
 }

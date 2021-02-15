@@ -9,6 +9,6 @@ namespace dino::hacks
 	struct translator
 	{
 		static void fix_language(const events::received_chat_message& event);
-		static void on_setting_change(const events::setting_changed<settings::hacks::translator>& event);
+		static void on_setting_change(const events::setting_changed& event);
 	};
 }

@@ -31,8 +31,6 @@ namespace dino::wow::data
 		unsigned int m_cursor;
 
 	public:
-
-
 		void GetPackedGUID(wow::guid* guid);
 		void GetString(char* out, unsigned int max_length);
 		void GetStringPtr(char** out, unsigned int max_length);

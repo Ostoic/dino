@@ -1,33 +1,43 @@
 #pragma once
 
-#include <chrono>
-#include <filesystem>
 #include <any>
-#include <obfuscator.hpp>
+#include <string_view>
+#include <unordered_map>
 
-#include "log.hpp"
+#include "scheduler.hpp"
 #include "events/dino_events.hpp"
-#include "settings/setting.hpp"
-#include "internal/uuid.hpp"
 
-namespace dino::settings
+namespace dino
 {
-	namespace hacks
+	class settings
 	{
-		namespace mp = boost::mp11;
+	public:
+		explicit settings() = default;
 
-		//uuids
-		//mp::mp_list_c<std::uint64_t, 0
-		constexpr auto is_enabled_ = 0;
-		constexpr auto anti_afk_ = 1;
-		constexpr auto translator_ = uuid.next();
-		constexpr auto uuid = uuid.next();
+		template <class T>
+		void set(const std::string_view name, T&& value)
+		{
+			settings_[name] = std::forward<T>(value);
+			scheduler::trigger(events::setting_changed{name, settings_[name]});
+		}
 
-		inline auto is_enabled = setting{true, events::setting_changed<is_enabled_>{}};
+		void remove(const std::string_view name)
+		{
+			settings_.erase(name);
+		}
 
-		inline auto anti_afk = setting{true, events::setting_changed<anti_afk_>{}};
+		bool contains(const std::string_view name) const noexcept
+		{
+			return settings_.contains(name);
+		}
 
-		inline auto translator = setting<events::setting_changed<uuid.next()>>{false};
+		template <class T>
+		T lookup(const std::string_view name) const noexcept
+		{
+			return std::any_cast<T>(settings_.at(name));
+		}
 
+	private:
+		std::unordered_map<std::string_view, std::any> settings_;
 	};
 }

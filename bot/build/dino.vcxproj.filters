@@ -160,9 +160,6 @@
     <Filter Include="Source Files\dino\internal">
       <UniqueIdentifier>{79150400-98d8-48e3-9fb9-bb583c8e20d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\dino\settings">
-      <UniqueIdentifier>{d659b608-c1bc-4422-aae3-32c6efa753e7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -462,15 +459,6 @@
     <ClInclude Include="..\src\dino\wow\data\CDataStore.hpp">
       <Filter>Header Files\dino\wow\data</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\dino\internal\settings_disambiguator.hpp">
-      <Filter>Header Files\dino\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\internal\settings_fwd.hpp">
-      <Filter>Header Files\dino\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\dino\settings\setting.hpp">
-      <Filter>Header Files\dino\settings</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\dino\events\connected_event.hpp">
       <Filter>Header Files\dino\events</Filter>
     </ClInclude>
@@ -479,6 +467,21 @@
     </ClInclude>
     <ClInclude Include="..\src\dino\scheduler.hpp">
       <Filter>Header Files\dino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\settings_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\hacks_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\hook\patch.hpp">
+      <Filter>Header Files\dino\hook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\emitters\send_packet_emitter.hpp">
+      <Filter>Header Files\dino\emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dino\internal\string.hpp">
+      <Filter>Header Files\dino\internal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -644,8 +647,20 @@
     <ClCompile Include="..\src\dino\wow\data\CDataStore.cpp">
       <Filter>Source Files\dino\wow\data</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dino\internal\settings_disambiguator.cpp">
-      <Filter>Source Files\dino\internal</Filter>
+    <ClCompile Include="..\src\dino\emitters\settings_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\hacks_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\wow\world\world.cpp">
+      <Filter>Source Files\dino\wow\world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\hook\patch.cpp">
+      <Filter>Source Files\dino\hook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dino\emitters\send_packet_emitter.cpp">
+      <Filter>Source Files\dino\emitters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

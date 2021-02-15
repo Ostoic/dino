@@ -14,6 +14,7 @@
 
 #include "wow/data/store.hpp"
 #include "wow/data/packed_guid.hpp"
+#include "events/glue_events.hpp"
 
 
 #include <obfuscator.hpp>
@@ -67,7 +68,7 @@ namespace dino::debug
 		//);
 
 		//log::info("[dev] local_base: {}", static_cast<unsigned int>(wow::world::local_base()));
-		log::info("[dev] event list:");
+		//log::info("[dev] event list:");
 
 		//for (const auto& event : events)
 			//log::info("[dev] event: {}", event);
@@ -76,25 +77,40 @@ namespace dino::debug
 			//(void*)deref_wow::world::local_base(),
 		//);
 
-		//const auto realm_list = wow::cvar::lookup("realmList");
-		//if (!realm_list.valid())
-		//	log::info("[dev] realm_list is invalid");
-		//else
-		//{
-		//	log::info("realm_list: name: {}, value: {}, data: {}, default_value: {}",
-		//		realm_list.name(),
-		//		realm_list.value(),
-		//		realm_list.data(),
-		//		realm_list.default_value()
-		//	);
-		//}
-		//session::queue_transient<events::gamestate_change>([](const auto& event)
+		const auto realm_list = wow::cvar::lookup("realmList");
+		if (!realm_list.valid())
+			log::info("[dev] realm_list is invalid");
+		else
+		{
+			log::info("realm_list: name: {}, value: {}, data: {}, default_value: {}",
+				realm_list.name(),
+				realm_list.value(),
+				realm_list.data(),
+				realm_list.default_value()
+			);
+		}
+
+		//scheduler::queue_task([] {
+		//	log::info("hi");
+		//	if (wow::glue::current_screen() == wow::glue::screen::login)
+		//	{
+		//		log::info("login screen!");
+		//		const auto realmlist = wow::cvar::lookup("realmList");
+		//		if (!realmlist.valid())
+		//			return;
+
+		//		if (realmlist.value() == "10.179.205.114")
+		//			wow::lua::run(OBFUSCATE("DefaultServerLogin('admin', 'admin')"));
+		//	}
+		//});
+
+		//session::dispatcher().queue_transient<events::gamestate_change>([](const auto& event)
 		//{
 		//	log::info("screen: {}", to_string(event.after));
 		//	if (event.after == wow::glue::screen::character_select)
 		//	{
 		//		log::info("character select!");
-		//		wow::lua::run(OBFUSCATE("EnterWorld()"));
+		//		//wow::lua::run(OBFUSCATE("EnterWorld()"));
 		//		return handlers::task_handler::transient_state::disconnect;
 		//	}
 

@@ -36,13 +36,13 @@ namespace dino
 		}
 
 		template <class Event>
-		static void enqueue()
+		static void trigger()
 		{
 			get().dispatcher_.enqueue<Event>();
 		}
 
 		template <class Event>
-		static void enqueue(Event&& event)
+		static void trigger(Event&& event)
 		{
 			get().dispatcher_.enqueue<Event>(std::forward<Event>(event));
 		}
@@ -81,7 +81,7 @@ namespace dino
 
 		get().dispatcher_
 			.sink<Event>()
-			.connect<session::handle_once<Event>>();
+			.connect<scheduler::handle_once<Event>>();
 
 		return true;
 	}
@@ -127,6 +127,6 @@ namespace dino
 
 		get().dispatcher_
 			.sink<Event>()
-			.disconnect<session::handle_once<Event>>();
+			.disconnect<scheduler::handle_once<Event>>();
 	}
 }

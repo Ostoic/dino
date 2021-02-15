@@ -6,6 +6,7 @@
 #include "../guid.hpp"
 #include "../chat/message.hpp"
 #include "../chat/language.hpp"
+#include "../../log.hpp"
 
 namespace dino::wow::data
 {
@@ -13,6 +14,7 @@ namespace dino::wow::data
 	struct message_store
 	{
 	public:
+		explicit message_store(const message_store&) = default;
 		explicit message_store(data::store&& data);
 		explicit message_store(address cdata);
 		explicit message_store() = default;

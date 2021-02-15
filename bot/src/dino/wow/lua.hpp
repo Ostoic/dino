@@ -90,3 +90,12 @@ namespace dino::wow::lua
 		return result;
 	}
 }
+
+namespace dino
+{
+	template <class... Args>
+	bool session::run_script(Args&&... args)
+	{
+		wow::lua::run(std::forward<Args>(args)...);
+	}
+}

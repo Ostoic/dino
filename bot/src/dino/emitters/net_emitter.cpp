@@ -4,6 +4,7 @@
 #include "../log.hpp"
 #include "../hook/vmt_hook.hpp"
 #include "../events/net_events.hpp"
+#include "../emitters/send_packet_emitter.hpp"
 
 #include <obfuscator.hpp>
 
@@ -21,7 +22,7 @@ namespace dino::emitters
 
 			auto event = events::received_wc_connected{};
 
-			scheduler::enqueue(event);
+			scheduler::trigger(event);
 			scheduler::update<decltype(event)>();
 
 			wc_connected(self, nullptr, server, a3, tick_count, addr);
@@ -34,7 +35,7 @@ namespace dino::emitters
 
 			auto event = events::received_wc_disconnected{};
 
-			scheduler::enqueue(event);
+			scheduler::trigger(event);
 			scheduler::update<decltype(event)>();
 
 			wc_disconnected(self, nullptr, a2, a3, a4);
@@ -52,7 +53,7 @@ namespace dino::emitters
 			event.data = &data_;
 			event.size = &size_;
 
-			scheduler::enqueue(event);
+			scheduler::trigger(event);
 			scheduler::update<decltype(event)>();
 
 			handle_data(self, nullptr, a2, data_, size_);
@@ -103,6 +104,8 @@ namespace dino::emitters
 			//vmt_hook_rc->hook(14, hook_handle_data);
 			//vmt_hook_nc->hook(14, hook_handle_data);
 
+			send_packet_emitter::install();
+
 			scheduler::sink<events::received_handle_data>()
 				.connect<log_handle_data>();
 
@@ -126,6 +129,17 @@ namespace dino::emitters
 		//	.sink<events::endscene_frame>()
 		//	.disconnect<check_lua_handler>();
 
+		scheduler::sink<events::received_handle_data>()
+			.disconnect<log_handle_data>();
+
+		scheduler::sink<events::received_wc_connected>()
+			.disconnect<log_wc_connected>();
+
+		scheduler::sink<events::received_wc_disconnected>()
+			.disconnect<log_wc_disconnected>();
+
+
+		send_packet_emitter::uninstall();
 		log::info(OBFUSCATE("[net_emitter] uninstalled"));
 	}
 }

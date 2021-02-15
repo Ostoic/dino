@@ -23,12 +23,10 @@ namespace dino::emitters
 
 	public:
 		bool is_active() const;
-
+		address original_endscene() const noexcept;
 		std::chrono::nanoseconds last_hook_runtime() const;
 
 	private:
-		static unsigned int original_endscene;
-
 		endscene_emitter();
 
 		void hook();
@@ -40,6 +38,8 @@ namespace dino::emitters
 		friend void endscene_hook();
 
 	private:
+		std::array<address, 5> send_packet_originals_;
+		address::address_type original_endscene_;
 		std::mutex tasks_mutex_;
 		clock::time_point last_frame_time_;
 		std::chrono::nanoseconds last_hook_runtime_;

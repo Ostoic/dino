@@ -11,7 +11,7 @@
 
 #include "../log.hpp"
 
-namespace dino { class session; }
+namespace dino { class scheduler; }
 
 namespace dino::handlers
 {
@@ -40,7 +40,7 @@ namespace dino::handlers
 		};
 
 	private:
-		friend class dino::session;
+		friend class dino::scheduler;
 
 		template <class Event>
 		static std::queue<std::function<transient_state(const Event&)>>& transients();
@@ -57,12 +57,13 @@ namespace dino::handlers
 	bool task_handler::queue_task(Fn&& fn)
 	{
 		using namespace std::chrono_literals;
+		log::info("task_handler::queue_task");
+
 		auto& handler = task_handler::get();
 		//auto lock = std::unique_lock{handler.mutex_};
 		//if (!lock.try_lock_for(100ms))
 		//	return false;
 
-		log::info("task_handler::queue_task");
 		handler.tasks_.emplace(std::forward<Fn>(fn));
 		return true;
 	}

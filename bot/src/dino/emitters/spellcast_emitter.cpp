@@ -127,7 +127,7 @@ namespace dino::emitters
 		template <class Event>
 		void queue_event(const wow::data::store& store)
 		{
-			scheduler::enqueue(Event{store});
+			scheduler::trigger(Event{store});
 			scheduler::update<Event>();
 		}
 

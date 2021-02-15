@@ -9,6 +9,13 @@
 
 namespace dino::wow::data
 {
+	store& store::operator=(const store& other) noexcept
+	{
+		store_ = other.store_;
+		initial_cursor_ = other.initial_cursor_;
+		return *this;
+	}
+
 	const store* store::operator->() const noexcept
 	{
 		return this;
@@ -31,7 +38,7 @@ namespace dino::wow::data
 	}
 
 	store::store(address class_base, unsigned int cursor)
-		: store{reinterpret_cast<CDataStore*>(static_cast<unsigned int>(class_base)), cursor}
+		: store{reinterpret_cast<CDataStore*>(static_cast<address::address_type>(class_base)), cursor}
 	{}
 
 	store::store(store&& store)
@@ -74,7 +81,7 @@ namespace dino::wow::data
 
 	void store::seek_end()
 	{
-		this->seek(this->size - 1);
+		this->seek(this->size() - 1);
 	}
 
 	void store::restore_cursor()

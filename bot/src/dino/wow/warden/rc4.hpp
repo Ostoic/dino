@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "../../offset.hpp"
 
 namespace dino::wow::warden::rc4
 {

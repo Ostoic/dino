@@ -22,11 +22,12 @@ namespace dino::wow::data
 		explicit store(address class_base);
 		explicit store(address class_base, unsigned int cursor);
 		explicit store(store&& store);
-		explicit store(const store& store, unsigned int initial_cursor);
+		explicit store(const store& store, unsigned int initial_cursor = 2);
 		explicit store() = default;
 
 		~store();
 
+		store& operator=(const store& other) noexcept;
 		const store* operator->() const noexcept;
 		store* operator->() noexcept;
 

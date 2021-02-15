@@ -5,6 +5,7 @@
 #include "messages.hpp"
 #include "../data/store.hpp"
 #include "../../scheduler.hpp"
+#include "../../offset.hpp"
 
 namespace dino::wow::net
 {
@@ -12,10 +13,10 @@ namespace dino::wow::net
 	template <class Fn>
 	void set_handler(const wow::net::messages::server message, Fn&& fn)
 	{
-		if constexpr (!std::is_invocable<Fn, int, int, int data::CDataStore*>)
-			static_assert(false, "[wow] [net] [set_handler] Function must be invocable in the form: int(int, int, int, data::CDataStore*)")
+		if constexpr (!std::is_invocable_v<Fn, int, int, int, data::CDataStore*>)
+			static_assert(false, "[wow] [net] [set_handler] Function must be invocable in the form: int(int, int, int, data::CDataStore*)");
 
-		const auto set_net_message_handler_
+		const auto set_net_message_handler_ 
 			= bind_fn<void(wow::net::messages::server, void*, void*)>
 				(wow::offsets::net::client_services::set_message_handler_fn);
 
@@ -32,7 +33,7 @@ namespace dino::wow::net
 		try
 		{
 			// Queue Event event
-			scheduler::enqueue(Event{store_t{cdata}, &drop_packet});
+			scheduler::trigger(Event{store_t{cdata}, &drop_packet});
 
 			// Signal Event handlers
 			scheduler::update<Event>();

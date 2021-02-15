@@ -3,6 +3,7 @@
 #include "../events/chat_events.hpp"
 #include "../wow/framexml/events.hpp"
 #include "../session.hpp"
+#include "../wow/lua.hpp"
 
 #include <obfuscator.hpp>
 

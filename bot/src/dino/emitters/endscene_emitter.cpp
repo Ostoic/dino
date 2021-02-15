@@ -6,20 +6,47 @@
 #include "../session.hpp"
 #include "../version.hpp"
 #include "../log.hpp"
+#include "../wow/data/CDataStore.hpp"
 
 #include <chrono>
 #include <obfuscator.hpp>
 
 namespace dino::emitters
 {
-	unsigned int endscene_emitter::original_endscene = static_cast<unsigned int>
-		(bind_value(wow::graphics::get_ptr_address()));
+	//namespace
+	//{
+	//	__declspec(naked) void send_packet_prehook(void* this_, wow::data::CDataStore* data)
+	//	{
+	//		__asm {
+	//			pushad;
+	//			pushfd;
+	//		}
+
+	//		[&] {
+	//			log::debug(OBFUSCATE("[send_packet_prehook] sending packet of size {}"), data->m_size);
+	//		}();
+	//		
+	//		__asm {
+	//			popfd;
+	//			popad;
+	//		}
+
+	//		deref_as<fn_ptr<void
+	//	}
+	//}
 
 	void endscene_emitter::install()
 	{
 		auto& emitter = endscene_emitter::get();
+		if (emitter.is_active())
+			return;
+
+		emitter.hook();
+
 		if (!emitter.is_active())
-			emitter.hook();
+			log::info(OBFUSCATE("[endscene_emitter::install] unable to install hook"));
+		else
+			log::info(OBFUSCATE("[endscene_emitter::install] successfully hooked"));
 	}
 
 	void endscene_emitter::uninstall()
@@ -31,7 +58,13 @@ namespace dino::emitters
 
 	bool endscene_emitter::is_active() const
 	{
-		return bind_value(wow::graphics::get_ptr_address()) != endscene_emitter::original_endscene;
+		const auto current_endscene_ptr = address{deref_as<address::address_type>(wow::graphics::get_ptr_address())};
+		return current_endscene_ptr != endscene_emitter::get().original_endscene();
+	}
+
+	address endscene_emitter::original_endscene() const noexcept
+	{
+		return original_endscene_;
 	}
 
 	std::chrono::nanoseconds endscene_emitter::last_hook_runtime() const
@@ -44,7 +77,8 @@ namespace dino::emitters
 		using clock = std::chrono::high_resolution_clock;
 		using namespace std::chrono_literals;
 
-		static auto original_endscene = endscene_emitter::original_endscene;
+		static address::address_type original_endscene = static_cast<address::address_type>(endscene_emitter::get().original_endscene());
+
 
 		// Save asm flags
 		_asm
@@ -59,14 +93,15 @@ namespace dino::emitters
 			const auto frame_duration = std::chrono::duration_cast<std::chrono::milliseconds>
 				(clock::now() - last_frame_time);
 
-			if (frame_duration < settings::refresh_rate())
+			if (frame_duration < dino::session::settings().lookup<std::chrono::milliseconds>("refresh_rate"))
 				return;
 
 			last_frame_time = clock::now();
+
 			try
 			{
 				const auto start = clock::now();
-				scheduler::enqueue(events::endscene_frame{frame_duration});
+				scheduler::trigger(events::endscene_frame{frame_duration});
 				scheduler::update();
 
 				const auto end = clock::now();
@@ -76,36 +111,6 @@ namespace dino::emitters
 			{
 				log::critical(OBFUSCATE("[endscene_emitter] Exception: {}"), e.what());
 			}
-
-			//try
-			//{
-			//	endscene_emitter.update_session();
-
-			//	// Run services
-			//	if (!services.empty())
-			//		for (const auto& service : services)
-			//			service.fn();
-
-			//	// Run any new tasks
-			//	if (!tasks.empty())
-			//	{
-			//		// This is synchronized since tasks are meant to run once, so it is more likely endscene
-			//		// will race with another contending thread.
-			//		auto lock = std::unique_lock<std::mutex>{endscene_emitter.tasks_mutex_};
-			//		if (lock.owns_lock())
-			//		{
-			//			while (!tasks.empty())
-			//			{
-			//				tasks.front()();
-			//				tasks.pop();
-			//			}
-			//		}
-			//	}
-			//}
-			//catch (const std::exception & e)
-			//{
-			//	wow::console::dino("Error: {}", e.what());
-			//}
 		}();
 
 		// Restore any asm flags.
@@ -119,20 +124,20 @@ namespace dino::emitters
 
 	endscene_emitter::endscene_emitter()
 	{
-		endscene_emitter::original_endscene = deref_as<unsigned int>(wow::graphics::get_ptr_address());
+		original_endscene_ = deref_as<address::address_type>(wow::graphics::get_ptr_address());
 	}
 
 	void endscene_emitter::hook()
 	{
-		deref_as<fn_ptr<void()>>(wow::graphics::get_ptr_address())
-			= endscene_hook;
+		auto& endscene_ptr = deref_as<fn_ptr<void()>>(wow::graphics::get_ptr_address());
+		endscene_ptr = endscene_hook;
 	}
 
 	void endscene_emitter::unhook()
 	{
-		// Make endscene_emitter unhook itself
-		deref_as<fn_ptr<void()>>(wow::graphics::get_ptr_address())
-			= fn_ptr<void()>(static_cast<unsigned int>(endscene_emitter::original_endscene));
+		auto& endscene_ptr = deref_as<fn_ptr<void()>>(wow::graphics::get_ptr_address());
+		endscene_ptr
+			= fn_ptr<void()>(static_cast<address::address_type>(endscene_emitter::get().original_endscene()));
 	}
 
 	endscene_emitter& endscene_emitter::get() noexcept

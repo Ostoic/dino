@@ -62,13 +62,13 @@ namespace dino::emitters
 					);
 
 					if (event == wow::framexml::event::player_target_changed)
-						scheduler::enqueue<events::framexml::player_target_changed>();
+						scheduler::trigger<events::framexml::player_target_changed>();
 
 					else if (event == wow::framexml::event::player_entering_world)
-						scheduler::enqueue<events::framexml::player_entering_world>();
+						scheduler::trigger<events::framexml::player_entering_world>();
 
 					else if (event == wow::framexml::event::ui_error_message)
-						scheduler::enqueue(events::framexml::received_ui_error_message{action.data()});
+						scheduler::trigger(events::framexml::received_ui_error_message{action.data()});
 				}
 			}
 			catch (const std::exception& e)

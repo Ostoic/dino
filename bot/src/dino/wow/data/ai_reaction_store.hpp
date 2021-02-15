@@ -10,7 +10,7 @@ namespace dino::wow::data
 	public:
 		template <class... Args>
 		explicit ai_reaction_store(Args&&... args)
-			: store{std::forward<Args>(args)}
+			: store{std::forward<Args>(args)...}
 		{}
 
 	public:

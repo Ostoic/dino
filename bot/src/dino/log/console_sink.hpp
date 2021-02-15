@@ -17,7 +17,7 @@ namespace dino::log
 	protected:
 		void console_sink::sink_it_(const spdlog::details::log_msg& msg)
 		{
-			fmt::memory_buffer formatted;
+			spdlog::memory_buf_t formatted;
 			spdlog::sinks::base_sink<Mutex>::formatter_->format(msg, formatted);
 
 			auto color = wow::console::color::standard;

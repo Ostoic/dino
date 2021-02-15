@@ -5,6 +5,7 @@
 #include <entt/entt.hpp>
 #include <spdlog/sinks/basic_file_sink.h>
 
+#include "settings.hpp"
 #include "emitters/endscene_emitter.hpp"
 #include "offset.hpp"
 #include "scheduler.hpp"
@@ -13,6 +14,7 @@ namespace dino
 {
 	class session
 	{
+		using settings_t = settings;
 	public:
 		static void start();
 		static void exit();
@@ -25,6 +27,8 @@ namespace dino
 		static std::string status();
 
 	public:
+		static settings_t& settings() noexcept;
+
 		static entt::registry& registry() noexcept;
 		static scheduler& dispatcher() noexcept;
 
@@ -40,14 +44,6 @@ namespace dino
 
 	private:
 		entt::registry registry_;
+		settings_t settings_;
 	};
-}
-
-namespace dino
-{
-	template <class... Args>
-	bool session::run_script(Args&&... args)
-	{
-		//wow::lua::run(std::forward<Args>(args)...);
-	}
 }

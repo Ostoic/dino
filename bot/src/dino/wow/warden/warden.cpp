@@ -31,7 +31,7 @@ namespace dino::wow::warden
 
 	std::vector<byte> get_key_out()
 	{
-		const auto size = static_cast<unsigned int>(offsets::warden::rc4_keys_size);
+		const auto size = static_cast<address::address_type>(offsets::warden::rc4_keys_size);
 		const auto class_loc = deref_as<address>(offsets::warden::class_ptr);
 		const auto* key_bytes = &deref_as<const byte>(class_loc + offsets::warden::rc4_keys_offset);
 		return std::vector<byte>{key_bytes, key_bytes + size};
@@ -39,8 +39,8 @@ namespace dino::wow::warden
 
 	std::vector<byte> get_key_in()
 	{
-		const auto size = static_cast<unsigned int>(offsets::warden::rc4_keys_size);
-		const auto* key_bytes = deref_as<const byte*>(deref_as<address>(offsets::warden::class_ptr) + offsets::warden::rc4_keys_offset + size);
+		const auto size = static_cast<address::address_type>(offsets::warden::rc4_keys_size);
+		const auto* key_bytes = deref_as<const byte*>(deref_as<address>(offsets::warden::class_ptr) + offsets::warden::rc4_keys_offset + offsets::warden::rc4_keys_size);
 
 		return std::vector<byte>{key_bytes, key_bytes + size};
 	}

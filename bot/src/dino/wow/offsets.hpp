@@ -280,6 +280,13 @@ namespace dino::wow::offsets
 			constexpr auto clear_message_handler_fn = address{0x006B0BC0};
 
 			constexpr auto singleton = address{0x00C79CF4};
+
+			constexpr auto send_packet_fn = address{0x00632B50};
+			constexpr auto send_packet_invocation1 = address{0x00406F72};
+			constexpr auto send_packet_invocation2 = address{0x00406F87}; 
+			constexpr auto send_packet_invocation3 = address{0x006330AB};
+			constexpr auto send_packet_invocation4 = address{0x006332E5};
+			constexpr auto send_packet_invocation5 = address{0x006B0B61};
 		}
 	}
 
