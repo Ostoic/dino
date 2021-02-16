@@ -36,19 +36,11 @@ namespace dino::hook
 		byte& dest_byte = bind_value<byte>(destination_);
 		byte* dest_bytes = &dest_byte;
 
-		log::debug(OBFUSCATE("[packet::apply] destination: {}"), destination_);
-		log::debug(OBFUSCATE("[packet::apply] size: {}"), size);
-		log::debug(OBFUSCATE("[packet::apply] dest_bytes: {}"), dest_bytes);
-
-		log::debug(OBFUSCATE("[packet::apply] dest_bytes: {}"), internal::format_bytes(dest_bytes, dest_bytes + size));
-
 		// Save original bytes
 		std::copy(dest_bytes, dest_bytes + size, std::back_inserter(original_));
-		log::debug(OBFUSCATE("[packet::apply] original_: {}"), internal::format_bytes(original_));	
 
 		// Patch new bytes
 		std::copy(data_.begin(), data_.end(), dest_bytes);
-		log::debug(OBFUSCATE("[packet::apply] dest_bytes: {}"), internal::format_bytes(dest_bytes, dest_bytes + size));
 	}
 
 	void patch::restore()
@@ -56,10 +48,8 @@ namespace dino::hook
 		auto guard = distant::make_protect_guard<distant::page_protection::execute_readwrite>(distant::current_process(), destination_, original_.size());
 		byte& dest_byte = bind_value<byte>(destination_);
 		byte* dest_bytes = &dest_byte;
-		log::debug(OBFUSCATE("[packet::restore] destination: {}"), destination_);
 
 		// Restore original bytes
 		std::copy(original_.begin(), original_.end(), dest_bytes);
-		log::debug(OBFUSCATE("[packet::restore] dest_bytes: {}"), internal::format_bytes(dest_bytes, dest_bytes + original_.size()));
 	}
 }

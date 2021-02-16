@@ -16,12 +16,11 @@ namespace dino::emitters
 	void send_packet_emitter::install()
 	{
 		auto& patches = send_packet_emitter::get().patches_;
-		const auto install_patch = [&](const address base) {
-			const auto target = &wow::world::client_services::hooked_send_packet;
-			const auto target_address = address{reinterpret_cast<void* const&>(target)};
-			
-			const auto diff_bytes = bytes_of(static_cast<address::address_type>(target_address - base - 5));
+		const auto target = &wow::world::client_services::prehook_send_packet;
+		const auto target_address = address{reinterpret_cast<void* const&>(target)};
 
+		const auto install_patch = [&](const address base) {
+			const auto diff_bytes = bytes_of(static_cast<address::address_type>(target_address - base - 5));
 			patches.push_back(hook::patch{base + 1, diff_bytes});
 			patches.back().apply();
 		};
@@ -32,14 +31,12 @@ namespace dino::emitters
 		install_patch(wow::offsets::net::client_services::send_packet_invocation4);
 		install_patch(wow::offsets::net::client_services::send_packet_invocation5);
 		log::info(OBFUSCATE("[send_packet_emitter::install] installed"));
+		log::info(OBFUSCATE("[send_packet_emitter::install] prehook_send_packet: {}"), target_address);
 	}
 
 	void send_packet_emitter::uninstall()
 	{
 		auto& patches = send_packet_emitter::get().patches_;
-		for (auto& patch : patches)
-			patch.restore();
-
 		patches.clear();
 		log::info(OBFUSCATE("[send_packet_emitter::uninstall] uninstalled"));
 	}

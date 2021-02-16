@@ -50,7 +50,7 @@ namespace dino::wow::world
 		const auto now = clock::now();
 
 		log::info(
-			"[get_async_time] timing_method: {}",
+			OBFUSCATE("[get_async_time] timing_method: {}"),
 			to_string(wow::world::get_timing_method())
 		);
 
@@ -58,7 +58,7 @@ namespace dino::wow::world
 		{
 			auto ms = time::milliseconds{tick_count};
 			log::info(
-				"[get_async_time] tick_count: {}, now.count(): {}",
+				OBFUSCATE("[get_async_time] tick_count: {}, now.count(): {}"),
 				ms.count(),
 				time::duration_cast<time::milliseconds>(now.time_since_epoch()).count()
 			);

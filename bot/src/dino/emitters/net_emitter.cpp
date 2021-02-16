@@ -104,8 +104,6 @@ namespace dino::emitters
 			//vmt_hook_rc->hook(14, hook_handle_data);
 			//vmt_hook_nc->hook(14, hook_handle_data);
 
-			send_packet_emitter::install();
-
 			scheduler::sink<events::received_handle_data>()
 				.connect<log_handle_data>();
 
@@ -115,6 +113,7 @@ namespace dino::emitters
 			scheduler::sink<events::received_wc_disconnected>()
 				.connect<log_wc_disconnected>();
 
+			send_packet_emitter::install();
 			log::info(OBFUSCATE("[net_emitter] installed"));
 		}
 		catch (const std::exception & e)
@@ -128,6 +127,7 @@ namespace dino::emitters
 		//dispatcher::
 		//	.sink<events::endscene_frame>()
 		//	.disconnect<check_lua_handler>();
+		send_packet_emitter::uninstall();
 
 		scheduler::sink<events::received_handle_data>()
 			.disconnect<log_handle_data>();
@@ -138,8 +138,6 @@ namespace dino::emitters
 		scheduler::sink<events::received_wc_disconnected>()
 			.disconnect<log_wc_disconnected>();
 
-
-		send_packet_emitter::uninstall();
 		log::info(OBFUSCATE("[net_emitter] uninstalled"));
 	}
 }

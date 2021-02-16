@@ -22,7 +22,7 @@ namespace dino::emitters
 		auto& settings = session::settings();
 		settings.set("hacks.is_enabled", true);
 		settings.set("hacks.anti_afk", true);
-		settings.set("hacks.translator", true);
+		settings.set("hacks.translator", false);
 		log::info(OBFUSCATE("[hacks_emitter] installed"));
 	}
 
